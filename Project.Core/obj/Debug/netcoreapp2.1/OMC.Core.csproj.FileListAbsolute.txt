@@ -1,0 +1,13 @@
+C:\Projects\HonoursProject671\OMC.Core\obj\Debug\netcoreapp2.1\OMC.Core.csprojAssemblyReference.cache
+C:\Projects\HonoursProject671\OMC.Core\obj\Debug\netcoreapp2.1\OMC.Core.AssemblyInfoInputs.cache
+C:\Projects\HonoursProject671\OMC.Core\obj\Debug\netcoreapp2.1\OMC.Core.AssemblyInfo.cs
+C:\Projects\HonoursProject671\OMC.Core\obj\Debug\netcoreapp2.1\OMC.Core.csproj.CoreCompileInputs.cache
+C:\Projects\HonoursProject671\OMC.Core\bin\Debug\netcoreapp2.1\Select.Html.dep
+C:\Projects\HonoursProject671\OMC.Core\bin\Debug\netcoreapp2.1\OMC.Core.deps.json
+C:\Projects\HonoursProject671\OMC.Core\bin\Debug\netcoreapp2.1\OMC.Core.dll
+C:\Projects\HonoursProject671\OMC.Core\bin\Debug\netcoreapp2.1\OMC.Core.pdb
+C:\Projects\HonoursProject671\OMC.Core\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Mvc.Core.dll
+C:\Projects\HonoursProject671\OMC.Core\bin\Debug\netcoreapp2.1\Microsoft.AspNetCore.Mvc.Core.xml
+C:\Projects\HonoursProject671\OMC.Core\obj\Debug\netcoreapp2.1\OMC.Core.csproj.CopyComplete
+C:\Projects\HonoursProject671\OMC.Core\obj\Debug\netcoreapp2.1\OMC.Core.dll
+C:\Projects\HonoursProject671\OMC.Core\obj\Debug\netcoreapp2.1\OMC.Core.pdb

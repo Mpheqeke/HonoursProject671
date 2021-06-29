@@ -1,0 +1,53 @@
+C:\Projects\HonoursProject671\New folder\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.dll
+C:\Projects\HonoursProject671\New folder\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.pdb
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\Select.Html.dep
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\appsettings.Debug.json
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\appsettings.Development.json
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\appsettings.json
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\appsettings.Production.json
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\appsettings.Uat.json
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\Properties\launchSettings.json
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\Project.Web.deps.json
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\Project.Web.runtimeconfig.json
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\Project.Web.runtimeconfig.dev.json
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\Project.Web.dll
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\Project.Web.pdb
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\Project.Core.dll
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\Project.Infrastructure.dll
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\Project.Core.pdb
+C:\Projects\HonoursProject671\New folder\Project.Web\bin\Debug\netcoreapp2.1\Project.Infrastructure.pdb
+C:\Projects\HonoursProject671\New folder\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.csprojAssemblyReference.cache
+C:\Projects\HonoursProject671\New folder\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.AssemblyInfoInputs.cache
+C:\Projects\HonoursProject671\New folder\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.AssemblyInfo.cs
+C:\Projects\HonoursProject671\New folder\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.csproj.CoreCompileInputs.cache
+C:\Projects\HonoursProject671\New folder\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.RazorAssemblyInfo.cache
+C:\Projects\HonoursProject671\New folder\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.RazorAssemblyInfo.cs
+C:\Projects\HonoursProject671\New folder\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.RazorTargetAssemblyInfo.cache
+C:\Projects\HonoursProject671\New folder\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.csproj.CopyComplete
+C:\Projects\HonoursProject671\New folder\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.genruntimeconfig.cache
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\Select.Html.dep
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\appsettings.Debug.json
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\appsettings.Development.json
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\appsettings.json
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\appsettings.Production.json
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\Properties\launchSettings.json
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\Project.Web.deps.json
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\Project.Web.runtimeconfig.json
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\Project.Web.runtimeconfig.dev.json
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\Project.Web.dll
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\Project.Web.pdb
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\Project.Core.dll
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\Project.Infrastructure.dll
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\Project.Core.pdb
+C:\Projects\HonoursProject671\Project.Web\bin\Debug\netcoreapp2.1\Project.Infrastructure.pdb
+C:\Projects\HonoursProject671\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.csprojAssemblyReference.cache
+C:\Projects\HonoursProject671\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.AssemblyInfoInputs.cache
+C:\Projects\HonoursProject671\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.AssemblyInfo.cs
+C:\Projects\HonoursProject671\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.csproj.CoreCompileInputs.cache
+C:\Projects\HonoursProject671\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.RazorAssemblyInfo.cache
+C:\Projects\HonoursProject671\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.RazorAssemblyInfo.cs
+C:\Projects\HonoursProject671\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.RazorTargetAssemblyInfo.cache
+C:\Projects\HonoursProject671\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.csproj.CopyComplete
+C:\Projects\HonoursProject671\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.dll
+C:\Projects\HonoursProject671\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.pdb
+C:\Projects\HonoursProject671\Project.Web\obj\Debug\netcoreapp2.1\Project.Web.genruntimeconfig.cache
