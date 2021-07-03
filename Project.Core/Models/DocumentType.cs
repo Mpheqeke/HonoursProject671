@@ -11,6 +11,7 @@ namespace Project.Core.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
+        //keys
+        public virtual List<UserDocument> UserDocuments { get; set; }
     }
 }

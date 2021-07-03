@@ -24,7 +24,9 @@ namespace Project.Core.Models
         public DateTime CreatedOn { get; set; }
         public string ModifiedBy {get;set;}
         public DateTime ModifiedOn { get; set; }
-
+        
+        //Keys
+        public virtual List<UserJobApplication> UserJobApplication { get; set; }
 
     }
 }

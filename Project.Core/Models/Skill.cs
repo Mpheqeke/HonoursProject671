@@ -12,5 +12,7 @@ namespace Project.Core.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
+        public virtual List<UserJobApplication> UserJobApplications { get; set; }
+        public virtual List<UserSkillGain> UserSkillGains { get; set; }
     }
 }

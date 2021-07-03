@@ -13,6 +13,8 @@ namespace Project.Core.Models
         public int UserId { get; set; }
         public int CompanyId { get; set; }
 
-
+        //keys
+        public virtual User User { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

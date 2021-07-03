@@ -21,6 +21,8 @@ namespace Project.Core.Models
         public string ModifiedBy {get;set;}
         public DateTime ModifiedOn { get; set; }
 
+        //keys
+        public virtual List<CompanyRepresentative> CompanyRepresentatives { get; set; }
 
     }
 }

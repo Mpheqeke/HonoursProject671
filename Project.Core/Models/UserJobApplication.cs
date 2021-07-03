@@ -21,6 +21,8 @@ namespace Project.Core.Models
         public string ModifiedBy {get;set;}
         public DateTime ModifiedOn { get; set; }
 
-
+        public virtual Vacancy Vacancy { get; set; }
+        public virtual Skill Skill { get; set; }
+        public virtual Status Status { get; set; }
     }
 }

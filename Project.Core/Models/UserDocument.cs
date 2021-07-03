@@ -15,6 +15,10 @@ namespace Project.Core.Models
         public int StatusId { get; set; }
         public string DocumentUrl { get; set; }
 
+        public virtual DocumentType DocumentType { get; set; }
+        public virtual Status Status { get; set; }
+        public virtual User User { get; set; }
+        public virtual List<UserSkillGain> UserSkillGains { get; set; }
 
     }
 }

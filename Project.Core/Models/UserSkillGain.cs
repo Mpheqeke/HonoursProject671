@@ -15,6 +15,9 @@ namespace Project.Core.Models
         public int SkillId { get; set; }
         public int DocumentId { get; set; }
 
-
+        public virtual User User { get; set; }
+        public virtual Moocs Moocs { get; set; }
+        public virtual Skill Skill{ get; set; }
+        public virtual UserDocument UserDocument { get; set; }
     }
 }
