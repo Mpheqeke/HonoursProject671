@@ -15,7 +15,11 @@ namespace Project.Core.Models
         public string Gender { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }
-
+        public string Mobile { get; set; }
+        public string ThumbnailUrl { get; set; }
+        public string UDID { get; set; }
+        public string ModifiedBy { get; set; }
+        public DateTime ModifiedOn { get; set; }
         public bool IsActive { get; set; }
         public bool IsSuperAdmin { get; set; }
         public string DisplayName => $"{UserFirstName} {UserLastName}";
