@@ -14,10 +14,11 @@ namespace Project.Core.Models
         public string LastName { get; set; }
         public string Mobile { get; set; }
         public string Gender { get; set; }
-        public string ThumbnailUrl { get; set; }
+        public string ThumbnailUrl { get; set; }0
         public string ImageUrl { get; set; }
         public bool IsActive { get; set; }
         public string UUID { get; set; }
+        public string Email { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }
         public string ModifiedBy { get; set; }
