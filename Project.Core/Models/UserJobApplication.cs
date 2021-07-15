@@ -15,7 +15,7 @@ namespace Project.Core.Models
         public int SkillId { get; set; }
         public string Motivation { get; set; }
         public string CVUrl { get; set; }
-        public bool ISActive { get; set; }
+        public bool IsActive { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
         public string ModifiedBy {get;set;}

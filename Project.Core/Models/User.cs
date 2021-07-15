@@ -10,19 +10,21 @@ namespace Project.Core.Models
     public class User : BaseModel
     {
         public int Id { get; set; }
-        public string UserFirstName { get; set; }
-        public string UserLastName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Mobile { get; set; }
         public string Gender { get; set; }
+        public string ThumbnailUrl { get; set; }
+        public string ImageUrl { get; set; }
+        public bool IsActive { get; set; }
+        public string UUID { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }
-        public string Mobile { get; set; }
-        public string ThumbnailUrl { get; set; }
-        public string UDID { get; set; }
         public string ModifiedBy { get; set; }
         public DateTime ModifiedOn { get; set; }
-        public bool IsActive { get; set; }
+        
         public bool IsSuperAdmin { get; set; }
-        public string DisplayName => $"{UserFirstName} {UserLastName}";
+        public string DisplayName => $"{FirstName} {LastName}";
         
         //keys
         public virtual List<CompanyRepresentative> CompanyRepresentatives { get; set; }

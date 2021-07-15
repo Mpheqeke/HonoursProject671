@@ -14,7 +14,7 @@ namespace Project.Core.Models
         public string Sector { get; set; }
         public string Vision { get; set; }
         public string Mission { get; set; }
-        public bool ISActive { get; set; }
+        public bool IsActive { get; set; }
         public bool LogoUrl { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
