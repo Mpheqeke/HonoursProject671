@@ -25,7 +25,6 @@ namespace Project.Infrastructure.Database
         DbSet<UserDocument> UserDocuments { get; set; }
         DbSet<UserJobApplication> UserJobApplications { get; set; }
         DbSet<UserPermission> UserPermissions { get; set; }
-        DbSet<UserRole> UserRoles { get; set; }
         DbSet<Vacancy> Vacancies { get; set; }
 		
      }

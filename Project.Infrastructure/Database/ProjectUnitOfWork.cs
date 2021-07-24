@@ -22,7 +22,6 @@ namespace EntityConfigurationBase
         private IRepository<UserDocument> _userDocument;
         private IRepository<UserJobApplication> _userJobApplication;
         private IRepository<UserPermission> _userPermission;
-        private IRepository<UserRole> _userRole;
         private IRepository<UserSkillGain> _userSkillGain;
         private IRepository<Vacancy> _vacancy;
 
@@ -45,7 +44,6 @@ namespace EntityConfigurationBase
         public IRepository<UserDocument> UserDocument => _userDocument ?? (_userDocument = new Repository<UserDocument>(_context));
         public IRepository<UserJobApplication> UserJobApplication => _userJobApplication ?? (_userJobApplication = new Repository<UserJobApplication>(_context));
         public IRepository<UserPermission> UserPermission => _userPermission ?? (_userPermission = new Repository<UserPermission>(_context));
-        public IRepository<UserRole> UserRole => _userRole ?? (_userRole = new Repository<UserRole>(_context));
         public IRepository<UserSkillGain> UserSkillGain => _userSkillGain ?? (_userSkillGain = new Repository<UserSkillGain>(_context));
         public IRepository<Vacancy> Vacancy => _vacancy ?? (_vacancy  = new Repository<Vacancy>(_context));
 

@@ -30,7 +30,6 @@ namespace Project.Core.Models
         //keys
         public virtual List<CompanyRepresentative> CompanyRepresentatives { get; set; }
         public virtual List<UserPermission> UserPermissions { get; set; }
-        public virtual List<UserRole> UserRoles { get; set; }
         public virtual List<UserDocument> UserDocuments { get; set; }
         public virtual List<UserSkillGain> UserSkillGains { get; set; }
     }
