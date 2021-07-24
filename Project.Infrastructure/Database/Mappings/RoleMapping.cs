@@ -11,6 +11,7 @@ namespace Project.Infrastructure.Database.Mappings
         {
             builder.HasKey(c => c.Id);
             builder.HasMany(x => x.RolePermissions).WithOne(c => c.Role).HasPrincipalKey(c => c.Id);
+            builder.HasMany(x => x.Users).WithOne(c => c.Role).HasPrincipalKey(c => c.Id);
             builder.ToTable("Role");
         }
     }

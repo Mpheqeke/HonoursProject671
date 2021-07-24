@@ -14,7 +14,7 @@ namespace Project.Core.Models
         public string LastName { get; set; }
         public string Mobile { get; set; }
         public string Gender { get; set; }
-        public string ThumbnailUrl { get; set; }0
+        public string ThumbnailUrl { get; set; }
         public string ImageUrl { get; set; }
         public bool IsActive { get; set; }
         public string UUID { get; set; }
@@ -30,8 +30,8 @@ namespace Project.Core.Models
         //keys
         public virtual List<CompanyRepresentative> CompanyRepresentatives { get; set; }
         public virtual List<UserPermission> UserPermissions { get; set; }
-        public virtual List<UserRole> UserRoles { get; set; }
         public virtual List<UserDocument> UserDocuments { get; set; }
         public virtual List<UserSkillGain> UserSkillGains { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

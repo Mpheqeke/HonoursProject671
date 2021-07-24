@@ -17,7 +17,6 @@ namespace Project.Core.Interfaces
         IRepository<UserDocument> UserDocument { get; }
         IRepository<UserJobApplication> UserJobApplication { get; }
         IRepository<UserPermission> UserPermission { get; }
-        IRepository<UserRole> UserRole { get; }
         IRepository<UserSkillGain> UserSkillGain { get; }
         IRepository<Vacancy> Vacancy { get; }
         void Save();

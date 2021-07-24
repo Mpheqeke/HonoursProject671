@@ -23,3 +23,4 @@ C:\Projects\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.
 C:\Projects\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.csproj.CopyComplete
 C:\Projects\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.dll
 C:\Projects\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.pdb
+C:\Projects\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.csprojAssemblyReference.cache

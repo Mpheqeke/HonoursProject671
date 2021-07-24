@@ -25,7 +25,6 @@ namespace Project.Infrastructure.Database
         DbSet<UserDocument> UserDocuments { get; set; }
         DbSet<UserJobApplication> UserJobApplications { get; set; }
         DbSet<UserPermission> UserPermissions { get; set; }
-        DbSet<UserRole> UserRoles { get; set; }
         DbSet<Vacancy> Vacancies { get; set; }
 		
      }
@@ -70,7 +69,6 @@ namespace Project.Infrastructure.Database
           public  DbSet<UserDocument> UserDocuments { get; set; }
           public  DbSet<UserJobApplication> UserJobApplications { get; set; }
           public  DbSet<UserPermission> UserPermissions { get; set; }
-          public  DbSet<UserRole> UserRoles { get; set; }
           public  DbSet<Vacancy> Vacancies { get; set; }
 
     }
