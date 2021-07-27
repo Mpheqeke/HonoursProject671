@@ -7,7 +7,13 @@ namespace Project.Core.Interfaces
 {
     public interface IUserService
     {
-     
+
+        List<User> GetSingleUser(int id);
+        List<User> GetUsers();
+        List<User> temp();
+        void CreateUser(User user);
+        void UpdateUser(int id, User user);
+        void DeleteUser(int id);
 
 
     }
