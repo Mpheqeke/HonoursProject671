@@ -18,6 +18,7 @@ namespace Project.Core.Models
         public string ImageUrl { get; set; }
         public bool IsActive { get; set; }
         public string UUID { get; set; }
+        public int RoleId { get; set; }
         public string Email { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }
