@@ -24,5 +24,6 @@ namespace Project.Core.Models
         public virtual Vacancy Vacancy { get; set; }
         public virtual Skill Skill { get; set; }
         public virtual Status Status { get; set; }
+        public virtual User User { get; set; }
     }
 }

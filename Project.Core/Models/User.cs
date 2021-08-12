@@ -32,6 +32,7 @@ namespace Project.Core.Models
         public virtual List<UserPermission> UserPermissions { get; set; }
         public virtual List<UserDocument> UserDocuments { get; set; }
         public virtual List<UserSkillGain> UserSkillGains { get; set; }
+        public virtual List<UserJobApplication> UserJobApplications { get; set; }
         public virtual Role Role { get; set; }
     }
 }
