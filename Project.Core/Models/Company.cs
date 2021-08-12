@@ -23,6 +23,7 @@ namespace Project.Core.Models
 
         //keys
         public virtual List<CompanyRepresentative> CompanyRepresentatives { get; set; }
+        public virtual List<Vacancy> Vacancy { get; set; }
 
     }
 }

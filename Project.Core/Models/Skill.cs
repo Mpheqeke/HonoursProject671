@@ -14,5 +14,6 @@ namespace Project.Core.Models
 
         public virtual List<UserJobApplication> UserJobApplications { get; set; }
         public virtual List<UserSkillGain> UserSkillGains { get; set; }
+        public virtual Vacancy Vacancy { get; set; }
     }
 }

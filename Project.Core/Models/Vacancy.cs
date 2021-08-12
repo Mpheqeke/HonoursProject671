@@ -27,6 +27,8 @@ namespace Project.Core.Models
         
         //Keys
         public virtual List<UserJobApplication> UserJobApplication { get; set; }
+        public virtual Company Company { get; set; }
+        public virtual List<Skill> Skills { get; set; }
 
     }
 }

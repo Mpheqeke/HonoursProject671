@@ -12,6 +12,7 @@ namespace Project.Infrastructure.Database.Mappings
             builder.HasKey(c => c.Id);
 
             builder.HasMany(c => c.UserJobApplication).WithOne(y => y.Vacancy).HasPrincipalKey(y => y.Id);
+            builder.HasMany(c => c.Skills).WithOne(y => y.Vacancy).HasPrincipalKey(y => y.Id);
             builder.ToTable("Vacancy");
         }
     }
