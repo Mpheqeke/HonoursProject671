@@ -13,6 +13,7 @@ namespace Project.Infrastructure.Database.Mappings
 
             builder.HasMany(c => c.CompanyRepresentatives).WithOne(x => x.Company).HasPrincipalKey(x => x.Id);
             builder.HasMany(c => c.Vacancy).WithOne(x => x.Company).HasPrincipalKey(x => x.Id);
+    
 
             builder.ToTable("Company");
         }

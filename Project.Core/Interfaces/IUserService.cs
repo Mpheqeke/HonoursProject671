@@ -10,7 +10,8 @@ namespace Project.Core.Interfaces
 
         List<User> GetSingleUser(int id);
         List<User> GetUsers();
-        List<User> temp();
+        List<User> GetGrads();
+        List<User> GetRecruiters();
         void CreateUser(User user);
         void UpdateUser(int id, User user);
         void DeleteUser(int id);

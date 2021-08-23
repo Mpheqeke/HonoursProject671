@@ -15,7 +15,7 @@ namespace Project.Core.Models
         public string Vision { get; set; }
         public string Mission { get; set; }
         public bool IsActive { get; set; }
-        public bool LogoUrl { get; set; }
+        public string LogoUrl { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
         public string ModifiedBy {get;set;}
@@ -24,6 +24,13 @@ namespace Project.Core.Models
         //keys
         public virtual List<CompanyRepresentative> CompanyRepresentatives { get; set; }
         public virtual List<Vacancy> Vacancy { get; set; }
+
+        public VacanciesDTO DisplayVacanciesDTO => new VacanciesDTO
+        {
+            Name = this.Name,
+            Sector = this.Sector,
+            StartDate = this.Vacancy.Select(a => a.StartDate).SingleOrDefault()
+        };
 
     }
 }

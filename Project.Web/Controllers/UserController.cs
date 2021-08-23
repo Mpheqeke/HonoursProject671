@@ -6,6 +6,7 @@ using Project.Core.Interfaces;
 using Project.Core.Models;
 using Project.Web.Filters;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Project.Web.Controllers
 {
@@ -25,10 +26,36 @@ namespace Project.Web.Controllers
         //Retreive all users
         [Route("~/api/User/GetUsers")]
         [HttpGet]
-        public ActionResult<List<User>> GetUsers()
+        public ActionResult<List<User>> GetUsers(int? pageNumber)
         {
+            int curPage = pageNumber ?? 1;
+            int curPageSize = 30;
+
             var users = _userService.GetUsers();
-            return users;
+            return Ok(users.Skip((curPage - 1) * curPageSize).Take(curPageSize));
+        }
+
+        //Retreive specific users
+        [Route("~/api/User/GetGrads")]
+        [HttpGet]
+        public ActionResult<List<User>> GetGrads(int? pageNumber)
+        {
+            int curPage = pageNumber ?? 1;
+            int curPageSize = 30;
+
+            var users = _userService.GetGrads();
+            return Ok(users.Skip((curPage - 1) * curPageSize).Take(curPageSize));
+        }
+
+        [Route("~/api/User/GetRecruiters")]
+        [HttpGet]
+        public ActionResult<List<User>> GetRecruiters(int? pageNumber)
+        {
+            int curPage = pageNumber ?? 1;
+            int curPageSize = 30;
+
+            var users = _userService.GetRecruiters();
+            return Ok(users.Skip((curPage - 1) * curPageSize).Take(curPageSize));
         }
 
         //Retreive user by Id
@@ -64,13 +91,6 @@ namespace Project.Web.Controllers
             _userService.UpdateUser(id, user);
         }
 
-        [Route("~/api/User/temp")]
-        [HttpGet]
-        public ActionResult<List<User>> temp()
-        {
-            var temp = _userService.temp();
-            return temp;
-        }
 
     }
 }

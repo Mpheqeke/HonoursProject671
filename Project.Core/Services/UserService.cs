@@ -27,10 +27,24 @@ namespace Project.Core.Services
             //_authentication = authentication;
         }
 
-        //Get All Users
+        //Get All Users (With Pagination)
         public List<User> GetUsers()
         {
             var users = _unitOfWork.User.Query(x => x.IsActive).ToList();
+            return users;
+        }
+
+        //Get Graduates Only (With Pagination)
+        public List<User> GetGrads()
+        {
+            var users = _unitOfWork.User.Query(x => x.IsActive).Where(x => x.RoleId == 1).ToList();
+            return users;
+        }
+
+        //Get Recruiters Only (With Pagination)
+        public List<User> GetRecruiters()
+        {
+            var users = _unitOfWork.User.Query(x => x.IsActive).Where(x => x.RoleId == 2).ToList();
             return users;
         }
 
@@ -100,23 +114,11 @@ namespace Project.Core.Services
 
         }
 
-        //WERK NIE
-        public List<User> temp()
-        {
-            //var watch = new System.Diagnostics.Stopwatch();
-            //watch.Start();
-            //watch.Stop();
-            //var timeTaken = watch.ElapsedMilliseconds;
+        //Upload CV
 
-            //var result = (from U in _unitOfWork.User.Query()
-            //              where U.Id == 1
-            //              select U).ToList();
+        //Update Profile Picture
 
-            //var result2 = _unitOfWork.User.Query(x => x.Id == 1).First();
+        //FIREBASE STUFF vir UUID
 
-            var result3 = _unitOfWork.User.Query(x => x.Id == 2).ToList();
-
-            return result3;
-        }
     }
 }

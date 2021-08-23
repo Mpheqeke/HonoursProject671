@@ -56,7 +56,8 @@ namespace Project.Web
 			services.AddScoped<IProjectUnitOfWork, ProjectUnitOfWork>();
 			services.AddSingleton<IMemoryCache, MemoryCache>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IAuthInfo, AuthInfo>();
+			services.AddScoped<ICompanyService, CompanyService>();
+			services.AddScoped<IAuthInfo, AuthInfo>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
