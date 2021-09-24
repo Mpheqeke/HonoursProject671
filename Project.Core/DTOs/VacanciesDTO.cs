@@ -9,6 +9,6 @@ namespace Project.Core.DTOs
         public string Name { get; set; }
         public string Sector { get; set; }
         public DateTime StartDate { get; set; }
-
+        public int TotalVac { get; set; }
     }
 }

@@ -29,7 +29,8 @@ namespace Project.Core.Models
         {
             Name = this.Name,
             Sector = this.Sector,
-            StartDate = this.Vacancy.Select(a => a.StartDate).SingleOrDefault()
+            StartDate = this.Vacancy.Select(a => a.StartDate).FirstOrDefault(),
+            TotalVac = this.Vacancy.Count(x => x.CompanyId == this.Id)
         };
 
     }

@@ -29,15 +29,26 @@ namespace Project.Core.Services
         {
             var users = _unitOfWork.Company.Query(x => x.IsActive).Include("Vacancy").ToList().Select(x => x.DisplayVacanciesDTO).ToList();
 
+            List<VacanciesDTO> usersWithVacancies = new List<VacanciesDTO>();
+
+            //To only display companies with vacancies
+            for (int i = 0; i <= users.Count() - 1; i++)
+            {
+                if (users[i].TotalVac > 0)
+                {
+                    usersWithVacancies.Add(users[i]);
+                }
+            }    
+
             //Sort by vacancy start date
             switch (sort)
             {
                 case "desc":
-                    return users.OrderByDescending(o => o.StartDate).ToList();
+                    return usersWithVacancies.OrderByDescending(o => o.StartDate).ToList();
                 case "asc":
-                    return users.OrderBy(o => o.StartDate).ToList();
+                    return usersWithVacancies.OrderBy(o => o.StartDate).ToList();
                 default:
-                    return users;
+                    return usersWithVacancies;
             }
         }
 
