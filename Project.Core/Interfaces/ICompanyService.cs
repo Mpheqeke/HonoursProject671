@@ -12,5 +12,8 @@ namespace Project.Core.Interfaces
         List<Company> GetCompanies();
         List<Vacancy> GetVacancyInfo(int id);
         List<VacanciesDTO> SearchVacancies(string sort, string search);
+        void CreateCompany(Company company);
+        void DeleteCompany(int id);
+        void UpdateCompany(int id, Company company);
     }
 }

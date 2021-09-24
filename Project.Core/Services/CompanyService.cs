@@ -69,9 +69,7 @@ namespace Project.Core.Services
             }
         }
 
-        //Create Company
-
-        //Update Company Information
+        //Approve Company
 
         //Update Company Logo
 
@@ -96,12 +94,74 @@ namespace Project.Core.Services
 
         //View Specific Applicant Profile (With Pagination)
 
+        //View all Companies
         public List<Company> GetCompanies()
         {
             var users = _unitOfWork.Company.Query(x => x.IsActive).ToList();
             return users;
         }
 
+        //Create Company
+        public void CreateCompany(Company company)
+        {
+            try
+            {
+                company.CreatedOn = DateTime.Now;
+                company.ModifiedOn = DateTime.Now;
+                company.CreatedBy = company.Name;
+                company.ModifiedBy = company.Name;
+                //Still need to be approved
+                company.IsActive = false;
+
+                _unitOfWork.Company.Add(company);
+                _unitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
+
+        //Remove Company
+        public void DeleteCompany(int id)
+        {
+            try
+            {
+                var delObj = _unitOfWork.Company.Query(x => x.Id == id).SingleOrDefault();
+
+                if (delObj != null)
+                {
+                    _unitOfWork.Company.Delete(delObj);
+                    _unitOfWork.Save();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+
+        }
+
+        //Update Company Information
+        public void UpdateCompany(int id, Company company)
+        {
+            var updateObj = _unitOfWork.Company.Query(x => x.Id == id).SingleOrDefault();
+
+            if (updateObj != null)
+            {
+                updateObj.Name = company.Name;
+                updateObj.Sector = company.Sector;
+                updateObj.Vision = company.Vision;
+                updateObj.Mission = company.Mission;
+
+                updateObj.ModifiedBy = company.Name;
+                updateObj.ModifiedOn = DateTime.Now;
+
+                _unitOfWork.Company.Update(updateObj);
+                _unitOfWork.Save();
+            }
+        }
 
     }
 }

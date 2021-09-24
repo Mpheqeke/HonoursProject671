@@ -64,5 +64,28 @@ namespace Project.Web.Controllers
             return users;
         }
 
+        //Create new company
+        [Route("~/api/Company/CreateCompany")]
+        [HttpPost]
+        public void CreateCompany([FromBody] Company company)
+        {
+            _companyService.CreateCompany(company);
+        }
+
+        //Remove a company
+        [Route("~/api/Company/{id}")]
+        [HttpDelete("{id}")]
+        public void DeleteCompany(int id)
+        {
+            _companyService.DeleteCompany(id);
+        }
+
+        //Update existing company
+        [Route("~/api/Company/{id}")]
+        [HttpPut("{id}")]
+        public void UpdateCompany(int id, [FromBody] Company company)
+        {
+            _companyService.UpdateCompany(id, company);
+        }
     }
 }
