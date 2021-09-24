@@ -57,15 +57,26 @@ namespace Project.Core.Services
         {
             var users = _unitOfWork.Company.Query(x => x.IsActive).Include("Vacancy").ToList().Select(x => x.DisplayVacanciesDTO).Where(s => s.Name.Contains(search) || s.Sector.Contains(search)).ToList();
 
+            List<VacanciesDTO> newSearchList = new List<VacanciesDTO>();
+
+            //To only display companies with vacancies
+            for (int i = 0; i <= users.Count() - 1; i++)
+            {
+                if (users[i].TotalVac > 0)
+                {
+                    newSearchList.Add(users[i]);
+                }
+            }
+
             //Sort by vacancy start date
             switch (sort)
             {
                 case "desc":
-                    return users.OrderByDescending(o => o.StartDate).ToList();
+                    return newSearchList.OrderByDescending(o => o.StartDate).ToList();
                 case "asc":
-                    return users.OrderBy(o => o.StartDate).ToList();
+                    return newSearchList.OrderBy(o => o.StartDate).ToList();
                 default:
-                    return users;
+                    return newSearchList;
             }
         }
 
