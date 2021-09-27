@@ -49,9 +49,18 @@ namespace Project.Web.Controllers
         //Retreive vacancy by Id
         [Route("~/api/Vacancy/{id}")]
         [HttpGet("{id}")]
-        public ActionResult<List<Vacancy>> GetVacancyInfo(int id)
+        public ActionResult<List<SpecificVacancyDetailsDTO>> GetVacancyInfo(int id)
         {
             var vacancy = _companyService.GetVacancyInfo(id);
+            return vacancy;
+        }
+
+        //Retreive all vacancies by company id
+        [Route("~/api/Vacancy/Company/{id}")]
+        [HttpGet("{id}")]
+        public ActionResult<List<CompanySpecificVacanciesDTO>> GetCompanyVacancies(int id)
+        {
+            var vacancy = _companyService.GetCompanyVacancies(id);
             return vacancy;
         }
 
@@ -73,7 +82,7 @@ namespace Project.Web.Controllers
         }
 
         //Remove a company
-        [Route("~/api/Company/{id}")]
+        [Route("~/api/Company/DeleteCompany/{id}")]
         [HttpDelete("{id}")]
         public void DeleteCompany(int id)
         {
@@ -81,7 +90,7 @@ namespace Project.Web.Controllers
         }
 
         //Update existing company
-        [Route("~/api/Company/{id}")]
+        [Route("~/api/Company/UpdateCompany/{id}")]
         [HttpPut("{id}")]
         public void UpdateCompany(int id, [FromBody] Company company)
         {

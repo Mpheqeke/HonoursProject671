@@ -25,13 +25,14 @@ namespace Project.Core.Models
         public virtual List<CompanyRepresentative> CompanyRepresentatives { get; set; }
         public virtual List<Vacancy> Vacancy { get; set; }
 
-        public VacanciesDTO DisplayVacanciesDTO => new VacanciesDTO
-        {
-            Name = this.Name,
-            Sector = this.Sector,
-            StartDate = this.Vacancy.Select(a => a.StartDate).FirstOrDefault(),
-            TotalVac = this.Vacancy.Count(x => x.CompanyId == this.Id)
-        };
+        //public VacanciesDTO DisplayVacanciesDTO => new VacanciesDTO
+        //{
+        //    Id = this.Id,
+        //    Name = this.Name,
+        //    Sector = this.Sector,
+        //    StartDate = this.Vacancy.Select(a => a.StartDate).FirstOrDefault(),
+        //    TotalVac = this.Vacancy.Count(x => x.CompanyId == this.Id)
+        //};
 
     }
 }

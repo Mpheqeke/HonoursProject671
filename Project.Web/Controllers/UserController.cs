@@ -90,7 +90,5 @@ namespace Project.Web.Controllers
         {
             _userService.UpdateUser(id, user);
         }
-
-
     }
 }

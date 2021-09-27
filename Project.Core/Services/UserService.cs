@@ -72,7 +72,7 @@ namespace Project.Core.Services
             _unitOfWork.Save();
         }
 
-        //Update User Information
+        //Update User Information (Let users update their own info)
         public void UpdateUser(int id, User user)
         {
             var updateObj = _unitOfWork.User.Query(x => x.Id == id).SingleOrDefault();

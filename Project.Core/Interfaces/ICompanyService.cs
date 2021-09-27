@@ -10,10 +10,11 @@ namespace Project.Core.Interfaces
     {
         List<VacanciesDTO> GetVacancies(string sort);
         List<Company> GetCompanies();
-        List<Vacancy> GetVacancyInfo(int id);
         List<VacanciesDTO> SearchVacancies(string sort, string search);
         void CreateCompany(Company company);
         void DeleteCompany(int id);
         void UpdateCompany(int id, Company company);
+        List<CompanySpecificVacanciesDTO> GetCompanyVacancies(int id);
+        List<SpecificVacancyDetailsDTO> GetVacancyInfo(int id);
     }
 }
