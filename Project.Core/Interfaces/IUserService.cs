@@ -15,7 +15,7 @@ namespace Project.Core.Interfaces
         void CreateUser(User user);
         void UpdateUser(int id, User user);
         void DeleteUser(int id);
-
-
+        List<MoocsDTO> GetMoocs();
+        List<MoocsDTO> SearchMoocs(string search);
     }
 }

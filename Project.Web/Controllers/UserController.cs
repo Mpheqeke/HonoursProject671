@@ -23,6 +23,33 @@ namespace Project.Web.Controllers
             _userService = userService;
         }
 
+        #region Moocs Select and Search
+        //Retreive all Moocs
+        [Route("~/api/User/GetMoocs")]
+        [HttpGet]
+        public ActionResult<List<MoocsDTO>> GetMoocs(int? pageNumber)
+        {
+            int curPage = pageNumber ?? 1;
+            int curPageSize = 30;
+
+            var users = _userService.GetMoocs();
+            return Ok(users.Skip((curPage - 1) * curPageSize).Take(curPageSize));
+        }
+
+        //Search for Moocs
+        [Route("~/api/User/SearchMoocs")]
+        [HttpGet]
+        public ActionResult<List<MoocsDTO>> SearchMoocs(int? pageNumber, string search)
+        {
+            int curPage = pageNumber ?? 1;
+            int curPageSize = 30;
+
+            var vacancies = _userService.SearchMoocs(search);
+            return Ok(vacancies.Skip((curPage - 1) * curPageSize).Take(curPageSize));
+        }
+        #endregion
+
+        #region User Select and Search Related Queries
         //Retreive all users
         [Route("~/api/User/GetUsers")]
         [HttpGet]
@@ -66,7 +93,9 @@ namespace Project.Web.Controllers
             var user = _userService.GetSingleUser(id);
             return user;
         }
+        #endregion
 
+        #region User CRUD Related Queries (Create, Update, Delete)
         //Create new user
         [Route("~/api/User/CreateUser")]
         [HttpPost]
@@ -90,5 +119,6 @@ namespace Project.Web.Controllers
         {
             _userService.UpdateUser(id, user);
         }
+        #endregion
     }
 }

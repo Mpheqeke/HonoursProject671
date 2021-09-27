@@ -154,7 +154,9 @@ namespace Project.Core.Services
 
             var users = (from c in comp
                          join v in vacan on c.Id equals v.CompanyId
-                         where c.Name.Contains(search) || c.Sector.Contains(search) || v.JobTitle.Contains(search)
+                         where c.Name.ToUpper().Contains(search.ToUpper()) 
+                            || c.Sector.ToUpper().Contains(search.ToUpper()) 
+                            || v.JobTitle.ToUpper().Contains(search.ToUpper())
                          select new VacanciesDTO
                          {
                              CompanyId = c.Id,

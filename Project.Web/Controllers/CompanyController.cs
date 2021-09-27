@@ -22,6 +22,44 @@ namespace Project.Web.Controllers
             _companyService = companyService;
         }
 
+        #region Company Select and Search Related Queries
+        //Retreive all Companies
+        [Route("~/api/Company/GetCompanies")]
+        [HttpGet]
+        public ActionResult<List<Company>> GetCompanies()
+        {
+            var users = _companyService.GetCompanies();
+            return users;
+        }
+        #endregion
+
+        #region Company CRUD Related Queries (Create, Update, Delete)
+        //Create new company
+        [Route("~/api/Company/CreateCompany")]
+        [HttpPost]
+        public void CreateCompany([FromBody] Company company)
+        {
+            _companyService.CreateCompany(company);
+        }
+
+        //Remove a company
+        [Route("~/api/Company/DeleteCompany/{id}")]
+        [HttpDelete("{id}")]
+        public void DeleteCompany(int id)
+        {
+            _companyService.DeleteCompany(id);
+        }
+
+        //Update existing company
+        [Route("~/api/Company/UpdateCompany/{id}")]
+        [HttpPut("{id}")]
+        public void UpdateCompany(int id, [FromBody] Company company)
+        {
+            _companyService.UpdateCompany(id, company);
+        }
+        #endregion
+
+        #region Vacancy Select and Search Related Queries
         //Retreive all Vacancies
         [Route("~/api/Company/GetVacancies")]
         [HttpGet]
@@ -63,38 +101,9 @@ namespace Project.Web.Controllers
             var vacancy = _companyService.GetCompanyVacancies(id);
             return vacancy;
         }
+        #endregion
 
-        //Retreive all Companies
-        [Route("~/api/Company/GetCompanies")]
-        [HttpGet]
-        public ActionResult<List<Company>> GetCompanies()
-        {
-            var users = _companyService.GetCompanies();
-            return users;
-        }
-
-        //Create new company
-        [Route("~/api/Company/CreateCompany")]
-        [HttpPost]
-        public void CreateCompany([FromBody] Company company)
-        {
-            _companyService.CreateCompany(company);
-        }
-
-        //Remove a company
-        [Route("~/api/Company/DeleteCompany/{id}")]
-        [HttpDelete("{id}")]
-        public void DeleteCompany(int id)
-        {
-            _companyService.DeleteCompany(id);
-        }
-
-        //Update existing company
-        [Route("~/api/Company/UpdateCompany/{id}")]
-        [HttpPut("{id}")]
-        public void UpdateCompany(int id, [FromBody] Company company)
-        {
-            _companyService.UpdateCompany(id, company);
-        }
+        #region Vacancy CRUD Related Queries
+        #endregion
     }
 }

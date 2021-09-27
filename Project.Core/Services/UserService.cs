@@ -33,7 +33,39 @@ namespace Project.Core.Services
 
         //FIREBASE STUFF vir UUID
 
-        //MOOCS Stuffs
+        #region Moocs Select and Search
+        //Get all Moocs
+        public List<MoocsDTO> GetMoocs()
+        {
+            List<Moocs> moocs = _unitOfWork.Moocs.Query().ToList();
+
+            var MoocList = (from m in moocs
+                            select new MoocsDTO
+                            {
+                                MoocName = m.Name,
+                                MoocUrl = m.Url
+                            }).ToList();
+
+            return MoocList;
+        }
+
+        //Search for Moocs
+        public List<MoocsDTO> SearchMoocs(string search)
+        {
+            List<Moocs> moocs = _unitOfWork.Moocs.Query().ToList();
+
+            var MoocList = (from m in moocs
+                            where m.Name.ToUpper().Contains(search.ToUpper())
+                               || m.Url.ToUpper().Contains(search.ToUpper())
+                            select new MoocsDTO
+                            {
+                                MoocName = m.Name,
+                                MoocUrl = m.Url
+                            }).ToList();
+
+            return MoocList;
+        }
+        #endregion
 
         #region User Select and Search Related Queries
         //Get All Users (With Pagination)
