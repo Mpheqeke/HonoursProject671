@@ -24,113 +24,23 @@ namespace Project.Core.Services
             //_authentication = authentication;
         }
 
-        //Show All Available Vacancies
-        public List<VacanciesDTO> GetVacancies(string sort)
-        {
-            List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
-            List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
-
-            //var a = _unitOfWork.Vacancy.Query().Join(comp, s => s.CompanyId, b => b.Id,
-            //    (s, b) => new VacanciesDTO
-            //    {
-            //        Id = b.Id,
-            //        Name = b.Name,
-            //        Sector = b.Sector,
-            //        StartDate = s.StartDate,
-            //        TotalVac = b.Vacancy.Count(x => x.CompanyId == b.Id)
-            //    }).ToList();
-
-            var users = (from c in comp
-                     join v in vacan on c.Id equals v.CompanyId
-                     select new VacanciesDTO
-                     {
-                         CompanyId = c.Id,
-                         Name = c.Name,
-                         Sector = c.Sector,
-                         JobTitle = v.JobTitle,
-                         StartDate = v.StartDate,
-                         TotalVac = c.Vacancy.Count(x => x.CompanyId == c.Id)
-                     }).ToList();
-
-            //Sort by vacancy start date
-            switch (sort)
-            {
-                case "desc":
-                    return users.OrderByDescending(o => o.StartDate).ToList();
-                case "asc":
-                    return users.OrderBy(o => o.StartDate).ToList();
-                default:
-                    return users;
-            }
-
-            //var users = _unitOfWork.Company.Query(x => x.IsActive).Include("Vacancy").ToList().Select(x => x.DisplayVacanciesDTO).ToList();
-
-            //List<VacanciesDTO> usersWithVacancies = new List<VacanciesDTO>();
-
-            ////To only display companies with vacancies
-            //for (int i = 0; i <= users.Count() - 1; i++)
-            //{
-            //    if (users[i].TotalVac > 0)
-            //    {
-            //        usersWithVacancies.Add(users[i]);
-            //    }
-            //}
-
-            ////Sort by vacancy start date
-            //switch (sort)
-            //{
-            //    case "desc":
-            //        return usersWithVacancies.OrderByDescending(o => o.StartDate).ToList();
-            //    case "asc":
-            //        return usersWithVacancies.OrderBy(o => o.StartDate).ToList();
-            //    default:
-            //        return usersWithVacancies;
-            //}
-        }
-
-        //Search for Available Vacancies
-        public List<VacanciesDTO> SearchVacancies(string sort, string search)
-        {
-            List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
-            List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
-
-            var users = (from c in comp
-                         join v in vacan on c.Id equals v.CompanyId
-                         where c.Name.Contains(search) || c.Sector.Contains(search) || v.JobTitle.Contains(search)
-                         select new VacanciesDTO
-                         {
-                             CompanyId = c.Id,
-                             Name = c.Name,
-                             Sector = c.Sector,
-                             JobTitle = v.JobTitle,
-                             StartDate = v.StartDate,
-                             TotalVac = c.Vacancy.Count(x => x.CompanyId == c.Id)
-                         }).ToList();
-
-            //Sort by vacancy start date
-            switch (sort)
-            {
-                case "desc":
-                    return users.OrderByDescending(o => o.StartDate).ToList();
-                case "asc":
-                    return users.OrderBy(o => o.StartDate).ToList();
-                default:
-                    return users;
-            }
-        }
-
         //Create new Postion
 
         //Update Position Information
 
         //Remove Postion
 
-        //Show all Application for all Positions (With Pagination)
+        //Show all Applications for all Positions (With Pagination)
 
         //Show all Applications for Specific Position (With Pagination)
 
         //View Specific Applicant Profile (With Pagination)
 
+        //Approve Company
+
+        //Update Company Logo
+
+        #region Company Select and Search Related Queries
         //View all Companies
         public List<Company> GetCompanies()
         {
@@ -138,6 +48,9 @@ namespace Project.Core.Services
             return users;
         }
 
+        #endregion
+
+        #region Company CRUD Related Queries (Create, Update, Delete)
         //Create Company
         public void CreateCompany(Company company)
         {
@@ -199,12 +112,70 @@ namespace Project.Core.Services
                 _unitOfWork.Save();
             }
         }
+        #endregion
 
-        //Approve Company
+        #region Vacancy Select and Search Related Queries
+        //Show All Available Vacancies
+        public List<VacanciesDTO> GetVacancies(string sort)
+        {
+            List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
+            List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
 
-        //Update Company Logo
+            var users = (from c in comp
+                         join v in vacan on c.Id equals v.CompanyId
+                         select new VacanciesDTO
+                         {
+                             CompanyId = c.Id,
+                             VacancyName = c.Name,
+                             Sector = c.Sector,
+                             JobTitle = v.JobTitle,
+                             StartDate = v.StartDate,
+                             TotalVac = c.Vacancy.Count(x => x.CompanyId == c.Id)
+                         }).ToList();
 
-        //Show Selected Company Information with Vacancies (With Pagination)
+            //Sort by vacancy start date
+            switch (sort)
+            {
+                case "desc":
+                    return users.OrderByDescending(o => o.StartDate).ToList();
+                case "asc":
+                    return users.OrderBy(o => o.StartDate).ToList();
+                default:
+                    return users;
+            }
+
+        }
+
+        //Search for Available Vacancies
+        public List<VacanciesDTO> SearchVacancies(string sort, string search)
+        {
+            List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
+            List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
+
+            var users = (from c in comp
+                         join v in vacan on c.Id equals v.CompanyId
+                         where c.Name.Contains(search) || c.Sector.Contains(search) || v.JobTitle.Contains(search)
+                         select new VacanciesDTO
+                         {
+                             CompanyId = c.Id,
+                             VacancyName = c.Name,
+                             Sector = c.Sector,
+                             JobTitle = v.JobTitle,
+                             StartDate = v.StartDate,
+                             TotalVac = c.Vacancy.Count(x => x.CompanyId == c.Id)
+                         }).ToList();
+
+            //Sort by vacancy start date
+            switch (sort)
+            {
+                case "desc":
+                    return users.OrderByDescending(o => o.StartDate).ToList();
+                case "asc":
+                    return users.OrderBy(o => o.StartDate).ToList();
+                default:
+                    return users;
+            }
+        }
 
         //Get all vacancies for specific company
         public List<CompanySpecificVacanciesDTO> GetCompanyVacancies(int CompId)
@@ -213,14 +184,14 @@ namespace Project.Core.Services
             List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
 
             var vacancies = (from c in comp
-                         join v in vacan on c.Id equals v.CompanyId
-                         where v.CompanyId == CompId
+                             join v in vacan on c.Id equals v.CompanyId
+                             where v.CompanyId == CompId
                              select new CompanySpecificVacanciesDTO
-                         {
-                             VacancyId = v.Id,
-                             JobTitle = v.JobTitle,
-                             StartDate = v.StartDate,
-                         }).ToList();
+                             {
+                                 VacancyId = v.Id,
+                                 JobTitle = v.JobTitle,
+                                 StartDate = v.StartDate,
+                             }).ToList();
 
 
             //var vacancies = _unitOfWork.Vacancy.Query(a => a.IsActive).Where(a => a.CompanyId == id).ToList();
@@ -235,23 +206,27 @@ namespace Project.Core.Services
             List<Skill> skills = _unitOfWork.Skill.Query().ToList();
 
             var vacancyInfo = (from c in comp
-                            join v in vacan on c.Id equals v.CompanyId
-                            join s in skills on v.SkillRequirementId equals s.Id
-                            where v.Id == VacId
-                            select new SpecificVacancyDetailsDTO
-                            {
-                                JobTitle = v.JobTitle,
-                                CompanyId = c.Id,
-                                CompanyName = c.Name,
-                                Location = v.Location,
-                                JobDescription = v.JobDescription,
-                                Sector = c.Sector,
-                                StartDate = v.StartDate,
-                                Responsibilities = v.Responsibilities,
-                                SkillName = s.Name
-                            }).ToList();
+                               join v in vacan on c.Id equals v.CompanyId
+                               join s in skills on v.SkillRequirementId equals s.Id
+                               where v.Id == VacId
+                               select new SpecificVacancyDetailsDTO
+                               {
+                                   JobTitle = v.JobTitle,
+                                   CompanyId = c.Id,
+                                   CompanyName = c.Name,
+                                   Location = v.Location,
+                                   JobDescription = v.JobDescription,
+                                   Sector = c.Sector,
+                                   StartDate = v.StartDate,
+                                   Responsibilities = v.Responsibilities,
+                                   SkillName = s.Name
+                               }).ToList();
 
             return vacancyInfo;
         }
+        #endregion
+
+        #region Vacancy CRUD Related Queries
+        #endregion
     }
 }

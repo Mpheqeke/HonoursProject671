@@ -27,6 +27,15 @@ namespace Project.Core.Services
             //_authentication = authentication;
         }
 
+        //Upload CV
+
+        //Update Profile Picture
+
+        //FIREBASE STUFF vir UUID
+
+        //MOOCS Stuffs
+
+        #region User Select and Search Related Queries
         //Get All Users (With Pagination)
         public List<User> GetUsers()
         {
@@ -55,6 +64,9 @@ namespace Project.Core.Services
             return user;
         }
 
+        #endregion
+
+        #region User CRUD Related Queries (Create, Update, Delete)
         //Create User
         public void CreateUser(User user)
         {
@@ -113,12 +125,7 @@ namespace Project.Core.Services
             }
 
         }
-
-        //Upload CV
-
-        //Update Profile Picture
-
-        //FIREBASE STUFF vir UUID
+        #endregion
 
     }
 }
