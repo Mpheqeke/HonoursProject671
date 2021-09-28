@@ -93,6 +93,15 @@ namespace Project.Web.Controllers
             var user = _userService.GetSingleUser(id);
             return user;
         }
+
+        //Retreive specific user info by Id
+        [Route("~/api/User/GetSpecificUser/{userId}")]
+        [HttpGet("{userId}")]
+        public ActionResult<List<UserDTO>> GetSpecificUser(int userId)
+        {
+            var user = _userService.GetSpecificUser(userId);
+            return user;
+        }
         #endregion
 
         #region User CRUD Related Queries (Create, Update, Delete)
@@ -120,5 +129,15 @@ namespace Project.Web.Controllers
             _userService.UpdateUser(id, user);
         }
         #endregion
+
+        //Apply to a Postion (DOESNT WORK)
+        [Route("~/api/User/Vacancy/ApplyToPosition/{userId}/{vacId}")]
+        [HttpPost]
+        public void ApplyToPosition([FromBody] UserJobApplication application, int userId, int vacId)
+        {
+            _userService.ApplyToPosition(userId, vacId, application);
+        }
+
+  
     }
 }

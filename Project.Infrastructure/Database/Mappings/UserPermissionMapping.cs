@@ -12,7 +12,6 @@ namespace Project.Infrastructure.Database.Mappings
             builder.HasKey(c => c.Id);
             builder.HasOne(x => x.User).WithMany(c => c.UserPermissions).HasPrincipalKey(c => c.Id);
             builder.HasOne(y => y.Permission).WithMany(c => c.UserPermissions).HasPrincipalKey(c => c.Id);
-            builder.HasOne(y => y.Permission).WithMany(c => c.UserPermissions).HasPrincipalKey(c => c.Id);
             builder.ToTable("UserPermission");
         }
     }

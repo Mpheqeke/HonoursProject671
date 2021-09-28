@@ -19,6 +19,8 @@ namespace Project.Core.Interfaces
         void CreatePosition(Vacancy vacancy, int CompId);
         void UpdatePosition(int VacId, int CompId, Vacancy vacancy);
         void DeletePosition(int VacId);
-
+        List<CompanyDTO> GetSpecificCompany(int CompId);
+        List<CompanyRepsDTO> GetCompSpecificReps(int CompId);
+        List<CompanyApplicantsDTO> GetPositionApplicants(int vacId);
     }
 }

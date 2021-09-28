@@ -27,11 +27,49 @@ namespace Project.Core.Services
             //_authentication = authentication;
         }
 
+        #region Werk Nie (Need UserID in db on UserJobApplication Table)
+        //Apply to A Postion
+        public void ApplyToPosition(int userId, int vacId, UserJobApplication application)
+        {
+            try
+            {
+                //Users add in CVUrl and Motivation themselves
+
+                //var vacancy = _unitOfWork.Vacancy.Query(x => x.Id == vacId).SingleOrDefault();
+                var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
+                var skills = _unitOfWork.UserSkillGain.Query(x => x.UserId == userId).SingleOrDefault();
+                _unitOfWork.Save();
+
+                application.CreatedOn = DateTime.Now;
+                application.ModifiedOn = DateTime.Now;
+
+                application.VacancyId = vacId;
+                application.StatusId = 1;
+                application.SkillId = skills.SkillId;
+                application.CreatedBy = $"{user.FirstName} {user.LastName}";
+                application.ModifiedBy = $"{user.FirstName} {user.LastName}";
+
+                application.IsActive = true;
+
+                _unitOfWork.UserJobApplication.Add(application);
+                _unitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
+        #endregion
+
+
+
         //Upload CV
 
         //Update Profile Picture
 
         //FIREBASE STUFF vir UUID
+
+        
 
         #region Moocs Select and Search
         //Get all Moocs
@@ -96,6 +134,27 @@ namespace Project.Core.Services
             return user;
         }
 
+        //View specific user info
+        //View Specific Applicant Profile (With Pagination)
+        public List<UserDTO> GetSpecificUser(int userId)
+        {
+            List<User> user = _unitOfWork.User.Query(x => x.IsActive).ToList();
+
+            var company = (from u in user
+                           where u.Id == userId
+                           select new UserDTO
+                           {
+                               UserId = userId,
+                               FirstName = u.FirstName,
+                               LastName = u.LastName,
+                               Gender = u.Gender,
+                               Email = u.Email,
+                               Mobile = u.Mobile,
+                               ImageUrl = u.ImageUrl
+                           }).ToList();
+
+            return company;
+        }
         #endregion
 
         #region User CRUD Related Queries (Create, Update, Delete)

@@ -58,6 +58,9 @@ namespace Project.Web
             services.AddScoped<IUserService, UserService>();
 			services.AddScoped<ICompanyService, CompanyService>();
 			services.AddScoped<IAuthInfo, AuthInfo>();
+			//Firebase
+			services.AddScoped<IFireBaseAuth, FireBaseAuth>();
+			services.AddScoped<IFireBaseHelper, FirebaseHelper>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,8 +86,6 @@ namespace Project.Web
 
 			app.UseHttpsRedirection();
 			app.UseMvc();
-
-	
 			
 		}
 

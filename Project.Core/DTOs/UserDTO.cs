@@ -4,14 +4,12 @@ namespace Project.Core.DTOs
 {
     public class UserDTO
     {
-        public int Id { get; set; }
-        public string UserFirstName { get; set; }
-        public string UserLastName { get; set; }
-        public bool IsActive { get; set; }
-        public string LocalId { get; set; }
-        public string ThumbnailUrl { get; set; }
-        public string ImageUrl { get; set; }
+        public int UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Mobile { get; set; }
         public string Gender { get; set; }
-        public string displayName => $"{UserFirstName}{UserLastName}";
+        public string ImageUrl { get; set; }
+        public string Email { get; set; }
     }
 }

@@ -25,15 +25,37 @@ namespace Project.Core.Services
             //_authentication = authentication;
         }
 
+        #region Fix (Need UserId in UserJobApplication Table)
         //Show all Applications for all Positions (With Pagination)
+        public List<CompanyApplicantsDTO> GetPositionApplicants(int vacId)
+        {
+            List<UserJobApplication> applications = _unitOfWork.UserJobApplication.Query(x => x.IsActive).ToList();
+            List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
+            List<User> user = _unitOfWork.User.Query(x => x.IsActive).ToList();
 
-        //Show all Applications for Specific Position (With Pagination)
+            var applicants = (from v in vacan
+                             join a in applications on vacId equals a.VacancyId
+                             join u in user on a.UserId equals u.Id //Not right format (Need to get UserId for this)(NOT IN DB YET)
+                             where v.Id == vacId
+                             select new CompanyApplicantsDTO
+                             {
+                                 UserId = u.Id,
+                                 FirstName = u.FirstName,
+                                 LastName = u.LastName,
+                                 Motivation = a.Motivation,
+                                 CVUrl = a.CVUrl
+                             }).ToList();
 
-        //View Specific Applicant Profile (With Pagination)
+            return applicants;
+        }
+        #endregion
+
+        
 
         //Approve Company
 
         //Update Company Logo
+
 
         #region Company Select and Search Related Queries
         //View all Companies
@@ -43,6 +65,48 @@ namespace Project.Core.Services
             return users;
         }
 
+        //View Specific Company Info
+        public List<CompanyDTO> GetSpecificCompany(int CompId)
+        {
+            List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
+
+            var company = (from c in comp
+                               where c.Id == CompId
+                               select new CompanyDTO
+                               {
+                                   CompanyId = c.Id,
+                                   CompanyName = c.Name,
+                                   Mission = c.Mission,
+                                   Vision = c.Vision,
+                                   Sector = c.Sector,
+                                   LogoUrl = c.LogoUrl
+                               }).ToList();
+
+            return company;
+        }
+
+        //View Company Specific Representatives
+        public List<CompanyRepsDTO> GetCompSpecificReps(int CompId)
+        {
+            List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
+            List<CompanyRepresentative> comprep = _unitOfWork.CompanyRepresentative.Query().ToList();
+            List<User> users = _unitOfWork.User.Query(x => x.IsActive).ToList();
+
+            var reps = (from c in comp
+                               join cr in comprep on CompId equals cr.CompanyId
+                               join u in users on cr.UserId equals u.Id
+                               where u.RoleId == 2 && c.Id == CompId
+                               select new CompanyRepsDTO
+                               {
+                                   CompanyId = c.Id,
+                                   RepId = cr.Id,
+                                   RepFirstName = u.FirstName,
+                                   RepLastName = u.LastName,
+                                   RepProfileImageUrl = u.ImageUrl       
+                               }).ToList();
+
+            return reps;
+        }
         #endregion
 
         #region Company CRUD Related Queries (Create, Update, Delete)
@@ -174,7 +238,7 @@ namespace Project.Core.Services
             }
         }
 
-        //Get all vacancies for specific company
+        //Get all vacancies for specific company (*#######CHECK CHANGE IN WORD DOC###########)
         public List<CompanySpecificVacanciesDTO> GetCompanyVacancies(int CompId)
         {
             List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
@@ -187,13 +251,13 @@ namespace Project.Core.Services
                              {
                                  VacancyId = v.Id,
                                  JobTitle = v.JobTitle,
-                                 StartDate = v.StartDate,
+                                 StartDate = v.ApplicationClosingDate, //CHANGED FROM START DATE
                              }).ToList();
 
 
             //var vacancies = _unitOfWork.Vacancy.Query(a => a.IsActive).Where(a => a.CompanyId == id).ToList();
             return vacancies;
-        }
+        } //Can also use for "View Submission" Page
 
         //Show all info of selected vacancy (NOGI REG)
         public List<SpecificVacancyDetailsDTO> GetVacancyInfo(int VacId)
@@ -286,6 +350,7 @@ namespace Project.Core.Services
                 updateObj.JobDescription = vacancy.JobDescription;
                 updateObj.Location = vacancy.Location;
                 updateObj.Responsibilities = vacancy.Responsibilities;
+                updateObj.ApplicationClosingDate = vacancy.ApplicationClosingDate;
                 updateObj.StartDate = vacancy.StartDate;
 
                 updateObj.ModifiedBy = companyVac.Name;

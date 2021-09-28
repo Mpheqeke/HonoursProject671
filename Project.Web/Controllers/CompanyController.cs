@@ -22,6 +22,15 @@ namespace Project.Web.Controllers
             _companyService = companyService;
         }
 
+        //Retreive company by Id (DOESNT WORK(Needs UserId))
+        [Route("~/api/Company/GetPositionApplicants/{VacId}")]
+        [HttpGet("{VacId}")]
+        public ActionResult<List<CompanyApplicantsDTO>> GetPositionApplicants(int VacId)
+        {
+            var applicants = _companyService.GetPositionApplicants(VacId);
+            return applicants;
+        }
+
         #region Company Select and Search Related Queries
         //Retreive all Companies
         [Route("~/api/Company/GetCompanies")]
@@ -30,6 +39,24 @@ namespace Project.Web.Controllers
         {
             var users = _companyService.GetCompanies();
             return users;
+        }
+
+        //Retreive company by Id
+        [Route("~/api/Company/GetSpecificCompany/{CompId}")]
+        [HttpGet("{CompId}")]
+        public ActionResult<List<CompanyDTO>> GetSpecificCompany(int CompId)
+        {
+            var company = _companyService.GetSpecificCompany(CompId);
+            return company;
+        }
+
+        //Retreive all Company Representatives
+        [Route("~/api/Company/GetCompSpecificReps/{CompId}")]
+        [HttpGet("{CompId}")]
+        public ActionResult<List<CompanyRepsDTO>> GetCompSpecificReps(int CompId)
+        {
+            var CompanyReps = _companyService.GetCompSpecificReps(CompId);
+            return CompanyReps;
         }
         #endregion
 

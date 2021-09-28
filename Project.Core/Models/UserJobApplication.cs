@@ -10,6 +10,7 @@ namespace Project.Core.Models
     public class UserJobApplication : BaseModel
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public int VacancyId { get; set; }
         public int StatusId { get; set; }
         public int SkillId { get; set; }
