@@ -16,5 +16,9 @@ namespace Project.Core.Interfaces
         void UpdateCompany(int id, Company company);
         List<CompanySpecificVacanciesDTO> GetCompanyVacancies(int id);
         List<SpecificVacancyDetailsDTO> GetVacancyInfo(int id);
+        void CreatePosition(Vacancy vacancy, int CompId);
+        void UpdatePosition(int VacId, int CompId, Vacancy vacancy);
+        void DeletePosition(int VacId);
+
     }
 }

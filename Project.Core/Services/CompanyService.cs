@@ -10,6 +10,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Project.Core.AbstractFactories;
 using System.Net.Http;
+using System.Text;
 
 namespace Project.Core.Services
 {
@@ -23,12 +24,6 @@ namespace Project.Core.Services
             _unitOfWork = unitOfWork;
             //_authentication = authentication;
         }
-
-        //Create new Postion
-
-        //Update Position Information
-
-        //Remove Postion
 
         //Show all Applications for all Positions (With Pagination)
 
@@ -228,7 +223,100 @@ namespace Project.Core.Services
         }
         #endregion
 
-        #region Vacancy CRUD Related Queries
+        #region Vacancy CRUD Related Queries (Create, Update, Delete)
+
+        //Generate Position Reference Code
+        public string GenerateRefCode()
+        {
+            //Add maybe check vir duplicates in DB
+            StringBuilder builder = new StringBuilder();
+            Enumerable
+               .Range(65, 26)
+                .Select(e => ((char)e).ToString())
+                .Concat(Enumerable.Range(97, 26).Select(e => ((char)e).ToString()))
+                .Concat(Enumerable.Range(0, 10).Select(e => e.ToString()))
+                .OrderBy(e => Guid.NewGuid())
+                .Take(11)
+                .ToList().ForEach(e => builder.Append(e));
+            string RefCode = builder.ToString();
+
+            return RefCode;
+        }
+
+        //Create new Postion
+        public void CreatePosition(Vacancy vacancy, int CompId)
+        {
+            try
+            {
+                //Users add in VacancyName, JobTitle, StartDate, SkillRequirementsID, JobDescription, Location, Responsibilitites, and ApplicationClosingDate themselves
+
+                var companyVac = _unitOfWork.Company.Query(x => x.Id == CompId).SingleOrDefault();
+
+                vacancy.RefCode = GenerateRefCode();
+
+                vacancy.CreatedOn = DateTime.Now;
+                vacancy.ModifiedOn = DateTime.Now;
+                vacancy.ApplictionOpeningDate = DateTime.Now;
+
+                vacancy.CompanyId = CompId;
+                vacancy.CreatedBy = companyVac.Name;
+                vacancy.ModifiedBy = companyVac.Name;
+
+                vacancy.IsActive = true;
+
+                _unitOfWork.Vacancy.Add(vacancy);
+                _unitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
+
+        //Update Position Information
+        public void UpdatePosition(int VacId, int CompId, Vacancy vacancy)
+        {
+            var updateObj = _unitOfWork.Vacancy.Query(x => x.Id == VacId).SingleOrDefault();
+            var companyVac = _unitOfWork.Company.Query(x => x.Id == CompId).SingleOrDefault();
+
+            if (updateObj != null)
+            {
+                updateObj.SkillRequirementId = vacancy.SkillRequirementId;
+                updateObj.JobTitle = vacancy.JobTitle;
+                updateObj.JobDescription = vacancy.JobDescription;
+                updateObj.Location = vacancy.Location;
+                updateObj.Responsibilities = vacancy.Responsibilities;
+                updateObj.StartDate = vacancy.StartDate;
+
+                updateObj.ModifiedBy = companyVac.Name;
+                updateObj.ModifiedOn = DateTime.Now;
+
+                _unitOfWork.Vacancy.Update(updateObj);
+                _unitOfWork.Save();
+            }
+        }
+
+        //Remove Postion
+        public void DeletePosition(int VacId)
+        {
+            try
+            {
+                var delObj = _unitOfWork.Vacancy.Query(x => x.Id == VacId).SingleOrDefault();
+
+                if (delObj != null)
+                {
+                    _unitOfWork.Vacancy.Delete(delObj);
+                    _unitOfWork.Save();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+
+        }
         #endregion
+
     }
 }

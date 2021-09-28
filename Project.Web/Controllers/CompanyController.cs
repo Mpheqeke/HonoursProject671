@@ -103,7 +103,30 @@ namespace Project.Web.Controllers
         }
         #endregion
 
-        #region Vacancy CRUD Related Queries
+        #region Vacancy CRUD Related Queries (Create, Update, Delete)
+        //Create new position
+        [Route("~/api/Company/Vacancy/CreatePosition/{CompId}")]
+        [HttpPost]
+        public void CreatePosition([FromBody] Vacancy vacancy, int CompId)
+        {
+            _companyService.CreatePosition(vacancy, CompId);
+        }
+
+        //Remove a position
+        [Route("~/api/Company/Vacancy/DeletePosition/{VacId}")]
+        [HttpDelete("{VacId}")]
+        public void DeletePosition(int VacId)
+        {
+            _companyService.DeletePosition(VacId);
+        }
+
+        //Update existing position
+        [Route("~/api/Company/Vacancy/UpdatePosition/{CompId}/{VacId}")]
+        [HttpPut("{VacId}")]
+        public void UpdatePosition(int VacId, int CompId, [FromBody] Vacancy vacancy)
+        {
+            _companyService.UpdatePosition(VacId, CompId, vacancy);
+        }
         #endregion
     }
 }
