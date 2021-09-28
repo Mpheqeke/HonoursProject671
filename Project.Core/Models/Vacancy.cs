@@ -19,6 +19,8 @@ namespace Project.Core.Models
         public string Responsibilities { get; set; } 
         public string DocumentUploadUrl { get; set; }
         public bool IsActive { get; set; }
+        public DateTime ApplicationClosingDate { get; set; }
+        public DateTime ApplictionOpeningDate { get; set; }   
         public DateTime StartDate { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
