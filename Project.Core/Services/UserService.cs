@@ -27,18 +27,15 @@ namespace Project.Core.Services
             //_authentication = authentication;
         }
 
-        #region Werk Nie (Need UserID in db on UserJobApplication Table)
+        #region Werk Nie EEEEEEEEEEEEERRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOOOOOOOOORRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
         //Apply to A Postion
         public void ApplyToPosition(int userId, int vacId, UserJobApplication application)
         {
             try
             {
                 //Users add in CVUrl and Motivation themselves
-
-                //var vacancy = _unitOfWork.Vacancy.Query(x => x.Id == vacId).SingleOrDefault();
                 var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
                 var skills = _unitOfWork.UserSkillGain.Query(x => x.UserId == userId).SingleOrDefault();
-                _unitOfWork.Save();
 
                 application.CreatedOn = DateTime.Now;
                 application.ModifiedOn = DateTime.Now;

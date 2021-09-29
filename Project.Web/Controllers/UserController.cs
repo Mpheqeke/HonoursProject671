@@ -130,14 +130,16 @@ namespace Project.Web.Controllers
         }
         #endregion
 
-        //Apply to a Postion (DOESNT WORK)
+
+        #region EEEEEEEEEEEEEEERRRRRRRRROOOOOOOOOOOOOOOOOOOOOOOOOOOORRRRR
+        //Apply to a Postion
         [Route("~/api/User/Vacancy/ApplyToPosition/{userId}/{vacId}")]
         [HttpPost]
         public void ApplyToPosition([FromBody] UserJobApplication application, int userId, int vacId)
         {
             _userService.ApplyToPosition(userId, vacId, application);
         }
+        #endregion
 
-  
     }
 }

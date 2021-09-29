@@ -25,33 +25,6 @@ namespace Project.Core.Services
             //_authentication = authentication;
         }
 
-        #region Fix (Need UserId in UserJobApplication Table)
-        //Show all Applications for all Positions (With Pagination)
-        public List<CompanyApplicantsDTO> GetPositionApplicants(int vacId)
-        {
-            List<UserJobApplication> applications = _unitOfWork.UserJobApplication.Query(x => x.IsActive).ToList();
-            List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
-            List<User> user = _unitOfWork.User.Query(x => x.IsActive).ToList();
-
-            var applicants = (from v in vacan
-                             join a in applications on vacId equals a.VacancyId
-                             join u in user on a.UserId equals u.Id //Not right format (Need to get UserId for this)(NOT IN DB YET)
-                             where v.Id == vacId
-                             select new CompanyApplicantsDTO
-                             {
-                                 UserId = u.Id,
-                                 FirstName = u.FirstName,
-                                 LastName = u.LastName,
-                                 Motivation = a.Motivation,
-                                 CVUrl = a.CVUrl
-                             }).ToList();
-
-            return applicants;
-        }
-        #endregion
-
-        
-
         //Approve Company
 
         //Update Company Logo
@@ -383,5 +356,29 @@ namespace Project.Core.Services
         }
         #endregion
 
+        #region Vacancy Applications Related Queries
+        //Show all Applications for all Positions (With Pagination)
+        public List<CompanyApplicantsDTO> GetPositionApplicants(int vacId)
+        {
+            List<UserJobApplication> applications = _unitOfWork.UserJobApplication.Query(x => x.IsActive).ToList();
+            List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
+            List<User> user = _unitOfWork.User.Query(x => x.IsActive).ToList();
+
+            var applicants = (from v in vacan
+                              join a in applications on vacId equals a.VacancyId
+                              join u in user on a.UserId equals u.Id
+                              where v.Id == vacId
+                              select new CompanyApplicantsDTO
+                              {
+                                  UserId = u.Id,
+                                  FirstName = u.FirstName,
+                                  LastName = u.LastName,
+                                  Motivation = a.Motivation,
+                                  CVUrl = a.CVUrl
+                              }).ToList();
+
+            return applicants;
+        }
+        #endregion
     }
 }

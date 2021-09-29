@@ -22,7 +22,7 @@ namespace Project.Web.Controllers
             _companyService = companyService;
         }
 
-        //Retreive company by Id (DOESNT WORK(Needs UserId))
+        //Retreive company applicants for specific position
         [Route("~/api/Company/GetPositionApplicants/{VacId}")]
         [HttpGet("{VacId}")]
         public ActionResult<List<CompanyApplicantsDTO>> GetPositionApplicants(int VacId)
