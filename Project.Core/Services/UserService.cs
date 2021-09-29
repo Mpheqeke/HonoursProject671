@@ -27,7 +27,7 @@ namespace Project.Core.Services
             //_authentication = authentication;
         }
 
-        #region Werk Nie (Need UserID in db on UserJobApplication Table)
+        #region EEEEEEEEEEERRRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOORRRRRRRRRRRRRRRRRRRRRRRR
         //Apply to A Postion
         public void ApplyToPosition(int userId, int vacId, UserJobApplication application)
         {
@@ -106,28 +106,28 @@ namespace Project.Core.Services
         #endregion
 
         #region User Select and Search Related Queries
-        //Get All Users (With Pagination)
+        //Get All Users (Entire Model instead of DTO)
         public List<User> GetUsers()
         {
             var users = _unitOfWork.User.Query(x => x.IsActive).ToList();
             return users;
         }
 
-        //Get Graduates Only (With Pagination)
+        //Get Graduates Only (Entire Model instead of DTO)
         public List<User> GetGrads()
         {
             var users = _unitOfWork.User.Query(x => x.IsActive).Where(x => x.RoleId == 1).ToList();
             return users;
         }
 
-        //Get Recruiters Only (With Pagination)
+        //Get Recruiters Only (Entire Model instead of DTO)
         public List<User> GetRecruiters()
         {
             var users = _unitOfWork.User.Query(x => x.IsActive).Where(x => x.RoleId == 2).ToList();
             return users;
         }
 
-        //Get Specific User
+        //Get Specific User (Entire Model instead of DTO)
         public List<User> GetSingleUser(int id)
         {
             var user = _unitOfWork.User.Query(x => x.Id == id).ToList();
@@ -135,7 +135,6 @@ namespace Project.Core.Services
         }
 
         //View specific user info
-        //View Specific Applicant Profile (With Pagination)
         public List<UserDTO> GetSpecificUser(int userId)
         {
             List<User> user = _unitOfWork.User.Query(x => x.IsActive).ToList();
@@ -217,6 +216,83 @@ namespace Project.Core.Services
 
         }
         #endregion
+
+        #region User Application Related Queries (NEEDS TESTING STILL)
+        //Show All Applications for Specific User (Can click on JobTitle and will show all details for that application)
+        public List<UserApplicationsDTO> GetApplications(int userId)
+        {
+            List<UserJobApplication> applications = _unitOfWork.UserJobApplication.Query(x => x.IsActive).ToList();
+            List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
+            List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
+            List<User> user = _unitOfWork.User.Query(x => x.IsActive).ToList();
+            List<Status> status = _unitOfWork.Status.Query().ToList();
+
+            var applicationDetails = (from u in user
+                                      join a in applications on u.Id equals a.UserId
+                                      join v in vacan on a.VacancyId equals v.Id
+                                      join s in status on a.StatusId equals s.Id
+                                      where u.Id == userId
+                                      select new UserApplicationsDTO
+                                      {
+                                          ApplicationId = a.Id,
+                                          JobTitle = v.JobTitle,
+                                          ApplicationStatus = s.Name
+                                      }).ToList();
+
+            return applicationDetails;
+        }
+
+        //Allow User to View Own specific Applications (Can click company Name from here to view company)
+        public List<UserAppliDetailsDTO> ViewApplication(int userId, int applicationId)
+        {
+            List<UserJobApplication> applications = _unitOfWork.UserJobApplication.Query(x => x.IsActive).ToList();
+            List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
+            List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
+            List<User> user = _unitOfWork.User.Query(x => x.IsActive).ToList();
+            List<Status> status = _unitOfWork.Status.Query().ToList();
+
+            var applicationDetails = (from u in user
+                              join a in applications on u.Id equals applicationId
+                              join v in vacan on a.VacancyId equals v.Id
+                              join s in status on a.StatusId equals s.Id
+                              join c in comp on v.CompanyId equals c.Id
+                              where u.Id == userId && a.Id == applicationId
+                              select new UserAppliDetailsDTO
+                              {
+                                  CompId = c.Id,
+                                  CompanyName = c.Name,
+                                  JobTitle = v.JobTitle,
+                                  JobDescription = v.JobDescription,
+                                  Location = v.Location,
+                                  Responsibilities = v.Responsibilities,
+                                  StartDate = v.StartDate,
+                                  ApplicationStatus = s.Name
+                              }).ToList();
+
+            return applicationDetails;
+        }
+
+        //Allow User to Delete Own Applicantions
+        public void DeleteApplication(int applicationId)
+        {
+            try
+            {
+                var delObj = _unitOfWork.UserJobApplication.Query(x => x.Id == applicationId).SingleOrDefault();
+
+                if (delObj != null)
+                {
+                    _unitOfWork.UserJobApplication.Delete(delObj);
+                    _unitOfWork.Save();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
+        #endregion
+
 
     }
 }

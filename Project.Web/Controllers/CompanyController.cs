@@ -22,14 +22,7 @@ namespace Project.Web.Controllers
             _companyService = companyService;
         }
 
-        //Retreive company by Id (DOESNT WORK(Needs UserId))
-        [Route("~/api/Company/GetPositionApplicants/{VacId}")]
-        [HttpGet("{VacId}")]
-        public ActionResult<List<CompanyApplicantsDTO>> GetPositionApplicants(int VacId)
-        {
-            var applicants = _companyService.GetPositionApplicants(VacId);
-            return applicants;
-        }
+
 
         #region Company Select and Search Related Queries
         //Retreive all Companies
@@ -155,5 +148,42 @@ namespace Project.Web.Controllers
             _companyService.UpdatePosition(VacId, CompId, vacancy);
         }
         #endregion
+
+        #region User Application Related Queries (NEEDS TESTING STILL)
+        //View all applications for specific company position
+        [Route("~/api/Company/GetPositionApplicants/{VacId}")]
+        [HttpGet("{VacId}")]
+        public ActionResult<List<CompanyApplicantsDTO>> GetPositionApplicants(int VacId)
+        {
+            var applicants = _companyService.GetPositionApplicants(VacId);
+            return applicants;
+        }
+
+        //View specific applicant profile (Sets Status = Viewed)
+        [Route("~/api/Company/GetPositionApplicants/{compId}/{userId}")]
+        [HttpGet("{userId}")]
+        public ActionResult<List<UserDTO>> ViewSpecificApplicantProfile(int userId, int compId)
+        {
+            var applicantProfile = _companyService.ViewSpecificApplicantProfile(userId, compId);
+            return applicantProfile;
+        }
+
+        //Approve an application
+        [Route("~/api/Company/Vacancy/UpdatePosition/{CompId}/{appliId}")]
+        [HttpPut("{appliId}")]
+        public void ApproveApplication(int compId, int appliId, [FromBody] UserJobApplication application)
+        {
+            _companyService.ApproveApplication(compId, appliId, application);
+        }
+
+        //Reject an application
+        [Route("~/api/Company/Vacancy/RejectApplication/{CompId}/{appliId}")]
+        [HttpPut("{appliId}")]
+        public void RejectApplication(int compId, int appliId, [FromBody] UserJobApplication application)
+        {
+            _companyService.RejectApplication(compId, appliId, application);
+        }
+        #endregion
+
     }
 }

@@ -130,14 +130,44 @@ namespace Project.Web.Controllers
         }
         #endregion
 
-        //Apply to a Postion (DOESNT WORK)
+       
+
+        #region EEEEEERRRRRRRRRRRRRROOOOOOOOOOOOOORRRRRRRRRR
+        //Apply to a Postion
         [Route("~/api/User/Vacancy/ApplyToPosition/{userId}/{vacId}")]
         [HttpPost]
         public void ApplyToPosition([FromBody] UserJobApplication application, int userId, int vacId)
         {
             _userService.ApplyToPosition(userId, vacId, application);
         }
+        #endregion
 
-  
+        #region User Application Related Queries (NEEDS TESTING STILL)
+        //Get all application for specific user
+        [Route("~/api/User/GetApplications/{userId}")]
+        [HttpGet("{userId}")]
+        public ActionResult<List<UserApplicationsDTO>> GetApplications(int userId)
+        {
+            return _userService.GetApplications(userId);
+        }
+
+        //Get specific application details for specific user
+        [Route("~/api/User/ViewApplication/{userId}/{applicationId}")]
+        [HttpGet("{applicationId}")]
+        public ActionResult<List<UserAppliDetailsDTO>> ViewApplication(int userId, int applicationId)
+        {
+            return _userService.ViewApplication(userId, applicationId);
+        }
+
+        //Allow user to remove specific application
+        [Route("~/api/DeleteApplication/{applicationId}")]
+        [HttpDelete("{applicationId}")]
+        public void DeleteApplication(int applicationId)
+        {
+            _userService.DeleteUser(applicationId);
+        }
+        #endregion
+
+
     }
 }

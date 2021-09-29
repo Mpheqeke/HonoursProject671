@@ -25,40 +25,13 @@ namespace Project.Core.Services
             //_authentication = authentication;
         }
 
-        #region Fix (Need UserId in UserJobApplication Table)
-        //Show all Applications for all Positions (With Pagination)
-        public List<CompanyApplicantsDTO> GetPositionApplicants(int vacId)
-        {
-            List<UserJobApplication> applications = _unitOfWork.UserJobApplication.Query(x => x.IsActive).ToList();
-            List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
-            List<User> user = _unitOfWork.User.Query(x => x.IsActive).ToList();
-
-            var applicants = (from v in vacan
-                             join a in applications on vacId equals a.VacancyId
-                             join u in user on a.UserId equals u.Id //Not right format (Need to get UserId for this)(NOT IN DB YET)
-                             where v.Id == vacId
-                             select new CompanyApplicantsDTO
-                             {
-                                 UserId = u.Id,
-                                 FirstName = u.FirstName,
-                                 LastName = u.LastName,
-                                 Motivation = a.Motivation,
-                                 CVUrl = a.CVUrl
-                             }).ToList();
-
-            return applicants;
-        }
-        #endregion
-
-        
-
         //Approve Company
 
         //Update Company Logo
 
 
         #region Company Select and Search Related Queries
-        //View all Companies
+        //View all Companies (Entire Model instead of DTO)
         public List<Company> GetCompanies()
         {
             var users = _unitOfWork.Company.Query(x => x.IsActive).ToList();
@@ -174,7 +147,7 @@ namespace Project.Core.Services
         #endregion
 
         #region Vacancy Select and Search Related Queries
-        //Show All Available Vacancies
+        //Show All Available Vacancies (Vacancy Table)
         public List<VacanciesDTO> GetVacancies(string sort)
         {
             List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
@@ -205,7 +178,7 @@ namespace Project.Core.Services
 
         }
 
-        //Search for Available Vacancies
+        //Search for Available Vacancies (Vacancy Table)
         public List<VacanciesDTO> SearchVacancies(string sort, string search)
         {
             List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
@@ -380,6 +353,103 @@ namespace Project.Core.Services
                 ex.Message.ToString();
             }
 
+        }
+        #endregion
+
+        #region Job Application Related Queries (NEEDS TESTING STILL)
+        //Show all Applications for all Positions (With Pagination) (Click UserId to view that User Profile)
+        public List<CompanyApplicantsDTO> GetPositionApplicants(int vacId)
+        {
+            List<UserJobApplication> applications = _unitOfWork.UserJobApplication.Query(x => x.IsActive).ToList();
+            List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
+            List<User> user = _unitOfWork.User.Query(x => x.IsActive).ToList();
+
+            var applicants = (from v in vacan
+                              join a in applications on vacId equals a.VacancyId
+                              join u in user on a.UserId equals u.Id //Not right format (Need to get UserId for this)(NOT IN DB YET)
+                              where v.Id == vacId
+                              select new CompanyApplicantsDTO
+                              {
+                                  UserId = u.Id,
+                                  FirstName = u.FirstName,
+                                  LastName = u.LastName,
+                                  Motivation = a.Motivation,
+                                  CVUrl = a.CVUrl
+                              }).ToList();
+
+            return applicants;
+        }
+
+        //Approve Application
+        public void ApproveApplication(int compId, int appliId, UserJobApplication application)
+        {
+            var updateObj = _unitOfWork.UserJobApplication.Query(x => x.Id == appliId).SingleOrDefault();
+
+            var companyVac = _unitOfWork.Company.Query(x => x.Id == compId).SingleOrDefault();
+
+            if (updateObj != null)
+            {
+                updateObj.StatusId = 3;
+                updateObj.ModifiedBy = companyVac.Name;
+                updateObj.ModifiedOn = DateTime.Now;
+                updateObj.IsActive = true;
+
+                _unitOfWork.UserJobApplication.Update(updateObj);
+                _unitOfWork.Save();
+            }
+        }
+
+        //Reject Application
+        public void RejectApplication(int compId, int appliId, UserJobApplication application)
+        {
+            var updateObj = _unitOfWork.UserJobApplication.Query(x => x.Id == appliId).SingleOrDefault();
+
+            var companyVac = _unitOfWork.Company.Query(x => x.Id == compId).SingleOrDefault();
+
+            if (updateObj != null)
+            {
+                updateObj.StatusId = 4;
+                updateObj.ModifiedBy = companyVac.Name;
+                updateObj.ModifiedOn = DateTime.Now;
+                updateObj.IsActive = false;
+
+                _unitOfWork.UserJobApplication.Update(updateObj);
+                _unitOfWork.Save();
+            }
+        }
+
+        //View Applicants Profile/Applicantion
+        public List<UserDTO> ViewSpecificApplicantProfile(int userId, int compId)
+        {
+            List<User> user = _unitOfWork.User.Query(x => x.IsActive).ToList();
+            var updateObj = _unitOfWork.UserJobApplication.Query(x => x.UserId == userId).SingleOrDefault();
+            var companyVac = _unitOfWork.Company.Query(x => x.Id == compId).SingleOrDefault();
+
+            if (updateObj != null)
+            {
+                updateObj.StatusId = 2;
+                updateObj.ModifiedBy = companyVac.Name;
+                updateObj.ModifiedOn = DateTime.Now;
+                updateObj.IsActive = true;
+
+                _unitOfWork.UserJobApplication.Update(updateObj);
+                _unitOfWork.Save();
+            }
+
+            var applicantProfile = (from u in user
+                                    where u.Id == userId
+                                    select new UserDTO
+                                    {
+                                        UserId = userId,
+                                        FirstName = u.FirstName,
+                                        LastName = u.LastName,
+                                        Gender = u.Gender,
+                                        Email = u.Email,
+                                        Mobile = u.Mobile,
+                                        ImageUrl = u.ImageUrl
+                                    }).ToList();
+
+            return applicantProfile;
         }
         #endregion
 

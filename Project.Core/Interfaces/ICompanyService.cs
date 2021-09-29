@@ -21,6 +21,12 @@ namespace Project.Core.Interfaces
         void DeletePosition(int VacId);
         List<CompanyDTO> GetSpecificCompany(int CompId);
         List<CompanyRepsDTO> GetCompSpecificReps(int CompId);
+
+        //JobApplication Queries (All need to be tested)
         List<CompanyApplicantsDTO> GetPositionApplicants(int vacId);
+        void ApproveApplication(int compId, int appliId, UserJobApplication application);
+        void RejectApplication(int compId, int appliId, UserJobApplication application);
+        List<UserDTO> ViewSpecificApplicantProfile(int userId, int compId);
+
     }
 }
