@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "q4EUWeIwrIaU/9wtMoto4jbh+KNsFhf/ct4q1RljHAlFyIjsal/d0ulda2o0cRsgYkDaDlmWJceW4Gmk4Oo6HA==",
+  "dgSpecHash": "S/QddLSKK7N/PK1VcZwRunu26c5jPMPLRT5HIKJ3DJNLpVHN6wI0bU3NtiG9WU7/uljxYlr55S0mHK4yWSq+3w==",
   "success": true,
   "projectFilePath": "C:\\Projects\\HonoursProject671\\Project.Core\\Project.Core.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Katleho Mpheqeke\\.nuget\\packages\\firebaseauthentication.net\\3.7.2\\firebaseauthentication.net.3.7.2.nupkg.sha512",
     "C:\\Users\\Katleho Mpheqeke\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.1.0\\microsoft.aspnetcore.html.abstractions.2.1.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.http.abstractions\\2.1.1\\microsoft.aspnetcore.http.abstractions.2.1.1.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.aspnetcore.http.features\\2.1.1\\microsoft.aspnetcore.http.features.2.1.1.nupkg.sha512",

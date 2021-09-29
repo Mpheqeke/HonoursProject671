@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "K0QNJIx/J/HqpyvNxHwHNdT2JDyXVzq7cPpJmmmwjVWk8mmB07/1vN7Mrj8f+I8pLudbQdm9UTUSarZaXXN12w==",
+  "dgSpecHash": "nDVDlc7d8Os1qeucYL0uv2WLfm6fUVD7/IMypLU5UrffCU5wBMYbbP6g1k5qKqNDNBl9UUWlvrJoMo33waoi2Q==",
   "success": true,
   "projectFilePath": "C:\\Projects\\HonoursProject671\\Project.Infrastructure\\Project.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Katleho Mpheqeke\\.nuget\\packages\\firebaseadmin\\2.0.0\\firebaseadmin.2.0.0.nupkg.sha512",
+    "C:\\Users\\Katleho Mpheqeke\\.nuget\\packages\\firebaseauthentication.net\\3.7.2\\firebaseauthentication.net.3.7.2.nupkg.sha512",
     "C:\\Users\\Katleho Mpheqeke\\.nuget\\packages\\google.api.gax\\3.2.0\\google.api.gax.3.2.0.nupkg.sha512",
     "C:\\Users\\Katleho Mpheqeke\\.nuget\\packages\\google.api.gax.rest\\3.2.0\\google.api.gax.rest.3.2.0.nupkg.sha512",
     "C:\\Users\\Katleho Mpheqeke\\.nuget\\packages\\google.apis\\1.49.0\\google.apis.1.49.0.nupkg.sha512",

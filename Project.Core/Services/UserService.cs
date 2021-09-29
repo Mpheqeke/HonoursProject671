@@ -38,20 +38,35 @@ namespace Project.Core.Services
                 //var vacancy = _unitOfWork.Vacancy.Query(x => x.Id == vacId).SingleOrDefault();
                 var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
                 var skills = _unitOfWork.UserSkillGain.Query(x => x.UserId == userId).SingleOrDefault();
-                _unitOfWork.Save();
 
-                application.CreatedOn = DateTime.Now;
+                /*application.CreatedOn = DateTime.Now;
                 application.ModifiedOn = DateTime.Now;
 
                 application.VacancyId = vacId;
                 application.StatusId = 1;
                 application.SkillId = skills.SkillId;
                 application.CreatedBy = $"{user.FirstName} {user.LastName}";
-                application.ModifiedBy = $"{user.FirstName} {user.LastName}";
+                application.ModifiedBy = $"{user.FirstName} {user.LastName}";*/
 
                 application.IsActive = true;
 
-                _unitOfWork.UserJobApplication.Add(application);
+                var applicationToAdd = new UserJobApplication
+                {
+                    UserId = user.Id,
+                    VacancyId = vacId,
+                    StatusId = 1,
+                    SkillId = skills.SkillId,
+                    Motivation = application.Motivation,
+                    CVUrl = application.CVUrl,
+                    IsActive = true,
+                    CreatedOn = DateTime.Now,
+                    ModifiedOn = DateTime.Now,
+                    CreatedBy = $"{user.FirstName} {user.LastName}",
+                    ModifiedBy = $"{user.FirstName} {user.LastName}",
+
+                };
+                //_unitOfWork.UserJobApplication.Add(application);
+                _unitOfWork.UserJobApplication.Add(applicationToAdd);
                 _unitOfWork.Save();
             }
             catch (Exception ex)

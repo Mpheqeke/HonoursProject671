@@ -9,8 +9,10 @@ namespace Project.Core.Models
 {
     public class UserJobApplication : BaseModel
     {
+      
         public int Id { get; set; }
         public int UserId { get; set; }
+
         public int VacancyId { get; set; }
         public int StatusId { get; set; }
         public int SkillId { get; set; }
@@ -19,7 +21,7 @@ namespace Project.Core.Models
         public bool IsActive { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
-        public string ModifiedBy {get;set;}
+        public string ModifiedBy { get; set; }
         public DateTime ModifiedOn { get; set; }
 
         public virtual Vacancy Vacancy { get; set; }
