@@ -138,9 +138,7 @@ namespace Project.Web.Controllers
         }
         #endregion
 
-
-
-        #region EEEEEERRRRRRRRRRRRRROOOOOOOOOOOOOORRRRRRRRRR
+        #region User Application Related Queries
         //Apply to a Postion
         [Route("~/api/User/Vacancy/ApplyToPosition/{userId}/{vacId}")]
         [HttpPost]
@@ -148,10 +146,8 @@ namespace Project.Web.Controllers
         {
             _userService.ApplyToPosition(userId, vacId, application);
         }
-        #endregion
 
-        #region User Application Related Queries
-        //Get all application for specific user (Werk)
+        //Get all application for specific user
         [Route("~/api/User/GetApplications/{userId}")]
         [HttpGet("{userId}")]
         public ActionResult<List<UserApplicationsDTO>> GetApplications(int userId)
@@ -159,7 +155,7 @@ namespace Project.Web.Controllers
             return _userService.GetApplications(userId);
         }
 
-        //Get specific application details for specific user (Werk)
+        //Get specific application details for specific user
         [Route("~/api/User/ViewApplication/{userId}/{applicationId}")]
         [HttpGet("{applicationId}")]
         public ActionResult<List<UserAppliDetailsDTO>> ViewApplication(int userId, int applicationId)

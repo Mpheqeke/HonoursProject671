@@ -8,25 +8,62 @@ namespace Project.Core.Interfaces
 {
     public interface ICompanyService
     {
-        List<VacanciesDTO> GetVacancies(string sort);
-        List<Company> GetCompanies();
-        List<VacanciesDTO> SearchVacancies(string sort, string search);
-        void CreateCompany(Company company);
-        void DeleteCompany(int id);
-        void UpdateCompany(int id, Company company);
-        List<CompanySpecificVacanciesDTO> GetCompanyVacancies(int id);
-        List<SpecificVacancyDetailsDTO> GetVacancyInfo(int id);
-        void CreatePosition(Vacancy vacancy, int CompId);
-        void UpdatePosition(int VacId, int CompId, Vacancy vacancy);
-        void DeletePosition(int VacId);
+        //***Company CRUD Operations***
+            //-->Gets Profile information of a specific company (Company Profile Page)
         List<CompanyDTO> GetSpecificCompany(int CompId);
+
+            //-->Gets a List of all companies (NOT NEEDED maybe?)
+        List<Company> GetCompanies();
+
+            //-->To Create a new company
+        void CreateCompany(Company company);
+
+            //-->A company can delete their own profile (or deactive profiles can be deleted)
+        void DeleteCompany(int id);
+
+            //-->A company can update their own profile information
+        void UpdateCompany(int id, Company company);
+
+
+        //***Company Representative Operations***
         List<CompanyRepsDTO> GetCompSpecificReps(int CompId);
 
-        //JobApplication Queries (All need to be tested)
-        List<CompanyApplicantsDTO> GetPositionApplicants(int vacId); //(WERK)
-        void ApproveApplication(int compId, int appliId, UserJobApplication application); //(WERK)
-        void RejectApplication(int compId, int appliId, UserJobApplication application); //(WERK)
-        List<UserDTO> ViewSpecificApplicantProfile(int userId, int compId); //(WERK)
+        //***Vancancy CRUD Operations***
+            //-->Gets all the vacancies for a specific company (Company Profile Page)
+        List<CompanySpecificVacanciesDTO> GetCompanyVacancies(int id);
+
+            //-->Gets the details for a select vancancy (Company Profile Page)
+        List<SpecificVacancyDetailsDTO> GetVacancyInfo(int id);
+
+            //-->Gets all vacancies from all companies (Vacancies Table/Page)
+        List<VacanciesDTO> GetVacancies(string sort);
+
+            //-->Allows Users to search for vancacnies (Vacancies Table/Page)
+        List<VacanciesDTO> SearchVacancies(string sort, string search);
+
+            //-->A company can create a new position
+        void CreatePosition(Vacancy vacancy, int CompId);
+
+            //->A company can update a positions informations
+        void UpdatePosition(int VacId, int CompId, Vacancy vacancy);
+
+            //-->A company can remove a position 
+        void DeletePosition(int VacId);
+
+
+        //***JobApplication Operations***
+            //-->A company can view all applications for a position
+        List<CompanyApplicantsDTO> GetPositionApplicants(int vacId);
+
+            //-->A company can approve an application
+        void ApproveApplication(int compId, int appliId, UserJobApplication application);
+
+            //-->A company can reject an application
+        void RejectApplication(int compId, int appliId, UserJobApplication application);
+
+            //-->A company can view a selected applicants profile
+        List<UserDTO> ViewSpecificApplicantProfile(int userId, int compId);
+
 
     }
 }

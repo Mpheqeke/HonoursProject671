@@ -27,66 +27,11 @@ namespace Project.Core.Services
             //_authentication = authentication;
         }
 
-        #region EEEEEEEEEEERRRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOORRRRRRRRRRRRRRRRRRRRRRRR
-        //Apply to A Postion
-        public void ApplyToPosition(int userId, int vacId, UserJobApplication application)
-        {
-            try
-            {
-                //Users add in CVUrl and Motivation themselves
-
-                //var vacancy = _unitOfWork.Vacancy.Query(x => x.Id == vacId).SingleOrDefault();
-                var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
-                var skills = _unitOfWork.UserSkillGain.Query(x => x.UserId == userId).SingleOrDefault();
-
-                /*application.CreatedOn = DateTime.Now;
-                application.ModifiedOn = DateTime.Now;
-
-                application.VacancyId = vacId;
-                application.StatusId = 1;
-                application.SkillId = skills.SkillId;
-                application.CreatedBy = $"{user.FirstName} {user.LastName}";
-                application.ModifiedBy = $"{user.FirstName} {user.LastName}";*/
-
-                application.IsActive = true;
-
-                var applicationToAdd = new UserJobApplication
-                {
-                    UserId = user.Id,
-                    VacancyId = vacId,
-                    StatusId = 1,
-                    SkillId = skills.SkillId,
-                    Motivation = application.Motivation,
-                    CVUrl = application.CVUrl,
-                    IsActive = true,
-                    CreatedOn = DateTime.Now,
-                    ModifiedOn = DateTime.Now,
-                    CreatedBy = $"{user.FirstName} {user.LastName}",
-                    ModifiedBy = $"{user.FirstName} {user.LastName}",
-
-                };
-                //_unitOfWork.UserJobApplication.Add(application);
-                _unitOfWork.UserJobApplication.Add(applicationToAdd);
-                _unitOfWork.Save();
-            }
-            catch (Exception ex)
-            {
-                ex.Message.ToString();
-            }
-        }
-        #endregion
-
-
-
         //Upload CV
-
 
         //Update Profile Picture
 
-
         //FIREBASE STUFF vir UUID
-
-        
 
         #region Moocs Select and Search
         //Get all Moocs
@@ -235,6 +180,41 @@ namespace Project.Core.Services
         #endregion
 
         #region User Application Related Queries
+
+        //Allow users to apply to vacancies
+        public void ApplyToPosition(int userId, int vacId, UserJobApplication application)
+        {
+            try
+            {
+                //Users add in CVUrl and Motivation themselves
+
+                var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
+                var skills = _unitOfWork.UserSkillGain.Query(x => x.UserId == userId).SingleOrDefault();
+
+                var applicationToAdd = new UserJobApplication
+                {
+                    UserId = user.Id,
+                    VacancyId = vacId,
+                    StatusId = 1,
+                    SkillId = skills.SkillId,
+                    Motivation = application.Motivation,
+                    CVUrl = application.CVUrl,
+                    IsActive = true,
+                    CreatedOn = DateTime.Now,
+                    ModifiedOn = DateTime.Now,
+                    CreatedBy = $"{user.FirstName} {user.LastName}",
+                    ModifiedBy = $"{user.FirstName} {user.LastName}",
+
+                };
+                _unitOfWork.UserJobApplication.Add(applicationToAdd);
+                _unitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
+
         //Show All Applications for Specific User (Can click on JobTitle and will show all details for that application)
         public List<UserApplicationsDTO> GetApplications(int userId)
         {

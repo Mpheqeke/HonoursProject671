@@ -29,7 +29,6 @@ namespace Project.Core.Services
 
         //Update Company Logo
 
-
         #region Company Select and Search Related Queries
         //View all Companies (Entire Model instead of DTO)
         public List<Company> GetCompanies()

@@ -22,8 +22,6 @@ namespace Project.Web.Controllers
             _companyService = companyService;
         }
 
-
-
         #region Company Select and Search Related Queries
         //Retreive all Companies
         [Route("~/api/Company/GetCompanies")]
