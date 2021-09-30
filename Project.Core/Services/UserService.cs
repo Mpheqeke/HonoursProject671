@@ -80,7 +80,9 @@ namespace Project.Core.Services
 
         //Upload CV
 
+
         //Update Profile Picture
+
 
         //FIREBASE STUFF vir UUID
 
@@ -232,7 +234,7 @@ namespace Project.Core.Services
         }
         #endregion
 
-        #region User Application Related Queries (NEEDS TESTING STILL)
+        #region User Application Related Queries
         //Show All Applications for Specific User (Can click on JobTitle and will show all details for that application)
         public List<UserApplicationsDTO> GetApplications(int userId)
         {
@@ -260,7 +262,7 @@ namespace Project.Core.Services
         //Allow User to View Own specific Applications (Can click company Name from here to view company)
         public List<UserAppliDetailsDTO> ViewApplication(int userId, int applicationId)
         {
-            List<UserJobApplication> applications = _unitOfWork.UserJobApplication.Query(x => x.IsActive).ToList();
+            List<UserJobApplication> applications = _unitOfWork.UserJobApplication.Query().ToList();
             List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
             List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
             List<User> user = _unitOfWork.User.Query(x => x.IsActive).ToList();

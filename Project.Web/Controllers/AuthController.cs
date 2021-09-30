@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTOs;
@@ -12,6 +13,7 @@ namespace Project.Web.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ApiExceptionFilter]
+    [Authorize]
     public class AuthController : ControllerBase
     {
         private readonly IFireBaseAuth _fireBaseAuth;
@@ -22,6 +24,7 @@ namespace Project.Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("~/api/Auth/SingUp")]
         public SignUpDTO SingUp(FireBaseAuthDTO fireBaseAuthDTO)
         {
@@ -29,6 +32,7 @@ namespace Project.Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("~/api/Auth/SingIn")]
         public SignUpDTO SingIn(FireBaseAuthDTO fireBaseAuthDTO)
         {

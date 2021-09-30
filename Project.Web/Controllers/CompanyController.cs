@@ -149,8 +149,8 @@ namespace Project.Web.Controllers
         }
         #endregion
 
-        #region User Application Related Queries (NEEDS TESTING STILL)
-        //View all applications for specific company position
+        #region User Application Related Queries 
+        //View all applications for specific company position (WERK)
         [Route("~/api/Company/GetPositionApplicants/{VacId}")]
         [HttpGet("{VacId}")]
         public ActionResult<List<CompanyApplicantsDTO>> GetPositionApplicants(int VacId)
@@ -159,8 +159,8 @@ namespace Project.Web.Controllers
             return applicants;
         }
 
-        //View specific applicant profile (Sets Status = Viewed)
-        [Route("~/api/Company/GetPositionApplicants/{compId}/{userId}")]
+        //View specific applicant profile (Sets Status = Viewed) (WERK)
+        [Route("~/api/Company/Vacancy/ViewSpecificApplicantProfile/{compId}/{userId}")]
         [HttpGet("{userId}")]
         public ActionResult<List<UserDTO>> ViewSpecificApplicantProfile(int userId, int compId)
         {
@@ -168,15 +168,15 @@ namespace Project.Web.Controllers
             return applicantProfile;
         }
 
-        //Approve an application
-        [Route("~/api/Company/Vacancy/UpdatePosition/{CompId}/{appliId}")]
+        //Approve an application (WERK)
+        [Route("~/api/Company/Vacancy/ApproveApplication/{CompId}/{appliId}")]
         [HttpPut("{appliId}")]
         public void ApproveApplication(int compId, int appliId, [FromBody] UserJobApplication application)
         {
             _companyService.ApproveApplication(compId, appliId, application);
         }
 
-        //Reject an application
+        //Reject an application (WERK)
         [Route("~/api/Company/Vacancy/RejectApplication/{CompId}/{appliId}")]
         [HttpPut("{appliId}")]
         public void RejectApplication(int compId, int appliId, [FromBody] UserJobApplication application)

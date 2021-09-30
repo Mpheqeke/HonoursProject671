@@ -21,10 +21,10 @@ namespace Project.Core.Interfaces
 
 
         //JobApplication Queries (All need to be tested)
-        void ApplyToPosition(int userId, int vacId, UserJobApplication application);
-        List<UserApplicationsDTO> GetApplications(int userId);
-        List<UserAppliDetailsDTO> ViewApplication(int userId, int applicationId);
-        void DeleteApplication(int applicationId);
+        void ApplyToPosition(int userId, int vacId, UserJobApplication application); //(WERK NIE)
+        List<UserApplicationsDTO> GetApplications(int userId); //(WERK)
+        List<UserAppliDetailsDTO> ViewApplication(int userId, int applicationId); //(WERK)
+        void DeleteApplication(int applicationId); //(WERK)
 
     }
 }

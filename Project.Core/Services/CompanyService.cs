@@ -356,7 +356,7 @@ namespace Project.Core.Services
         }
         #endregion
 
-        #region Job Application Related Queries (NEEDS TESTING STILL)
+        #region Job Application Related Queries
         //Show all Applications for all Positions (With Pagination) (Click UserId to view that User Profile)
         public List<CompanyApplicantsDTO> GetPositionApplicants(int vacId)
         {

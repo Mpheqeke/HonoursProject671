@@ -23,10 +23,10 @@ namespace Project.Core.Interfaces
         List<CompanyRepsDTO> GetCompSpecificReps(int CompId);
 
         //JobApplication Queries (All need to be tested)
-        List<CompanyApplicantsDTO> GetPositionApplicants(int vacId);
-        void ApproveApplication(int compId, int appliId, UserJobApplication application);
-        void RejectApplication(int compId, int appliId, UserJobApplication application);
-        List<UserDTO> ViewSpecificApplicantProfile(int userId, int compId);
+        List<CompanyApplicantsDTO> GetPositionApplicants(int vacId); //(WERK)
+        void ApproveApplication(int compId, int appliId, UserJobApplication application); //(WERK)
+        void RejectApplication(int compId, int appliId, UserJobApplication application); //(WERK)
+        List<UserDTO> ViewSpecificApplicantProfile(int userId, int compId); //(WERK)
 
     }
 }

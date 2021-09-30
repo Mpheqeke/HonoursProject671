@@ -15,6 +15,9 @@ using System;
 using Microsoft.Extensions.Caching.Memory;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace Project.Web
 {
@@ -50,7 +53,12 @@ namespace Project.Web
 			services.Configure<FormOptions>(options =>
 			{
 				options.MemoryBufferThreshold = Int32.MaxValue;
+				//-----------------------------
+				options.ValueLengthLimit = int.MaxValue;
+				options.MultipartBodyLengthLimit = int.MaxValue;
+				//-----------------------------
 			});
+
 
 			services.AddScoped<IProjectContext, ProjectContext>();
 			services.AddScoped<IProjectUnitOfWork, ProjectUnitOfWork>();
@@ -86,7 +94,6 @@ namespace Project.Web
 
 			app.UseHttpsRedirection();
 			app.UseMvc();
-			
 		}
 
 

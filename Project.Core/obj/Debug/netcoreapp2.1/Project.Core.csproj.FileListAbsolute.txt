@@ -24,3 +24,13 @@ C:\Projects\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.
 C:\Projects\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.dll
 C:\Projects\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.pdb
 C:\Projects\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.csprojAssemblyReference.cache
+E:\HonoursProject671\Project.Core\bin\Debug\netcoreapp2.1\Select.Html.dep
+E:\HonoursProject671\Project.Core\bin\Debug\netcoreapp2.1\Project.Core.deps.json
+E:\HonoursProject671\Project.Core\bin\Debug\netcoreapp2.1\Project.Core.dll
+E:\HonoursProject671\Project.Core\bin\Debug\netcoreapp2.1\Project.Core.pdb
+E:\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.csprojAssemblyReference.cache
+E:\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.AssemblyInfoInputs.cache
+E:\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.AssemblyInfo.cs
+E:\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.dll
+E:\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.pdb
+E:\HonoursProject671\Project.Core\obj\Debug\netcoreapp2.1\Project.Core.csproj.CoreCompileInputs.cache

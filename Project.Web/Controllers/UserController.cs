@@ -1,12 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTOs;
 using Project.Core.Global;
 using Project.Core.Interfaces;
 using Project.Core.Models;
 using Project.Web.Filters;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace Project.Web.Controllers
 {
@@ -17,10 +23,12 @@ namespace Project.Web.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IHostingEnvironment _hostEnvironment;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IHostingEnvironment hostEnvironment)
         {
             _userService = userService;
+            _hostEnvironment = hostEnvironment;
         }
 
         #region Moocs Select and Search
@@ -130,7 +138,7 @@ namespace Project.Web.Controllers
         }
         #endregion
 
-       
+
 
         #region EEEEEERRRRRRRRRRRRRROOOOOOOOOOOOOORRRRRRRRRR
         //Apply to a Postion
@@ -142,8 +150,8 @@ namespace Project.Web.Controllers
         }
         #endregion
 
-        #region User Application Related Queries (NEEDS TESTING STILL)
-        //Get all application for specific user
+        #region User Application Related Queries
+        //Get all application for specific user (Werk)
         [Route("~/api/User/GetApplications/{userId}")]
         [HttpGet("{userId}")]
         public ActionResult<List<UserApplicationsDTO>> GetApplications(int userId)
@@ -151,7 +159,7 @@ namespace Project.Web.Controllers
             return _userService.GetApplications(userId);
         }
 
-        //Get specific application details for specific user
+        //Get specific application details for specific user (Werk)
         [Route("~/api/User/ViewApplication/{userId}/{applicationId}")]
         [HttpGet("{applicationId}")]
         public ActionResult<List<UserAppliDetailsDTO>> ViewApplication(int userId, int applicationId)
@@ -160,14 +168,45 @@ namespace Project.Web.Controllers
         }
 
         //Allow user to remove specific application
-        [Route("~/api/DeleteApplication/{applicationId}")]
+        [Route("~/api/User/DeleteApplication/{applicationId}")]
         [HttpDelete("{applicationId}")]
         public void DeleteApplication(int applicationId)
         {
-            _userService.DeleteUser(applicationId);
+            _userService.DeleteApplication(applicationId);
         }
         #endregion
 
 
+        //[HttpPost]
+        //[Route("~/api/User/SaveImage")]
+        //public async Task<string> SaveImage([FromForm] IFormFile imageFile)
+        //{
+        //    string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
+        //    imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(imageFile.FileName);
+        //    var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "Images", imageName);
+        //    using (var filestream = new FileStream(imagePath, FileMode.Create))
+        //    {
+        //        await imageFile.CopyToAsync(filestream);
+        //    }
+
+        //    return imageName;
+        //}
+
+        //[HttpDelete]
+        //[Route("~/api/User/DeleteImage/imageName")]
+        //public void DeleteImage(string imageName)
+        //{
+        //    var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "Images", imageName);
+        //    if (System.IO.File.Exists(imagePath))
+        //    {
+        //        System.IO.File.Delete(imagePath);
+        //    }
+
+        //}
+
+
+        ///KYK --> https://www.youtube.com/watch?v=1dqKPoYRoD8
+        ///KYK --> https://www.youtube.com/watch?v=CHweRtsv4ws
+        ///KYK --> https://www.youtube.com/watch?v=jSO5KJLd5Qk&t=627s
     }
 }

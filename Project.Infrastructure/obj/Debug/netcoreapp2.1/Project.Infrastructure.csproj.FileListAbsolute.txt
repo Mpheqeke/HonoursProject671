@@ -36,3 +36,16 @@ C:\Projects\HonoursProject671\Project.Infrastructure\obj\Debug\netcoreapp2.1\Pro
 C:\Projects\HonoursProject671\Project.Infrastructure\obj\Debug\netcoreapp2.1\Project.Infrastructure.csproj.CopyComplete
 C:\Projects\HonoursProject671\Project.Infrastructure\obj\Debug\netcoreapp2.1\Project.Infrastructure.dll
 C:\Projects\HonoursProject671\Project.Infrastructure\obj\Debug\netcoreapp2.1\Project.Infrastructure.pdb
+E:\HonoursProject671\Project.Infrastructure\bin\Debug\netcoreapp2.1\Select.Html.dep
+E:\HonoursProject671\Project.Infrastructure\bin\Debug\netcoreapp2.1\Project.Infrastructure.deps.json
+E:\HonoursProject671\Project.Infrastructure\bin\Debug\netcoreapp2.1\Project.Infrastructure.dll
+E:\HonoursProject671\Project.Infrastructure\bin\Debug\netcoreapp2.1\Project.Infrastructure.pdb
+E:\HonoursProject671\Project.Infrastructure\bin\Debug\netcoreapp2.1\Project.Core.dll
+E:\HonoursProject671\Project.Infrastructure\bin\Debug\netcoreapp2.1\Project.Core.pdb
+E:\HonoursProject671\Project.Infrastructure\obj\Debug\netcoreapp2.1\Project.Infrastructure.csprojAssemblyReference.cache
+E:\HonoursProject671\Project.Infrastructure\obj\Debug\netcoreapp2.1\Project.Infrastructure.AssemblyInfoInputs.cache
+E:\HonoursProject671\Project.Infrastructure\obj\Debug\netcoreapp2.1\Project.Infrastructure.AssemblyInfo.cs
+E:\HonoursProject671\Project.Infrastructure\obj\Debug\netcoreapp2.1\Project.Infrastructure.csproj.CopyComplete
+E:\HonoursProject671\Project.Infrastructure\obj\Debug\netcoreapp2.1\Project.Infrastructure.dll
+E:\HonoursProject671\Project.Infrastructure\obj\Debug\netcoreapp2.1\Project.Infrastructure.pdb
+E:\HonoursProject671\Project.Infrastructure\obj\Debug\netcoreapp2.1\Project.Infrastructure.csproj.CoreCompileInputs.cache
