@@ -7,6 +7,6 @@ namespace Project.Core.DTOs
 {
     public class ProfilePictureDTO
     {
-        public IFormFile ImageUrl { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

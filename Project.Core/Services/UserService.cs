@@ -10,6 +10,10 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Project.Core.AbstractFactories;
 using System.Net.Http;
+using Microsoft.AspNetCore.Http;
+using System.Reflection;
+using System.IO;
+using System.IO.Compression;
 
 namespace Project.Core.Services
 {
@@ -27,9 +31,66 @@ namespace Project.Core.Services
             //_authentication = authentication;
         }
 
+        #region convert image to bytes
         //Upload CV
 
+        //public void UploadImage(IFormFile imageName, string imagePath, int userId)
+        //{
+        //    try
+        //    {
+        //        var updateObj = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
+
+        //        System.IO.FileStream fs = new System.IO.FileStream(imagePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+        //        System.IO.BinaryReader binaryReader = new System.IO.BinaryReader(fs);
+        //        long byteLength = new System.IO.FileInfo(imagePath).Length;
+        //        byte[] content = (binaryReader.ReadBytes((Int32)byteLength));
+
+        //        string imageByte = Convert.ToBase64String(content);
+        //        updateObj.ImageUrl = imageByte;
+
+        //        _unitOfWork.User.Update(updateObj);
+        //        _unitOfWork.Save();
+
+        //        fs.Close();
+        //        fs.Dispose();
+        //        binaryReader.Close();
+        //    }
+        //    catch (FileNotFoundException e)
+        //    {
+        //        Console.WriteLine(e.ToString());
+        //    }
+
+        //}
+        #endregion
+
         //Update Profile Picture
+        public void UploadImage(string imagePath, int userId)
+        {
+            try
+            {
+                var updateObj = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
+
+                updateObj.ImageUrl = imagePath;
+
+                _unitOfWork.User.Update(updateObj);
+                _unitOfWork.Save();
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+        }
+
+        //Display Profile Picture
+        public byte[] GetUserProfilePicture(int userId)
+        {
+            var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
+            string imgUrl = user.ImageUrl;
+
+            byte [] b = System.IO.File.ReadAllBytes(@imgUrl);
+            return b;
+        }
 
         //FIREBASE STUFF vir UUID
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
@@ -48,5 +49,10 @@ namespace Project.Core.Interfaces
             //-->A user can delete their own application
         void DeleteApplication(int applicationId);
 
+
+        //TEST
+        //void UploadImage(IFormFile imageName, string imagePath, int userId);
+        void UploadImage(string imagePath, int userId);
+        byte[] GetUserProfilePicture(int userId);
     }
 }

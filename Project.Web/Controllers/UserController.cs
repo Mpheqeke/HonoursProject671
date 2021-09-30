@@ -172,37 +172,63 @@ namespace Project.Web.Controllers
         }
         #endregion
 
-
-        //[HttpPost]
-        //[Route("~/api/User/SaveImage")]
-        //public async Task<string> SaveImage([FromForm] IFormFile imageFile)
+        #region convert image to byte
+        //[Route("~/api/User/UploadImage/{userId}")]
+        //[HttpPost("{userId}")]
+        //public void UploadImage([FromForm] IFormFile file, int userId)
         //{
-        //    string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
-        //    imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(imageFile.FileName);
-        //    var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "Images", imageName);
-        //    using (var filestream = new FileStream(imagePath, FileMode.Create))
+        //    if (file.Length > 0)
         //    {
-        //        await imageFile.CopyToAsync(filestream);
+        //        string filePath = System.IO.Path.Combine(_hostEnvironment.ContentRootPath, "Images", file.FileName);
+
+        //        using (var stream = System.IO.File.Create(filePath))
+        //        {
+        //            file.CopyTo(stream);
+        //        }
+
+        //        _userService.UploadImage(file, filePath, userId);
         //    }
 
-        //    return imageName;
-        //}
+        //    var fileUrl = $"{this.Request.Scheme}://{this.Request.Host}/images/{file.FileName}";
+        //    //return fileUrl;
 
-        //[HttpDelete]
-        //[Route("~/api/User/DeleteImage/imageName")]
-        //public void DeleteImage(string imageName)
-        //{
-        //    var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "Images", imageName);
-        //    if (System.IO.File.Exists(imagePath))
-        //    {
-        //        System.IO.File.Delete(imagePath);
-        //    }
-
+        //    //var imagePath = Path.Combine(img.ToString(), img.FileName);
+        //    //_userService.UploadImage(img, imagePath);
         //}
+        //https://www.c-sharpcorner.com/UploadFile/1a81c5/convert-file-to-byte-array-and-byte-array-to-files/
+        #endregion
+
+        //Allow user to upload profile image
+        [Route("~/api/User/UploadImage/{userId}")]
+        [HttpPost("{userId}")]
+        public void UploadImage([FromForm] IFormFile file, int userId)
+        {
+            if (file.Length > 0)
+            {
+                string filePath = System.IO.Path.Combine(_hostEnvironment.ContentRootPath, "Images", file.FileName);
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    file.CopyTo(stream);
+                }
+
+                //string fileUrl = $"{this.Request.Scheme}://{this.Request.Host}/images/{file.FileName}";
+                _userService.UploadImage(filePath, userId);       
+            }
+        }
+
+        //Get profile picture of specific user
+        [Route("~/api/User/GetUserProfilePicture/{userId}")]
+        [HttpGet("{userId}")]
+        public ActionResult GetUserProfilePicture(int userId)
+        {
+            return File(_userService.GetUserProfilePicture(userId), "image/jpeg");        
+        }
 
 
         ///KYK --> https://www.youtube.com/watch?v=1dqKPoYRoD8
         ///KYK --> https://www.youtube.com/watch?v=CHweRtsv4ws
         ///KYK --> https://www.youtube.com/watch?v=jSO5KJLd5Qk&t=627s
+        //How to delete items from VS resource folder programaticially
     }
 }
