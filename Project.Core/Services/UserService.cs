@@ -143,10 +143,29 @@ namespace Project.Core.Services
             }
         }
 
-        //View User Course Certificate
-        public byte[] GetUserCourseCert(int userId)
+        //Get all User Course Certificates
+        public List<CourseCertDTOcs> GetUserCourseCertificates(int userId)
         {
-            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 3).SingleOrDefault();
+            List<User> user = _unitOfWork.User.Query(x => x.Id == userId).ToList();
+            List<UserDocument> doc = _unitOfWork.UserDocument.Query(x => x.DocumentTypeId == 3).ToList();
+
+            var company = (from u in user
+                           join ud in doc on u.Id equals ud.UserId
+                           where u.Id == userId
+                           select new CourseCertDTOcs
+                           {
+                               DocumentUrl = ud.DocumentUrl,
+                               DocumentName = Path.GetFileNameWithoutExtension(ud.DocumentUrl),
+                               CourseCertId = ud.Id
+                           }).ToList();
+
+            return company;
+        }
+
+        //View User Course Certificate
+        public byte[] GetUserCourseCert(int userId, int docId)
+        {
+            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 3 && u.Id == docId).SingleOrDefault();
 
             string docUrl = userDoc.DocumentUrl;
 
@@ -155,9 +174,9 @@ namespace Project.Core.Services
         }
 
         //Get Course Certificate path
-        public string GetCourseCertPath(string docPath, int userId)
+        public string GetCourseCertPath(string docPath, int userId, int docId)
         {
-            var user = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 3).SingleOrDefault();
+            var user = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 3 && u.Id == docId).SingleOrDefault();
             docPath = user.DocumentUrl;
 
             return docPath;
@@ -206,6 +225,8 @@ namespace Project.Core.Services
         #endregion
 
         //FIREBASE STUFF vir UUID
+
+
 
         #region Moocs Select and Search
         //Get all Moocs

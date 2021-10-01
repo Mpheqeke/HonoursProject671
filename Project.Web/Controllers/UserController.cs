@@ -297,22 +297,30 @@ namespace Project.Web.Controllers
             }
         }
 
-        //View Course Certificate of specific user
-        [Route("~/api/User/GetUserCourseCert/{userId}")]
+        //Get all of the course ceritifcates of a user
+        [Route("~/api/User/Test/{userId}")]
         [HttpGet("{userId}")]
-        public ActionResult GetUserCourseCert(int userId, string path)
+        public ActionResult<List<CourseCertDTOcs>> GetUserCourseCertificates(int userId)
         {
-            path = _userService.GetCourseCertPath(path, userId);
+            return _userService.GetUserCourseCertificates(userId);
+        }
+
+        //View single Course Certificate of specific user
+        [Route("~/api/User/GetUserCourseCert/{userId}/{docId}")]
+        [HttpGet("{docId}")]
+        public ActionResult GetUserCourseCert(int userId, int docId, string path)
+        {
+            path = _userService.GetCourseCertPath(path, userId, docId);
             var ext = Path.GetExtension(path).ToLowerInvariant();
-            return File(_userService.GetUserCourseCert(userId), GetMimeTypes()[ext]);
+            return File(_userService.GetUserCourseCert(userId, docId), GetMimeTypes()[ext]);
         }
 
         //Download Course Certificate of specific user
-        [Route("~/api/User/DownloadUserCourseCert/{userId}")]
-        [HttpGet("{userId}")]
-        public ActionResult DownloadUserCourseCert(int userId, string path)
+        [Route("~/api/User/DownloadUserCourseCert/{userId}/{docId}")]
+        [HttpGet("{docId}")]
+        public ActionResult DownloadUserCourseCert(int userId, string path, int docId)
         {
-            path = _userService.GetCourseCertPath(path, userId);
+            path = _userService.GetCourseCertPath(path, userId, docId);
             var memory = new MemoryStream();
             using (var stream = new FileStream(path, FileMode.Open))
             {
