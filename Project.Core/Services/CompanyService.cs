@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Project.Core.AbstractFactories;
 using System.Net.Http;
 using System.Text;
+using System.IO;
 
 namespace Project.Core.Services
 {
@@ -27,7 +28,46 @@ namespace Project.Core.Services
 
         //Approve Company
 
-        //Update Company Logo
+        #region User Image Functionalities
+        //Update Profile Picture
+        public void UploadImage(string imagePath, int compId)
+        {
+            try
+            {
+                var updateObj = _unitOfWork.Company.Query(x => x.Id == compId).SingleOrDefault();
+
+                updateObj.LogoUrl = imagePath;
+
+                _unitOfWork.Company.Update(updateObj);
+                _unitOfWork.Save();
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+        }
+
+        //Display Profile Picture
+        public byte[] GetImage(int compId)
+        {
+            var company = _unitOfWork.Company.Query(x => x.Id == compId).SingleOrDefault();
+            string imgUrl = company.LogoUrl;
+
+            byte[] b = System.IO.File.ReadAllBytes(@imgUrl);
+            return b;
+        }
+
+        //Get Image Path
+        public string GetImagePath(string imagePath, int compId)
+        {
+            var company = _unitOfWork.Company.Query(x => x.Id == compId).SingleOrDefault();
+            imagePath = company.LogoUrl;
+
+            return imagePath;
+        }
+
+        #endregion
 
         #region Company Select and Search Related Queries
         //View all Companies (Entire Model instead of DTO)

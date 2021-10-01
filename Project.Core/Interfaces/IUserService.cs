@@ -52,7 +52,39 @@ namespace Project.Core.Interfaces
 
         //TEST
         //void UploadImage(IFormFile imageName, string imagePath, int userId);
+
+        //***User Profile Image Queries***
+            //-->A user can upload/change profile image
         void UploadImage(string imagePath, int userId);
+
+            //-->Used to display the image
         byte[] GetUserProfilePicture(int userId);
+
+            //-->Retreives image path
+        string GetImagePath(string imagePath, int userId);
+ 
+
+        //***User CV file Queries***
+            //-->A user can upload/change CV document
+        void UploadCV(string docPath, int userId, UserDocument document);
+
+            //-->Used to open document
+        byte[] GetUserDocument(int userId);
+
+            //-->Retreives file path
+        string GetFilePath(string docPath, int userId);
+
+
+        //***User Course Certificate file Queries***
+            //-->A user can upload/change Course Certificate document
+        void UploadCourseCert(string docPath, int userId, UserDocument document);
+
+            //-->Used to open document
+        byte[] GetUserCourseCert(int userId);
+
+            //-->Retreives file path
+        string GetCourseCertPath(string docPath, int userId);
+
+
     }
 }

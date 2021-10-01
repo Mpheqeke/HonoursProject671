@@ -63,6 +63,108 @@ namespace Project.Core.Services
         //}
         #endregion
 
+        #region User Document Functionalities
+        //Upload User CV
+        public void UploadCV(string docPath, int userId, UserDocument document)
+        {
+            try
+            {
+                var updateObj = _unitOfWork.UserDocument.Query(x => x.UserId == userId).SingleOrDefault();
+
+                if (updateObj == null)
+                {
+                    var docToAdd = new UserDocument
+                    {
+                        UserId = userId,
+                        DocumentTypeId = 1,
+                        StatusId = 1,
+                        DocumentUrl = docPath
+                    };
+                    _unitOfWork.UserDocument.Add(docToAdd);
+                    _unitOfWork.Save();
+                }
+                else
+                {
+                    updateObj.UserId = userId;
+                    updateObj.DocumentTypeId = 1;
+                    updateObj.StatusId = 1;
+                    updateObj.DocumentUrl = docPath;
+
+                    _unitOfWork.UserDocument.Update(updateObj);
+                    _unitOfWork.Save();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
+
+        //View User CV
+        public byte[] GetUserDocument(int userId)
+        {
+            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).SingleOrDefault();
+
+            string docUrl = userDoc.DocumentUrl;
+
+            byte[] b = System.IO.File.ReadAllBytes(@docUrl);
+            return b;
+        }
+
+        //Get CV path
+        public string GetFilePath(string docPath, int userId)
+        {
+            var user = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 1).SingleOrDefault();
+            docPath = user.DocumentUrl;
+
+            return docPath;
+        }
+
+        //Upload User Course Certificate
+        public void UploadCourseCert(string docPath, int userId, UserDocument document)
+        {
+            try
+            {
+                var docToAdd = new UserDocument
+                {
+                    UserId = userId,
+                    DocumentTypeId = 1,
+                    StatusId = 1,
+                    DocumentUrl = docPath
+                };
+                _unitOfWork.UserDocument.Add(docToAdd);
+                _unitOfWork.Save();
+
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
+
+        //View User Course Certificate
+        public byte[] GetUserCourseCert(int userId)
+        {
+            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).SingleOrDefault();
+
+            string docUrl = userDoc.DocumentUrl;
+
+            byte[] b = System.IO.File.ReadAllBytes(@docUrl);
+            return b;
+        }
+
+        //Get Course Certificate path
+        public string GetCourseCertPath(string docPath, int userId)
+        {
+            var user = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 3).SingleOrDefault();
+            docPath = user.DocumentUrl;
+
+            return docPath;
+        }
+        #endregion
+
+        #region User Image Functionalities
         //Update Profile Picture
         public void UploadImage(string imagePath, int userId)
         {
@@ -88,9 +190,20 @@ namespace Project.Core.Services
             var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
             string imgUrl = user.ImageUrl;
 
-            byte [] b = System.IO.File.ReadAllBytes(@imgUrl);
+            byte[] b = System.IO.File.ReadAllBytes(@imgUrl);
             return b;
         }
+
+        //Get Image Path
+        public string GetImagePath(string imagePath, int userId)
+        {
+            var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
+            imagePath = user.ImageUrl;
+
+            return imagePath;
+        }
+
+        #endregion
 
         //FIREBASE STUFF vir UUID
 

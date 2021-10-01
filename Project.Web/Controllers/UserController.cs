@@ -201,7 +201,8 @@ namespace Project.Web.Controllers
         //https://www.c-sharpcorner.com/UploadFile/1a81c5/convert-file-to-byte-array-and-byte-array-to-files/
         #endregion
 
-        //Allow user to upload profile image
+        #region User Image and File Upload, View, and Download Related Queries
+        //Allow user to upload/update profile image
         [Route("~/api/User/UploadImage/{userId}")]
         [HttpPost("{userId}")]
         public void UploadImage([FromForm] IFormFile file, int userId)
@@ -223,15 +224,123 @@ namespace Project.Web.Controllers
         //Get profile picture of specific user
         [Route("~/api/User/GetUserProfilePicture/{userId}")]
         [HttpGet("{userId}")]
-        public ActionResult GetUserProfilePicture(int userId)
+        public ActionResult GetUserProfilePicture(int userId, string path)
         {
-            return File(_userService.GetUserProfilePicture(userId), "image/jpeg");        
+            path = _userService.GetImagePath(path, userId);
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return File(_userService.GetUserProfilePicture(userId), GetMimeTypes()[ext]);        
         }
 
+        //Allow user to upload/update CV
+        [Route("~/api/User/UploadCV/{userId}")]
+        [HttpPost("{userId}")]
+        public void UploadFile([FromForm] IFormFile file, int userId)
+        {
+            if (file.Length > 0)
+            {
+                UserDocument document = new UserDocument();
+                string filePath = System.IO.Path.Combine(_hostEnvironment.ContentRootPath, "CVs", file.FileName);
 
-        ///KYK --> https://www.youtube.com/watch?v=1dqKPoYRoD8
-        ///KYK --> https://www.youtube.com/watch?v=CHweRtsv4ws
-        ///KYK --> https://www.youtube.com/watch?v=jSO5KJLd5Qk&t=627s
-        //How to delete items from VS resource folder programaticially
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    file.CopyTo(stream);
+                }
+
+                //string fileUrl = $"{this.Request.Scheme}://{this.Request.Host}/images/{file.FileName}";
+                _userService.UploadCV(filePath, userId, document);
+            }
+        }
+
+        //View CV of specific user
+        [Route("~/api/User/GetUserCV/{userId}")]
+        [HttpGet("{userId}")]
+        public ActionResult GetUserCV(int userId, string path)
+        {
+            path = _userService.GetFilePath(path, userId);
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return File(_userService.GetUserDocument(userId), GetMimeTypes()[ext]);
+        }
+
+        //Download CV of specific user
+        [Route("~/api/User/DownloadUserCV/{userId}")]
+        [HttpGet("{userId}")]
+        public ActionResult DownloadUserCV(int userId, string path)
+        {
+            path = _userService.GetFilePath(path, userId);
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                stream.CopyTo(memory);
+            }
+            memory.Position = 0;
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return File(memory, GetMimeTypes()[ext], Path.GetFileName(path));
+        }
+
+        //Allow user to upload Course Certificate
+        [Route("~/api/User/UploadCourseCert/{userId}")]
+        [HttpPost("{userId}")]
+        public void UploadCourseCert([FromForm] IFormFile file, int userId)
+        {
+            if (file.Length > 0)
+            {
+                UserDocument document = new UserDocument();
+                string filePath = System.IO.Path.Combine(_hostEnvironment.ContentRootPath, "CVs", file.FileName);
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    file.CopyTo(stream);
+                }
+
+                //string fileUrl = $"{this.Request.Scheme}://{this.Request.Host}/images/{file.FileName}";
+                _userService.UploadCourseCert(filePath, userId, document);
+            }
+        }
+
+        //View Course Certificate of specific user
+        [Route("~/api/User/GetUserCourseCert/{userId}")]
+        [HttpGet("{userId}")]
+        public ActionResult GetUserCourseCert(int userId, string path)
+        {
+            path = _userService.GetCourseCertPath(path, userId);
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return File(_userService.GetUserCourseCert(userId), GetMimeTypes()[ext]);
+        }
+
+        //Download Course Certificate of specific user
+        [Route("~/api/User/DownloadUserCourseCert/{userId}")]
+        [HttpGet("{userId}")]
+        public ActionResult DownloadUserCourseCert(int userId, string path)
+        {
+            path = _userService.GetCourseCertPath(path, userId);
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                stream.CopyTo(memory);
+            }
+            memory.Position = 0;
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return File(memory, GetMimeTypes()[ext], Path.GetFileName(path));
+        }
+
+        //Dictionary defining the different types of documents and imnages
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".txt", "text/plain"},
+                {".pdf", "application/pdf"},
+                {".doc", "application/vnd.ms-word"},
+                {".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
+                {".xls", "application/vnd.ms-excel"},
+                {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+                {".png", "image/png"},
+                {".jpg", "image/jpg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+                {".csv", "text/csv"},
+            };
+        }
+        #endregion
     }
 }

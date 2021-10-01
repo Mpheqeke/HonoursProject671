@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTOs;
 using Project.Core.Interfaces;
@@ -16,10 +19,12 @@ namespace Project.Web.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;
+        private readonly IHostingEnvironment _hostEnvironment;
 
-        public CompanyController(ICompanyService companyService)
+        public CompanyController(ICompanyService companyService, IHostingEnvironment hostEnvironment)
         {
             _companyService = companyService;
+            _hostEnvironment = hostEnvironment;
         }
 
         #region Company Select and Search Related Queries
@@ -189,5 +194,54 @@ namespace Project.Web.Controllers
         }
         #endregion
 
+        #region Company Porfile Image Related Queries
+        //Allow company to upload/update profile image
+        [Route("~/api/Company/UploadImage/{compId}")]
+        [HttpPost("{compId}")]
+        public void UploadImage([FromForm] IFormFile file, int compId)
+        {
+            if (file.Length > 0)
+            {
+                string filePath = System.IO.Path.Combine(_hostEnvironment.ContentRootPath, "Images", file.FileName);
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    file.CopyTo(stream);
+                }
+
+                //string fileUrl = $"{this.Request.Scheme}://{this.Request.Host}/images/{file.FileName}";
+                _companyService.UploadImage(filePath, compId);
+            }
+        }
+
+        //Get profile picture of specific company
+        [Route("~/api/Company/GetImage/{compId}")]
+        [HttpGet("{compId}")]
+        public ActionResult GetImage(int compId, string path)
+        {
+            path = _companyService.GetImagePath(path, compId);
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return File(_companyService.GetImage(compId), GetMimeTypes()[ext]);
+        }
+
+        //Dictionary defining the different types of documents and imnages
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            return new Dictionary<string, string>
+            {
+                {".txt", "text/plain"},
+                {".pdf", "application/pdf"},
+                {".doc", "application/vnd.ms-word"},
+                {".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
+                {".xls", "application/vnd.ms-excel"},
+                {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+                {".png", "image/png"},
+                {".jpg", "image/jpg"},
+                {".jpeg", "image/jpeg"},
+                {".gif", "image/gif"},
+                {".csv", "text/csv"},
+            };
+        }
+        #endregion
     }
 }

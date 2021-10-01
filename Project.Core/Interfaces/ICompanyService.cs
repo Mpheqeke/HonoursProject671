@@ -28,6 +28,7 @@ namespace Project.Core.Interfaces
         //***Company Representative Operations***
         List<CompanyRepsDTO> GetCompSpecificReps(int CompId);
 
+
         //***Vancancy CRUD Operations***
             //-->Gets all the vacancies for a specific company (Company Profile Page)
         List<CompanySpecificVacanciesDTO> GetCompanyVacancies(int id);
@@ -64,6 +65,16 @@ namespace Project.Core.Interfaces
             //-->A company can view a selected applicants profile
         List<UserDTO> ViewSpecificApplicantProfile(int userId, int compId);
 
+
+        //***Company Profile Image Queries***
+        //-->A company can upload/change profile image
+        void UploadImage(string imagePath, int compId);
+
+        //-->Used to display the image
+        byte[] GetImage(int compId);
+
+        //-->Retreives image path
+        string GetImagePath(string imagePath, int compId);
 
     }
 }
