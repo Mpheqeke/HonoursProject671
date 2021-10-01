@@ -103,7 +103,10 @@ namespace Project.Core.Services
             }
         }
 
-        //Remove Company
+        //Remove Company (FK CONSTRAINT ERROR)
+                //The DELETE statement conflicted with the REFERENCE constraint "FK_CompanyRepresentative_Company". 
+                //The conflict occurred in database "ITRI671Project", table "dbo.CompanyRepresentative", column 'CompanyId'.
+                //The statement has been terminated.
         public void DeleteCompany(int id)
         {
             try
@@ -157,7 +160,7 @@ namespace Project.Core.Services
                          select new VacanciesDTO
                          {
                              CompanyId = c.Id,
-                             VacancyName = c.Name,
+                             CompanyName = c.Name,
                              Sector = c.Sector,
                              JobTitle = v.JobTitle,
                              StartDate = v.StartDate,
@@ -191,7 +194,7 @@ namespace Project.Core.Services
                          select new VacanciesDTO
                          {
                              CompanyId = c.Id,
-                             VacancyName = c.Name,
+                             CompanyName = c.Name,
                              Sector = c.Sector,
                              JobTitle = v.JobTitle,
                              StartDate = v.StartDate,
@@ -210,7 +213,7 @@ namespace Project.Core.Services
             }
         }
 
-        //Get all vacancies for specific company (*#######CHECK CHANGE IN WORD DOC###########)
+        //Get all vacancies for specific company
         public List<CompanySpecificVacanciesDTO> GetCompanyVacancies(int CompId)
         {
             List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
@@ -223,7 +226,7 @@ namespace Project.Core.Services
                              {
                                  VacancyId = v.Id,
                                  JobTitle = v.JobTitle,
-                                 StartDate = v.ApplicationClosingDate, //CHANGED FROM START DATE
+                                 ApplicationClosingDate = v.ApplicationClosingDate, //CHANGED FROM START DATE
                              }).ToList();
 
 
@@ -333,7 +336,10 @@ namespace Project.Core.Services
             }
         }
 
-        //Remove Postion
+        //Remove Postion (FK CONSTRAINT ERROR)
+                //The DELETE statement conflicted with the REFERENCE constraint "FK_UserJobApplication_Vacancy". 
+                //The conflict occurred in database "ITRI671Project", table "dbo.UserJobApplication", column 'VacancyId'.
+                //The statement has been terminated.
         public void DeletePosition(int VacId)
         {
             try

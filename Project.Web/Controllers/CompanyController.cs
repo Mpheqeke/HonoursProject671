@@ -60,7 +60,10 @@ namespace Project.Web.Controllers
             _companyService.CreateCompany(company);
         }
 
-        //Remove a company
+        //Remove a company (FK CONSTRAINT ERROR)
+                //The DELETE statement conflicted with the REFERENCE constraint "FK_CompanyRepresentative_Company". 
+                //The conflict occurred in database "ITRI671Project", table "dbo.CompanyRepresentative", column 'CompanyId'.
+                //The statement has been terminated.
         [Route("~/api/Company/DeleteCompany/{id}")]
         [HttpDelete("{id}")]
         public void DeleteCompany(int id)
@@ -130,7 +133,10 @@ namespace Project.Web.Controllers
             _companyService.CreatePosition(vacancy, CompId);
         }
 
-        //Remove a position
+        //Remove a position (FK CONSTRAINT ERROR)
+                //The DELETE statement conflicted with the REFERENCE constraint "FK_UserJobApplication_Vacancy". 
+                //The conflict occurred in database "ITRI671Project", table "dbo.UserJobApplication", column 'VacancyId'.
+                //The statement has been terminated.
         [Route("~/api/Company/Vacancy/DeletePosition/{VacId}")]
         [HttpDelete("{VacId}")]
         public void DeletePosition(int VacId)

@@ -11,6 +11,6 @@ namespace Project.Core.DTOs
 
         // Info for company vacancies on company page
         public string JobTitle { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime ApplicationClosingDate { get; set; }
     }
 }

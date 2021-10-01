@@ -218,7 +218,10 @@ namespace Project.Core.Services
             }
         }
 
-        //Delete User
+        //Delete User (FK CONSTRAINT ERROR)
+                //The DELETE statement conflicted with the REFERENCE constraint "FK_CompanyRepresentative_User". 
+                //The conflict occurred in database "ITRI671Project", table "dbo.CompanyRepresentative", column 'UserId'.
+                //The statement has been terminated.
         public void DeleteUser(int id)
         {
             try
@@ -310,7 +313,7 @@ namespace Project.Core.Services
             List<Status> status = _unitOfWork.Status.Query().ToList();
 
             var applicationDetails = (from u in user
-                              join a in applications on u.Id equals applicationId
+                              join a in applications on u.Id equals userId
                               join v in vacan on a.VacancyId equals v.Id
                               join s in status on a.StatusId equals s.Id
                               join c in comp on v.CompanyId equals c.Id

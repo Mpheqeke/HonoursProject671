@@ -10,7 +10,7 @@ namespace Project.Core.DTOs
         public int CompanyId { get; set; }
 
         // Info for Vacancies Table
-        public string VacancyName { get; set; }
+        public string CompanyName { get; set; }
         public string Sector { get; set; }
         public string JobTitle { get; set; }
         public DateTime StartDate { get; set; }
