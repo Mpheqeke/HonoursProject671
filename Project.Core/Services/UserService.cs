@@ -104,7 +104,7 @@ namespace Project.Core.Services
         //View User CV
         public byte[] GetUserDocument(int userId)
         {
-            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).SingleOrDefault();
+            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 1).SingleOrDefault();
 
             string docUrl = userDoc.DocumentUrl;
 
@@ -129,7 +129,7 @@ namespace Project.Core.Services
                 var docToAdd = new UserDocument
                 {
                     UserId = userId,
-                    DocumentTypeId = 1,
+                    DocumentTypeId = 3,
                     StatusId = 1,
                     DocumentUrl = docPath
                 };
@@ -146,7 +146,7 @@ namespace Project.Core.Services
         //View User Course Certificate
         public byte[] GetUserCourseCert(int userId)
         {
-            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).SingleOrDefault();
+            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 3).SingleOrDefault();
 
             string docUrl = userDoc.DocumentUrl;
 
