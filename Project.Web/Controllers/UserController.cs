@@ -82,16 +82,6 @@ namespace Project.Web.Controllers
             return Ok(users.Skip((curPage - 1) * curPageSize).Take(curPageSize));
         }
 
-        [Route("~/api/User/GetRecruiters")]
-        [HttpGet]
-        public ActionResult<List<User>> GetRecruiters(int? pageNumber)
-        {
-            int curPage = pageNumber ?? 1;
-            int curPageSize = 30;
-
-            var users = _userService.GetRecruiters();
-            return Ok(users.Skip((curPage - 1) * curPageSize).Take(curPageSize));
-        }
 
         //Retreive user by Id
         [Route("~/api/User/GetSingleUser/{id}")]

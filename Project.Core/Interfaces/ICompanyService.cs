@@ -26,11 +26,21 @@ namespace Project.Core.Interfaces
 
 
         //***Company Representative Operations***
+            //-->Gets all reps for a specific company
         List<CompanyRepsDTO> GetCompSpecificReps(int CompId);
+
+            //-->Gets all of the available recruiters(so company can add them as their own recruiter)
+        List<RecruitersDTO> GetAvailableRecruiters();
+
+            //-->A company can add a recruiter to represent them
+        void AddNewCompanyRep(int compId, int userId);
+
+            //-->A company can remove a recruiter that currently represents them
+        void RemoveCompanyRep(int repId);
 
 
         //***Vancancy CRUD Operations***
-            //-->Gets all the vacancies for a specific company (Company Profile Page)
+        //-->Gets all the vacancies for a specific company (Company Profile Page)
         List<CompanySpecificVacanciesDTO> GetCompanyVacancies(int id);
 
             //-->Gets the details for a select vancancy (Company Profile Page)

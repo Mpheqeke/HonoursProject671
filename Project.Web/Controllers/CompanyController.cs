@@ -27,6 +27,7 @@ namespace Project.Web.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
+
         #region Company Select and Search Related Queries
         //Retreive all Companies
         [Route("~/api/Company/GetCompanies")]
@@ -82,6 +83,37 @@ namespace Project.Web.Controllers
         public void UpdateCompany(int id, [FromBody] Company company)
         {
             _companyService.UpdateCompany(id, company);
+        }
+        #endregion
+
+        #region Company Recruiters (View Available, Add New, Remove Exisiting)
+
+        //View all available recruiters
+        [Route("~/api/Company/GetAvailableRecruiters")]
+        [HttpGet]
+        public ActionResult<List<RecruitersDTO>> GetAvailableRecruiters(int? pageNumber)
+        {
+            int curPage = pageNumber ?? 1;
+            int curPageSize = 30;
+
+            var users = _companyService.GetAvailableRecruiters();
+            return Ok(users.Skip((curPage - 1) * curPageSize).Take(curPageSize));
+        }
+
+        //Allow company to add new representative
+        [Route("~/api/Company/AddNewCompanyRep/{compId}/{userId}")]
+        [HttpPut("{userId}")]
+        public void AddNewCompanyRep(int compId, int userId)
+        {
+            _companyService.AddNewCompanyRep(compId, userId);
+        }
+
+        //Allow company to remove exisiting representative
+        [Route("~/api/Company/RemoveCompanyRep/{repId}")]
+        [HttpDelete("{repId}")]
+        public void RemoveCompanyRep(int repId)
+        {
+            _companyService.RemoveCompanyRep(repId);
         }
         #endregion
 

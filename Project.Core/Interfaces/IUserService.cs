@@ -20,20 +20,14 @@ namespace Project.Core.Interfaces
 
             //-->Gets profile information of a specific user
         List<UserDTO> GetSpecificUser(int userId);
+       
 
         //***Moocs Operations***
-            //-->Gets all of the Moocs (Moocs Table / From user profile)
+        //-->Gets all of the Moocs (Moocs Table / From user profile)
         List<MoocsDTO> GetMoocs();
 
             //-->Allows users to search for Moocs
         List<MoocsDTO> SearchMoocs(string search);
-
-
-        //***User Related Select Operations*** (Might not use)
-        List<User> GetUsers();
-        List<User> GetGrads();
-        List<User> GetRecruiters();
-        List<User> GetSingleUser(int id);
 
 
         //***JobApplication Queries***
@@ -49,8 +43,6 @@ namespace Project.Core.Interfaces
             //-->A user can delete their own application
         void DeleteApplication(int applicationId);
 
-
-        //TEST
         //void UploadImage(IFormFile imageName, string imagePath, int userId);
 
         //***User Profile Image Queries***
@@ -79,12 +71,22 @@ namespace Project.Core.Interfaces
             //-->A user can upload/change Course Certificate document
         void UploadCourseCert(string docPath, int userId, UserDocument document);
 
+            //-->Used to get all course documents of user
+        List<CourseCertDTOcs> GetUserCourseCertificates(int userId);
+
             //-->Used to open document
-        byte[] GetUserCourseCert(int userId);
+        byte[] GetUserCourseCert(int userId, int docId);
 
             //-->Retreives file path
-        string GetCourseCertPath(string docPath, int userId);
+        string GetCourseCertPath(string docPath, int userId, int docId);
 
+
+
+
+        //***User Related Select Operations*** (Might not use)
+        List<User> GetUsers();
+        List<User> GetGrads();
+        List<User> GetSingleUser(int id);
 
     }
 }

@@ -224,10 +224,6 @@ namespace Project.Core.Services
 
         #endregion
 
-        //FIREBASE STUFF vir UUID
-
-
-
         #region Moocs Select and Search
         //Get all Moocs
         public List<MoocsDTO> GetMoocs()
@@ -277,12 +273,6 @@ namespace Project.Core.Services
             return users;
         }
 
-        //Get Recruiters Only (Entire Model instead of DTO)
-        public List<User> GetRecruiters()
-        {
-            var users = _unitOfWork.User.Query(x => x.IsActive).Where(x => x.RoleId == 2).ToList();
-            return users;
-        }
 
         //Get Specific User (Entire Model instead of DTO)
         public List<User> GetSingleUser(int id)

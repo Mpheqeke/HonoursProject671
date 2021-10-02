@@ -28,6 +28,98 @@ namespace Project.Core.Services
 
         //Approve Company
 
+
+        #region Recruiter/Representative Related Functionalities
+        //View Company Specific Representatives
+        public List<CompanyRepsDTO> GetCompSpecificReps(int CompId)
+        {
+            List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
+            List<CompanyRepresentative> comprep = _unitOfWork.CompanyRepresentative.Query().ToList();
+            List<User> users = _unitOfWork.User.Query(x => x.IsActive).ToList();
+
+            var reps = (from c in comp
+                        join cr in comprep on CompId equals cr.CompanyId
+                        join u in users on cr.UserId equals u.Id
+                        where u.RoleId == 2 && c.Id == CompId
+                        select new CompanyRepsDTO
+                        {
+                            CompanyId = c.Id,
+                            RepId = cr.Id,
+                            RepFirstName = u.FirstName,
+                            RepLastName = u.LastName,
+                            RepProfileImageUrl = u.ImageUrl
+                        }).ToList();
+
+            return reps;
+        }
+
+        //Get List of all available Recruiters Only
+        public List<RecruitersDTO> GetAvailableRecruiters()
+        {
+            List<User> user = _unitOfWork.User.Query(x => x.IsActive).ToList();
+            List<CompanyRepresentative> reps = _unitOfWork.CompanyRepresentative.Query().ToList();
+
+            var takenRecruitersIds = (from u in user
+                                      join r in reps on u.Id equals r.UserId
+                                      where u.RoleId == 2
+                                      select u.Id).ToList();
+
+            var availableRecruiters = (from u in user
+                                       where !takenRecruitersIds.Contains(u.Id) && u.RoleId == 2
+                                       select new RecruitersDTO
+                                       {
+                                           RecruiterId = u.Id,
+                                           FirstName = u.FirstName,
+                                           LastName = u.LastName,
+                                           Email = u.Email
+                                       }).ToList();
+
+            return availableRecruiters;
+        }
+
+        //Adding a representative to the company
+        public void AddNewCompanyRep(int compId, int userId)
+        {
+            try
+            {
+
+                var repToAdd = new CompanyRepresentative
+                {
+                   UserId = userId,
+                   CompanyId = compId
+                };
+
+                _unitOfWork.CompanyRepresentative.Add(repToAdd);
+                _unitOfWork.Save();
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
+
+        //Removing a representative from the company
+        public void RemoveCompanyRep(int repId)
+        {
+            try
+            {
+                var delObj = _unitOfWork.CompanyRepresentative.Query(x => x.Id == repId).SingleOrDefault();
+
+                if (delObj != null)
+                {
+                    _unitOfWork.CompanyRepresentative.Delete(delObj);
+                    _unitOfWork.Save();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+
+        }
+        #endregion
+
         #region User Image Functionalities
         //Update Profile Picture
         public void UploadImage(string imagePath, int compId)
@@ -97,28 +189,6 @@ namespace Project.Core.Services
             return company;
         }
 
-        //View Company Specific Representatives
-        public List<CompanyRepsDTO> GetCompSpecificReps(int CompId)
-        {
-            List<Company> comp = _unitOfWork.Company.Query(x => x.IsActive).ToList();
-            List<CompanyRepresentative> comprep = _unitOfWork.CompanyRepresentative.Query().ToList();
-            List<User> users = _unitOfWork.User.Query(x => x.IsActive).ToList();
-
-            var reps = (from c in comp
-                               join cr in comprep on CompId equals cr.CompanyId
-                               join u in users on cr.UserId equals u.Id
-                               where u.RoleId == 2 && c.Id == CompId
-                               select new CompanyRepsDTO
-                               {
-                                   CompanyId = c.Id,
-                                   RepId = cr.Id,
-                                   RepFirstName = u.FirstName,
-                                   RepLastName = u.LastName,
-                                   RepProfileImageUrl = u.ImageUrl       
-                               }).ToList();
-
-            return reps;
-        }
         #endregion
 
         #region Company CRUD Related Queries (Create, Update, Delete)
