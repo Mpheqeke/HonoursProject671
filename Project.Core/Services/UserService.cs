@@ -304,23 +304,7 @@ namespace Project.Core.Services
         #endregion
 
         #region User CRUD Related Queries (Create, Update, Delete)
-        //Create User
-        public void CreateUser(User user)
-        {
-            BaseUserFactory userFactory = new AbstractUserFactory().CreateFactory(user);
-
-            userFactory.ApplyUUID();
-
-            user.CreatedOn = DateTime.Now;
-            user.ModifiedOn = DateTime.Now;
-            user.CreatedBy = $"{user.FirstName} {user.LastName}";
-            user.ModifiedBy = $"{user.FirstName} {user.LastName}";
-            user.IsActive = true;
-
-            _unitOfWork.User.Add(user);
-            _unitOfWork.Save();
-        }
-
+        
         //Update User Information (Let users update their own info)
         public void UpdateUser(int id, User user)
         {
@@ -346,11 +330,12 @@ namespace Project.Core.Services
                 //The DELETE statement conflicted with the REFERENCE constraint "FK_CompanyRepresentative_User". 
                 //The conflict occurred in database "ITRI671Project", table "dbo.CompanyRepresentative", column 'UserId'.
                 //The statement has been terminated.
-        public void DeleteUser(int id)
+        public void DeleteUser(int userId)
         {
             try
             {
-                var delObj = _unitOfWork.User.Query(x => x.Id == id).SingleOrDefault();
+                //isactive = false
+                var delObj = _unitOfWork.User.Query(x => x.Id == userId).FirstOrDefault();
 
                 if (delObj != null)
                 {

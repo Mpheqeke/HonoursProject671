@@ -10,7 +10,7 @@ namespace Project.Core.Interfaces
     {
         //***User(Graduate/Recruiter) CRUD Operations***
             //-->Create a new user
-        void CreateUser(User user);
+        //int CreateUser(User user);
 
             //-->A user can update their profile information
         void UpdateUser(int id, User user);

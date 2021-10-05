@@ -15,9 +15,6 @@ namespace Project.Core.Interfaces
             //-->Gets a List of all companies (NOT NEEDED maybe?)
         List<Company> GetCompanies();
 
-            //-->To Create a new company
-        void CreateCompany(Company company);
-
             //-->A company can delete their own profile (or deactive profiles can be deleted)
         void DeleteCompany(int id);
 

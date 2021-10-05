@@ -67,7 +67,7 @@ namespace Project.Web
 			services.AddScoped<ICompanyService, CompanyService>();
 			services.AddScoped<IAuthInfo, AuthInfo>();
 			//Firebase
-			services.AddScoped<IFireBaseAuth, FireBaseAuth>();
+			services.AddScoped<IUserAuthService, FireBaseAuth>();
 			services.AddScoped<IFireBaseHelper, FirebaseHelper>();
 		}
 

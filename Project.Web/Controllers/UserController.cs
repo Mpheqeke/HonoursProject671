@@ -103,13 +103,6 @@ namespace Project.Web.Controllers
         #endregion
 
         #region User CRUD Related Queries (Create, Update, Delete)
-        //Create new user
-        [Route("~/api/User/CreateUser")]
-        [HttpPost]
-        public void CreateUser([FromBody] User user)
-        {
-            _userService.CreateUser(user);
-        }
 
         //Remove a user (FK CONSTRAINT ERROR)
                 //The DELETE statement conflicted with the REFERENCE constraint "FK_CompanyRepresentative_User". 

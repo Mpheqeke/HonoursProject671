@@ -58,13 +58,6 @@ namespace Project.Web.Controllers
         #endregion
 
         #region Company CRUD Related Queries (Create, Update, Delete)
-        //Create new company
-        [Route("~/api/Company/CreateCompany")]
-        [HttpPost]
-        public void CreateCompany([FromBody] Company company)
-        {
-            _companyService.CreateCompany(company);
-        }
 
         //Remove a company (FK CONSTRAINT ERROR)
                 //The DELETE statement conflicted with the REFERENCE constraint "FK_CompanyRepresentative_Company". 

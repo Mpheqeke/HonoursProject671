@@ -192,26 +192,6 @@ namespace Project.Core.Services
         #endregion
 
         #region Company CRUD Related Queries (Create, Update, Delete)
-        //Create Company
-        public void CreateCompany(Company company)
-        {
-            try
-            {
-                company.CreatedOn = DateTime.Now;
-                company.ModifiedOn = DateTime.Now;
-                company.CreatedBy = company.Name;
-                company.ModifiedBy = company.Name;
-                //Still need to be approved
-                company.IsActive = false;
-
-                _unitOfWork.Company.Add(company);
-                _unitOfWork.Save();
-            }
-            catch (Exception ex)
-            {
-                ex.Message.ToString();
-            }
-        }
 
         //Remove Company (FK CONSTRAINT ERROR)
                 //The DELETE statement conflicted with the REFERENCE constraint "FK_CompanyRepresentative_Company". 
