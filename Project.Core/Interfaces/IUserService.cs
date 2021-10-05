@@ -9,14 +9,12 @@ namespace Project.Core.Interfaces
     public interface IUserService
     {
         //***User(Graduate/Recruiter) CRUD Operations***
-            //-->Create a new user
-        //int CreateUser(User user);
 
             //-->A user can update their profile information
-        void UpdateUser(int id, User user);
+        void UpdateUser(int userId, User user);
 
             //-->A user can delete their own profile (or deactive profiles can be deleted)
-        void DeleteUser(int id);
+        void DeleteUser(int userId);
 
             //-->Gets profile information of a specific user
         List<UserDTO> GetSpecificUser(int userId);
@@ -86,7 +84,7 @@ namespace Project.Core.Interfaces
         //***User Related Select Operations*** (Might not use)
         List<User> GetUsers();
         List<User> GetGrads();
-        List<User> GetSingleUser(int id);
+        List<User> GetSingleUser(int userId);
 
     }
 }

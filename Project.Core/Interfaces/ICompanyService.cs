@@ -16,10 +16,10 @@ namespace Project.Core.Interfaces
         List<Company> GetCompanies();
 
             //-->A company can delete their own profile (or deactive profiles can be deleted)
-        void DeleteCompany(int id);
+        void DeleteCompany(int compId);
 
             //-->A company can update their own profile information
-        void UpdateCompany(int id, Company company);
+        void UpdateCompany(int compId, Company company);
 
 
         //***Company Representative Operations***
@@ -38,10 +38,10 @@ namespace Project.Core.Interfaces
 
         //***Vancancy CRUD Operations***
         //-->Gets all the vacancies for a specific company (Company Profile Page)
-        List<CompanySpecificVacanciesDTO> GetCompanyVacancies(int id);
+        List<CompanySpecificVacanciesDTO> GetCompanyVacancies(int compId);
 
             //-->Gets the details for a select vancancy (Company Profile Page)
-        List<SpecificVacancyDetailsDTO> GetVacancyInfo(int id);
+        List<SpecificVacancyDetailsDTO> GetVacancyInfo(int vacId);
 
             //-->Gets all vacancies from all companies (Vacancies Table/Page)
         List<VacanciesDTO> GetVacancies(string sort);

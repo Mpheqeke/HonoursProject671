@@ -193,19 +193,17 @@ namespace Project.Core.Services
 
         #region Company CRUD Related Queries (Create, Update, Delete)
 
-        //Remove Company (FK CONSTRAINT ERROR)
-                //The DELETE statement conflicted with the REFERENCE constraint "FK_CompanyRepresentative_Company". 
-                //The conflict occurred in database "ITRI671Project", table "dbo.CompanyRepresentative", column 'CompanyId'.
-                //The statement has been terminated.
-        public void DeleteCompany(int id)
+        //Remove Company 
+        public void DeleteCompany(int compId)
         {
             try
             {
-                var delObj = _unitOfWork.Company.Query(x => x.Id == id).SingleOrDefault();
+                var delObj = _unitOfWork.Company.Query(x => x.Id == compId).SingleOrDefault();
 
                 if (delObj != null)
                 {
-                    _unitOfWork.Company.Delete(delObj);
+                    delObj.IsActive = false;
+                    _unitOfWork.Company.Update(delObj);
                     _unitOfWork.Save();
                 }
 
@@ -218,9 +216,9 @@ namespace Project.Core.Services
         }
 
         //Update Company Information
-        public void UpdateCompany(int id, Company company)
+        public void UpdateCompany(int compId, Company company)
         {
-            var updateObj = _unitOfWork.Company.Query(x => x.Id == id).SingleOrDefault();
+            var updateObj = _unitOfWork.Company.Query(x => x.Id == compId).SingleOrDefault();
 
             if (updateObj != null)
             {
@@ -426,10 +424,7 @@ namespace Project.Core.Services
             }
         }
 
-        //Remove Postion (FK CONSTRAINT ERROR)
-                //The DELETE statement conflicted with the REFERENCE constraint "FK_UserJobApplication_Vacancy". 
-                //The conflict occurred in database "ITRI671Project", table "dbo.UserJobApplication", column 'VacancyId'.
-                //The statement has been terminated.
+        //Remove Postion
         public void DeletePosition(int VacId)
         {
             try
@@ -438,7 +433,8 @@ namespace Project.Core.Services
 
                 if (delObj != null)
                 {
-                    _unitOfWork.Vacancy.Delete(delObj);
+                    delObj.IsActive = false;
+                    _unitOfWork.Vacancy.Update(delObj);
                     _unitOfWork.Save();
                 }
 

@@ -275,9 +275,9 @@ namespace Project.Core.Services
 
 
         //Get Specific User (Entire Model instead of DTO)
-        public List<User> GetSingleUser(int id)
+        public List<User> GetSingleUser(int userId)
         {
-            var user = _unitOfWork.User.Query(x => x.Id == id).ToList();
+            var user = _unitOfWork.User.Query(x => x.Id == userId).ToList();
             return user;
         }
 
@@ -306,9 +306,9 @@ namespace Project.Core.Services
         #region User CRUD Related Queries (Create, Update, Delete)
         
         //Update User Information (Let users update their own info)
-        public void UpdateUser(int id, User user)
+        public void UpdateUser(int userId, User user)
         {
-            var updateObj = _unitOfWork.User.Query(x => x.Id == id).SingleOrDefault();
+            var updateObj = _unitOfWork.User.Query(x => x.Id == userId).FirstOrDefault();
 
             if (updateObj != null)
             {
@@ -326,10 +326,7 @@ namespace Project.Core.Services
             }
         }
 
-        //Delete User (FK CONSTRAINT ERROR)
-                //The DELETE statement conflicted with the REFERENCE constraint "FK_CompanyRepresentative_User". 
-                //The conflict occurred in database "ITRI671Project", table "dbo.CompanyRepresentative", column 'UserId'.
-                //The statement has been terminated.
+        //Delete User 
         public void DeleteUser(int userId)
         {
             try
@@ -339,7 +336,8 @@ namespace Project.Core.Services
 
                 if (delObj != null)
                 {
-                    _unitOfWork.User.Delete(delObj);
+                    delObj.IsActive = false;
+                    _unitOfWork.User.Update(delObj);
                     _unitOfWork.Save();
                 }
 

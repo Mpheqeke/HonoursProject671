@@ -59,23 +59,20 @@ namespace Project.Web.Controllers
 
         #region Company CRUD Related Queries (Create, Update, Delete)
 
-        //Remove a company (FK CONSTRAINT ERROR)
-                //The DELETE statement conflicted with the REFERENCE constraint "FK_CompanyRepresentative_Company". 
-                //The conflict occurred in database "ITRI671Project", table "dbo.CompanyRepresentative", column 'CompanyId'.
-                //The statement has been terminated.
-        [Route("~/api/Company/DeleteCompany/{id}")]
-        [HttpDelete("{id}")]
-        public void DeleteCompany(int id)
+        //Remove a company
+        [Route("~/api/Company/DeleteCompany/{compId}")]
+        [HttpDelete("{compId}")]
+        public void DeleteCompany(int compId)
         {
-            _companyService.DeleteCompany(id);
+            _companyService.DeleteCompany(compId);
         }
 
         //Update existing company
-        [Route("~/api/Company/UpdateCompany/{id}")]
-        [HttpPut("{id}")]
-        public void UpdateCompany(int id, [FromBody] Company company)
+        [Route("~/api/Company/UpdateCompany/{compId}")]
+        [HttpPut("{compId}")]
+        public void UpdateCompany(int compId, [FromBody] Company company)
         {
-            _companyService.UpdateCompany(id, company);
+            _companyService.UpdateCompany(compId, company);
         }
         #endregion
 
@@ -136,20 +133,20 @@ namespace Project.Web.Controllers
         }
 
         //Retreive vacancy by Id
-        [Route("~/api/Vacancy/{id}")]
-        [HttpGet("{id}")]
-        public ActionResult<List<SpecificVacancyDetailsDTO>> GetVacancyInfo(int id)
+        [Route("~/api/Vacancy/{vacId}")]
+        [HttpGet("{vacId}")]
+        public ActionResult<List<SpecificVacancyDetailsDTO>> GetVacancyInfo(int vacId)
         {
-            var vacancy = _companyService.GetVacancyInfo(id);
+            var vacancy = _companyService.GetVacancyInfo(vacId);
             return vacancy;
         }
 
         //Retreive all vacancies by company id
-        [Route("~/api/Vacancy/Company/{id}")]
-        [HttpGet("{id}")]
-        public ActionResult<List<CompanySpecificVacanciesDTO>> GetCompanyVacancies(int id)
+        [Route("~/api/Vacancy/Company/{compId}")]
+        [HttpGet("{compId}")]
+        public ActionResult<List<CompanySpecificVacanciesDTO>> GetCompanyVacancies(int compId)
         {
-            var vacancy = _companyService.GetCompanyVacancies(id);
+            var vacancy = _companyService.GetCompanyVacancies(compId);
             return vacancy;
         }
         #endregion
@@ -163,12 +160,9 @@ namespace Project.Web.Controllers
             _companyService.CreatePosition(vacancy, CompId);
         }
 
-        //Remove a position (FK CONSTRAINT ERROR)
-                //The DELETE statement conflicted with the REFERENCE constraint "FK_UserJobApplication_Vacancy". 
-                //The conflict occurred in database "ITRI671Project", table "dbo.UserJobApplication", column 'VacancyId'.
-                //The statement has been terminated.
+        //Remove a position
         [Route("~/api/Company/Vacancy/DeletePosition/{VacId}")]
-        [HttpDelete("{VacId}")]
+        [HttpPut("{VacId}")]
         public void DeletePosition(int VacId)
         {
             _companyService.DeletePosition(VacId);
@@ -184,7 +178,7 @@ namespace Project.Web.Controllers
         #endregion
 
         #region User Application Related Queries 
-        //View all applications for specific company position (WERK)
+        //View all applications for specific company position
         [Route("~/api/Company/GetPositionApplicants/{VacId}")]
         [HttpGet("{VacId}")]
         public ActionResult<List<CompanyApplicantsDTO>> GetPositionApplicants(int VacId)
@@ -193,7 +187,7 @@ namespace Project.Web.Controllers
             return applicants;
         }
 
-        //View specific applicant profile (Sets Status = Viewed) (WERK)
+        //View specific applicant profile (Sets Status = Viewed)
         [Route("~/api/Company/Vacancy/ViewSpecificApplicantProfile/{compId}/{userId}")]
         [HttpGet("{userId}")]
         public ActionResult<List<UserDTO>> ViewSpecificApplicantProfile(int userId, int compId)
@@ -202,7 +196,7 @@ namespace Project.Web.Controllers
             return applicantProfile;
         }
 
-        //Approve an application (WERK)
+        //Approve an application
         [Route("~/api/Company/Vacancy/ApproveApplication/{CompId}/{appliId}")]
         [HttpPut("{appliId}")]
         public void ApproveApplication(int compId, int appliId, [FromBody] UserJobApplication application)
@@ -210,7 +204,7 @@ namespace Project.Web.Controllers
             _companyService.ApproveApplication(compId, appliId, application);
         }
 
-        //Reject an application (WERK)
+        //Reject an application
         [Route("~/api/Company/Vacancy/RejectApplication/{CompId}/{appliId}")]
         [HttpPut("{appliId}")]
         public void RejectApplication(int compId, int appliId, [FromBody] UserJobApplication application)

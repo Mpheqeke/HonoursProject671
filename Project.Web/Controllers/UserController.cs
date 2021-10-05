@@ -84,11 +84,11 @@ namespace Project.Web.Controllers
 
 
         //Retreive user by Id
-        [Route("~/api/User/GetSingleUser/{id}")]
-        [HttpGet("{id}")]
-        public ActionResult<List<User>> GetSingleUser(int id)
+        [Route("~/api/User/GetSingleUser/{userId}")]
+        [HttpGet("{userId}")]
+        public ActionResult<List<User>> GetSingleUser(int userId)
         {
-            var user = _userService.GetSingleUser(id);
+            var user = _userService.GetSingleUser(userId);
             return user;
         }
 
@@ -104,23 +104,20 @@ namespace Project.Web.Controllers
 
         #region User CRUD Related Queries (Create, Update, Delete)
 
-        //Remove a user (FK CONSTRAINT ERROR)
-                //The DELETE statement conflicted with the REFERENCE constraint "FK_CompanyRepresentative_User". 
-                //The conflict occurred in database "ITRI671Project", table "dbo.CompanyRepresentative", column 'UserId'.
-                //The statement has been terminated.
-        [Route("~/api/User/DeleteUser/{id}")]
-        [HttpDelete("{id}")]
-        public void DeleteUser(int id)
+        //Remove a user
+        [Route("~/api/User/DeleteUser/{userId}")]
+        [HttpPut("{userId}")]
+        public void DeleteUser(int userId)
         {
-            _userService.DeleteUser(id);
+            _userService.DeleteUser(userId);
         }
 
         //Update existing user
-        [Route("~/api/User/UpdateUser/{id}")]
-        [HttpPut("{id}")]
-        public void UpdateUser(int id, [FromBody] User user)
+        [Route("~/api/User/UpdateUser/{userId}")]
+        [HttpPut("{userId}")]
+        public void UpdateUser(int userId, [FromBody] User user)
         {
-            _userService.UpdateUser(id, user);
+            _userService.UpdateUser(userId, user);
         }
         #endregion
 
