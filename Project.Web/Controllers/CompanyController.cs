@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,9 +26,28 @@ namespace Project.Web.Controllers
         public CompanyController(ICompanyService companyService, IHostingEnvironment hostEnvironment)
         {
             _companyService = companyService;
-            _hostEnvironment = hostEnvironment;
+            _hostEnvironment = hostEnvironment;          
         }
 
+        #region Logo Image Queries
+        //Upload Profile Image / Replace Exisiting One
+        [Route("~/api/Company/UploadCompanyLogo/{compId}")]
+        [HttpPut("{compId}")]
+        public async Task UploadCompanyLogo(int compId, [FromForm] IFormFile file)
+        {
+            try
+            {
+                await _companyService.UploadCompanyLogo(compId, file);
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
+
+        //For reference to get files
+        //"https://storage.googleapis.com/BUCKET_NAME/OBJECT_NAME"
+        #endregion
 
         #region Company Select and Search Related Queries
         //Retreive all Companies
@@ -213,35 +234,19 @@ namespace Project.Web.Controllers
         }
         #endregion
 
+
+        //USING FOR REFERENCE FOR MYSELF DONT USE IN FRONT END
+
         #region Company Porfile Image Related Queries
-        //Allow company to upload/update profile image
-        [Route("~/api/Company/UploadImage/{compId}")]
-        [HttpPost("{compId}")]
-        public void UploadImage([FromForm] IFormFile file, int compId)
-        {
-            if (file.Length > 0)
-            {
-                string filePath = System.IO.Path.Combine(_hostEnvironment.ContentRootPath, "Images", file.FileName);
-
-                using (var stream = System.IO.File.Create(filePath))
-                {
-                    file.CopyTo(stream);
-                }
-
-                //string fileUrl = $"{this.Request.Scheme}://{this.Request.Host}/images/{file.FileName}";
-                _companyService.UploadImage(filePath, compId);
-            }
-        }
-
         //Get profile picture of specific company
-        [Route("~/api/Company/GetImage/{compId}")]
-        [HttpGet("{compId}")]
-        public ActionResult GetImage(int compId, string path)
-        {
-            path = _companyService.GetImagePath(path, compId);
-            var ext = Path.GetExtension(path).ToLowerInvariant();
-            return File(_companyService.GetImage(compId), GetMimeTypes()[ext]);
-        }
+        //[Route("~/api/Company/GetImage/{compId}")]
+        //[HttpGet("{compId}")]
+        //public ActionResult GetImage(int compId, string path)
+        //{
+        //    path = _companyService.GetImagePath(path, compId);
+        //    var ext = Path.GetExtension(path).ToLowerInvariant();
+        //    return File(_companyService.GetImage(compId), GetMimeTypes()[ext]);
+        //}
 
         //Dictionary defining the different types of documents and imnages
         private Dictionary<string, string> GetMimeTypes()

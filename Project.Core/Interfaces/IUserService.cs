@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Project.Core.DTOs;
 using Project.Core.Models;
@@ -8,9 +9,14 @@ namespace Project.Core.Interfaces
 {
     public interface IUserService
     {
+        Task UploadProfileImage(IFormFile file, int userId); //WERK
+        Task UploadCVDocument(IFormFile file, int userId); //WERK
+        Task UploadCourseCert(IFormFile file, int userId); //WERK
+        Task DeleteCourseCert(int docId); //WERK
+
         //***User(Graduate/Recruiter) CRUD Operations***
 
-            //-->A user can update their profile information
+        //-->A user can update their profile information
         void UpdateUser(int userId, User user);
 
             //-->A user can delete their own profile (or deactive profiles can be deleted)
@@ -43,20 +49,16 @@ namespace Project.Core.Interfaces
 
         //void UploadImage(IFormFile imageName, string imagePath, int userId);
 
-        //***User Profile Image Queries***
-            //-->A user can upload/change profile image
-        void UploadImage(string imagePath, int userId);
 
-            //-->Used to display the image
+        //USING FOR REFERENCE FOR MYSELF DONT USE IN FRONT END
+        #region TESTS STUFFS
+
+        //-->Used to display the image
         byte[] GetUserProfilePicture(int userId);
 
             //-->Retreives image path
         string GetImagePath(string imagePath, int userId);
  
-
-        //***User CV file Queries***
-            //-->A user can upload/change CV document
-        void UploadCV(string docPath, int userId, UserDocument document);
 
             //-->Used to open document
         byte[] GetUserDocument(int userId);
@@ -64,10 +66,6 @@ namespace Project.Core.Interfaces
             //-->Retreives file path
         string GetFilePath(string docPath, int userId);
 
-
-        //***User Course Certificate file Queries***
-            //-->A user can upload/change Course Certificate document
-        void UploadCourseCert(string docPath, int userId, UserDocument document);
 
             //-->Used to get all course documents of user
         List<CourseCertDTOcs> GetUserCourseCertificates(int userId);
@@ -78,7 +76,7 @@ namespace Project.Core.Interfaces
             //-->Retreives file path
         string GetCourseCertPath(string docPath, int userId, int docId);
 
-
+        #endregion
 
 
         //***User Related Select Operations*** (Might not use)

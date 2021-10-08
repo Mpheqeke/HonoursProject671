@@ -12,19 +12,63 @@ using Project.Core.AbstractFactories;
 using System.Net.Http;
 using System.Text;
 using System.IO;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Project.Core.Services
 {
     public class CompanyService : ICompanyService
     {
         private readonly IProjectUnitOfWork _unitOfWork;
+        private readonly IGoogleCloudStorage _googleCloudStorage;
 
-        public CompanyService(IProjectUnitOfWork unitOfWork/*, IAuthenticationHelper authentication, IAuthInfo authInfo*/)
+        public CompanyService(IProjectUnitOfWork unitOfWork, IGoogleCloudStorage googleCloudStorage/*, IAuthenticationHelper authentication, IAuthInfo authInfo*/)
         {
             //_authInfo = authInfo;
             _unitOfWork = unitOfWork;
+            _googleCloudStorage = googleCloudStorage;
             //_authentication = authentication;
         }
+
+        #region Logo Image Functionalities
+        //Get the name of the file being uploaded
+        public string FormFileName(string compName, string fileName)
+        {
+            var fileExtension = Path.GetExtension(fileName);
+            var fileNameForStorage = $"{compName}-{DateTime.Now.ToString("yyyyMMddHHmmss")}{fileExtension}";
+            return fileNameForStorage;
+        }
+
+        //Upload the actual file
+        public async Task UploadCompanyLogo(int compId, IFormFile file)
+        {
+            try
+            {
+                var updateObj = _unitOfWork.Company.Query(x => x.Id == compId).FirstOrDefault();
+
+                if (updateObj != null)
+                {
+                    if (updateObj.LogoUrl != null)
+                    {
+                        await _googleCloudStorage.DeleteFileAsync(updateObj.LogoName);
+                    }
+
+                    string fileNameForStorage = FormFileName(updateObj.Name, file.FileName);
+                    updateObj.LogoUrl = await _googleCloudStorage.UploadFileAsync(file, fileNameForStorage);
+                    updateObj.LogoName = fileNameForStorage;
+
+                    _unitOfWork.Company.Update(updateObj);
+                    _unitOfWork.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        } //WERK
+        #endregion
+      
 
         //Approve Company
 
@@ -118,47 +162,6 @@ namespace Project.Core.Services
             }
 
         }
-        #endregion
-
-        #region User Image Functionalities
-        //Update Profile Picture
-        public void UploadImage(string imagePath, int compId)
-        {
-            try
-            {
-                var updateObj = _unitOfWork.Company.Query(x => x.Id == compId).SingleOrDefault();
-
-                updateObj.LogoUrl = imagePath;
-
-                _unitOfWork.Company.Update(updateObj);
-                _unitOfWork.Save();
-            }
-            catch (FileNotFoundException e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-        }
-
-        //Display Profile Picture
-        public byte[] GetImage(int compId)
-        {
-            var company = _unitOfWork.Company.Query(x => x.Id == compId).SingleOrDefault();
-            string imgUrl = company.LogoUrl;
-
-            byte[] b = System.IO.File.ReadAllBytes(@imgUrl);
-            return b;
-        }
-
-        //Get Image Path
-        public string GetImagePath(string imagePath, int compId)
-        {
-            var company = _unitOfWork.Company.Query(x => x.Id == compId).SingleOrDefault();
-            imagePath = company.LogoUrl;
-
-            return imagePath;
-        }
-
         #endregion
 
         #region Company Select and Search Related Queries

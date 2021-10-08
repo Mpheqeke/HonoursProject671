@@ -14,83 +14,145 @@ using Microsoft.AspNetCore.Http;
 using System.Reflection;
 using System.IO;
 using System.IO.Compression;
+using System.Threading.Tasks;
 
 namespace Project.Core.Services
 {
     public class UserService : IUserService
     {
         private readonly IProjectUnitOfWork _unitOfWork;
+        private readonly IGoogleCloudStorage _googleCloudStorage;
 
         //private readonly IAuthenticationHelper _authentication;
         //private readonly IAuthInfo _authInfo;
 
-        public UserService(IProjectUnitOfWork unitOfWork/*, IAuthenticationHelper authentication, IAuthInfo authInfo*/)
+        public UserService(IProjectUnitOfWork unitOfWork, IGoogleCloudStorage googleCloudStorage/*, IAuthenticationHelper authentication, IAuthInfo authInfo*/)
         {
             //_authInfo = authInfo;
             _unitOfWork = unitOfWork;
+            _googleCloudStorage = googleCloudStorage;
             //_authentication = authentication;
         }
 
-        #region convert image to bytes
-        //Upload CV
+        #region Profile Image Functionalities
 
-        //public void UploadImage(IFormFile imageName, string imagePath, int userId)
-        //{
-        //    try
-        //    {
-        //        var updateObj = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
+        //Get the name of the file being uploaded
+        public string FormFileName(string userName, string fileName)
+        {
+            var fileExtension = Path.GetExtension(fileName);
+            var fileNameForStorage = $"{userName}-{DateTime.Now.ToString("yyyyMMddHHmmss")}{fileExtension}";
+            return fileNameForStorage;
+        }
 
-        //        System.IO.FileStream fs = new System.IO.FileStream(imagePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-        //        System.IO.BinaryReader binaryReader = new System.IO.BinaryReader(fs);
-        //        long byteLength = new System.IO.FileInfo(imagePath).Length;
-        //        byte[] content = (binaryReader.ReadBytes((Int32)byteLength));
-
-        //        string imageByte = Convert.ToBase64String(content);
-        //        updateObj.ImageUrl = imageByte;
-
-        //        _unitOfWork.User.Update(updateObj);
-        //        _unitOfWork.Save();
-
-        //        fs.Close();
-        //        fs.Dispose();
-        //        binaryReader.Close();
-        //    }
-        //    catch (FileNotFoundException e)
-        //    {
-        //        Console.WriteLine(e.ToString());
-        //    }
-
-        //}
-        #endregion
-
-        #region User Document Functionalities
-        //Upload User CV
-        public void UploadCV(string docPath, int userId, UserDocument document)
+        //Upload the actual file / replace existin one /((WERK))
+        public async Task UploadProfileImage(IFormFile file, int userId)
         {
             try
             {
-                var updateObj = _unitOfWork.UserDocument.Query(x => x.UserId == userId).SingleOrDefault();
+                var updateObj = _unitOfWork.User.Query(x => x.Id == userId).FirstOrDefault();
 
-                if (updateObj == null)
+                if (updateObj != null)
                 {
+                    if (updateObj.ImageUrl != null)
+                    {
+                        await _googleCloudStorage.DeleteFileAsync(updateObj.ImageName);
+                    }
+
+                    string fileNameForStorage = FormFileName(updateObj.DisplayName, file.FileName);
+                    updateObj.ImageUrl = await _googleCloudStorage.UploadFileAsync(file, fileNameForStorage);
+                    updateObj.ImageName = fileNameForStorage;
+
+                    _unitOfWork.User.Update(updateObj);
+                    _unitOfWork.Save();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+           
+        }
+        #endregion
+
+        #region User Documents Functionalities
+
+        //Allow users to upload CV documents /((WERK))
+        public async Task UploadCVDocument(IFormFile file, int userId)
+        {
+            try
+            {
+                var userObj = _unitOfWork.User.Query(x => x.Id == userId).FirstOrDefault();
+                var docObj = _unitOfWork.UserDocument.Query(x => x.UserId == userId).FirstOrDefault();
+
+                if (userObj != null)
+                {
+                    if (docObj != null)
+                    {
+                        await _googleCloudStorage.DeleteFileAsync(docObj.DocumentName);
+                        _unitOfWork.UserDocument.Delete(docObj);
+                        _unitOfWork.Save();
+                    }
+
+                    string fileNameForStorage = FormFileName(userObj.DisplayName + " CV", file.FileName);
                     var docToAdd = new UserDocument
                     {
                         UserId = userId,
                         DocumentTypeId = 1,
                         StatusId = 1,
-                        DocumentUrl = docPath
+                        DocumentUrl = await _googleCloudStorage.UploadFileAsync(file, fileNameForStorage),
+                        DocumentName = fileNameForStorage
                     };
+
                     _unitOfWork.UserDocument.Add(docToAdd);
                     _unitOfWork.Save();
                 }
-                else
-                {
-                    updateObj.UserId = userId;
-                    updateObj.DocumentTypeId = 1;
-                    updateObj.StatusId = 1;
-                    updateObj.DocumentUrl = docPath;
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+           
+        }
 
-                    _unitOfWork.UserDocument.Update(updateObj);
+        //Allow users to upload course certificates /((WERK))
+        public async Task UploadCourseCert(IFormFile file, int userId)
+        {
+            try
+            {
+                var userObj = _unitOfWork.User.Query(x => x.Id == userId).FirstOrDefault();
+                if (userObj != null)
+                {
+                    string fileNameForStorage = FormFileName(userObj.DisplayName + " Course Certificate", file.FileName);
+                    var docToAdd = new UserDocument
+                    {
+                        UserId = userId,
+                        DocumentTypeId = 3,
+                        StatusId = 1,
+                        DocumentUrl = await _googleCloudStorage.UploadFileAsync(file, fileNameForStorage),
+                        DocumentName = fileNameForStorage
+                    };
+
+                    _unitOfWork.UserDocument.Add(docToAdd);
+                    _unitOfWork.Save();
+                }
+            }
+            catch(Exception ex)
+            {
+                ex.Message.ToString();
+            }          
+        }
+
+        //Allow users to delete a course certificate /((WERK))
+        public async Task DeleteCourseCert(int docId)
+        {
+            try
+            {
+                var delObj = _unitOfWork.UserDocument.Query(x => x.Id == docId).FirstOrDefault();
+
+                if (delObj != null)
+                {
+                    await _googleCloudStorage.DeleteFileAsync(delObj.DocumentName);
+                    _unitOfWork.UserDocument.Delete(delObj);
                     _unitOfWork.Save();
                 }
 
@@ -99,130 +161,10 @@ namespace Project.Core.Services
             {
                 ex.Message.ToString();
             }
-        }
 
-        //View User CV
-        public byte[] GetUserDocument(int userId)
-        {
-            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 1).SingleOrDefault();
-
-            string docUrl = userDoc.DocumentUrl;
-
-            byte[] b = System.IO.File.ReadAllBytes(@docUrl);
-            return b;
-        }
-
-        //Get CV path
-        public string GetFilePath(string docPath, int userId)
-        {
-            var user = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 1).SingleOrDefault();
-            docPath = user.DocumentUrl;
-
-            return docPath;
-        }
-
-        //Upload User Course Certificate
-        public void UploadCourseCert(string docPath, int userId, UserDocument document)
-        {
-            try
-            {
-                var docToAdd = new UserDocument
-                {
-                    UserId = userId,
-                    DocumentTypeId = 3,
-                    StatusId = 1,
-                    DocumentUrl = docPath
-                };
-                _unitOfWork.UserDocument.Add(docToAdd);
-                _unitOfWork.Save();
-
-            }
-            catch (Exception ex)
-            {
-                ex.Message.ToString();
-            }
-        }
-
-        //Get all User Course Certificates
-        public List<CourseCertDTOcs> GetUserCourseCertificates(int userId)
-        {
-            List<User> user = _unitOfWork.User.Query(x => x.Id == userId).ToList();
-            List<UserDocument> doc = _unitOfWork.UserDocument.Query(x => x.DocumentTypeId == 3).ToList();
-
-            var company = (from u in user
-                           join ud in doc on u.Id equals ud.UserId
-                           where u.Id == userId
-                           select new CourseCertDTOcs
-                           {
-                               DocumentUrl = ud.DocumentUrl,
-                               DocumentName = Path.GetFileNameWithoutExtension(ud.DocumentUrl),
-                               CourseCertId = ud.Id
-                           }).ToList();
-
-            return company;
-        }
-
-        //View User Course Certificate
-        public byte[] GetUserCourseCert(int userId, int docId)
-        {
-            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 3 && u.Id == docId).SingleOrDefault();
-
-            string docUrl = userDoc.DocumentUrl;
-
-            byte[] b = System.IO.File.ReadAllBytes(@docUrl);
-            return b;
-        }
-
-        //Get Course Certificate path
-        public string GetCourseCertPath(string docPath, int userId, int docId)
-        {
-            var user = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 3 && u.Id == docId).SingleOrDefault();
-            docPath = user.DocumentUrl;
-
-            return docPath;
         }
         #endregion
 
-        #region User Image Functionalities
-        //Update Profile Picture
-        public void UploadImage(string imagePath, int userId)
-        {
-            try
-            {
-                var updateObj = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
-
-                updateObj.ImageUrl = imagePath;
-
-                _unitOfWork.User.Update(updateObj);
-                _unitOfWork.Save();
-            }
-            catch (FileNotFoundException e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-        }
-
-        //Display Profile Picture
-        public byte[] GetUserProfilePicture(int userId)
-        {
-            var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
-            string imgUrl = user.ImageUrl;
-
-            byte[] b = System.IO.File.ReadAllBytes(@imgUrl);
-            return b;
-        }
-
-        //Get Image Path
-        public string GetImagePath(string imagePath, int userId)
-        {
-            var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
-            imagePath = user.ImageUrl;
-
-            return imagePath;
-        }
-
-        #endregion
 
         #region Moocs Select and Search
         //Get all Moocs
@@ -461,6 +403,94 @@ namespace Project.Core.Services
         }
         #endregion
 
+
+
+        //USING FOR REFERENCE FOR MYSELF DONT USE IN FRONT END
+
+        #region User Document Functionalities
+
+        //View User CV
+        public byte[] GetUserDocument(int userId)
+        {
+            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 1).SingleOrDefault();
+
+            string docUrl = userDoc.DocumentUrl;
+
+            byte[] b = System.IO.File.ReadAllBytes(@docUrl);
+            return b;
+        }
+
+        //Get CV path
+        public string GetFilePath(string docPath, int userId)
+        {
+            var user = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 1).SingleOrDefault();
+            docPath = user.DocumentUrl;
+
+            return docPath;
+        }
+
+        //Get all User Course Certificates
+        public List<CourseCertDTOcs> GetUserCourseCertificates(int userId)
+        {
+            List<User> user = _unitOfWork.User.Query(x => x.Id == userId).ToList();
+            List<UserDocument> doc = _unitOfWork.UserDocument.Query(x => x.DocumentTypeId == 3).ToList();
+
+            var company = (from u in user
+                           join ud in doc on u.Id equals ud.UserId
+                           where u.Id == userId
+                           select new CourseCertDTOcs
+                           {
+                               DocumentUrl = ud.DocumentUrl,
+                               DocumentName = Path.GetFileNameWithoutExtension(ud.DocumentUrl),
+                               CourseCertId = ud.Id
+                           }).ToList();
+
+            return company;
+        }
+
+        //View User Course Certificate
+        public byte[] GetUserCourseCert(int userId, int docId)
+        {
+            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 3 && u.Id == docId).SingleOrDefault();
+
+            string docUrl = userDoc.DocumentUrl;
+
+            byte[] b = System.IO.File.ReadAllBytes(@docUrl);
+            return b;
+        }
+
+        //Get Course Certificate path
+        public string GetCourseCertPath(string docPath, int userId, int docId)
+        {
+            var user = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 3 && u.Id == docId).SingleOrDefault();
+            docPath = user.DocumentUrl;
+
+            return docPath;
+        }
+        #endregion
+
+        #region User Image Functionalities
+
+        //Display Profile Picture
+        public byte[] GetUserProfilePicture(int userId)
+        {
+            var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
+            string imgUrl = user.ImageUrl;
+
+            byte[] b = System.IO.File.ReadAllBytes(@imgUrl);
+            return b;
+        }
+
+        //Get Image Path
+        public string GetImagePath(string imagePath, int userId)
+        {
+            var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
+            imagePath = user.ImageUrl;
+
+            return imagePath;
+        }
+
+        #endregion
 
     }
 }

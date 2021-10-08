@@ -13,6 +13,7 @@ namespace Project.Core.Models
         public int UserId { get; set; }
         public int DocumentTypeId { get; set; }
         public int StatusId { get; set; }
+        public string DocumentName { get; set; }
         public string DocumentUrl { get; set; }
 
         public virtual DocumentType DocumentType { get; set; }

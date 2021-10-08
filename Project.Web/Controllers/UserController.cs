@@ -31,6 +31,73 @@ namespace Project.Web.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
+        #region Profile Picture Queries
+        //Upload Profile Image / Replace Exisiting One
+        [Route("~/api/User/UploadProfileImage/{userId}")]
+        [HttpPut("{userId}")]
+        public async Task UploadProfileImage(int userId, [FromForm] IFormFile file)
+        {
+            try
+            {
+                await _userService.UploadProfileImage(file, userId);
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
+
+        #endregion
+
+        #region User Document Queries
+        //Upload User CV / Replace Exisiting One
+        [Route("~/api/User/UploadCVDocument/{userId}")]
+        [HttpPost("{userId}")]
+        public async Task UploadCVDocument(int userId, [FromForm] IFormFile file)
+        {
+            try
+            {
+                await _userService.UploadCVDocument(file, userId);
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+
+        }
+
+        //Upload User Course Certificate / Replace Exisiting One
+        [Route("~/api/User/UploadCourseCert/{userId}")]
+        [HttpPost("{userId}")]
+        public async Task UploadCourseCert(int userId, [FromForm] IFormFile file)
+        {
+            try
+            {
+                await _userService.UploadCourseCert(file, userId);
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
+
+        //Remove course certificate
+        [Route("~/api/User/DeleteCourseCert/{docId}")]
+        [HttpDelete("{docId}")]
+        public async Task DeleteCourseCert(int docId)
+        {
+            try
+            {
+                await _userService.DeleteCourseCert(docId);
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
+        #endregion
+
+
         #region Moocs Select and Search
         //Retreive all Moocs
         [Route("~/api/User/GetMoocs")]
@@ -155,52 +222,9 @@ namespace Project.Web.Controllers
         }
         #endregion
 
-        #region convert image to byte
-        //[Route("~/api/User/UploadImage/{userId}")]
-        //[HttpPost("{userId}")]
-        //public void UploadImage([FromForm] IFormFile file, int userId)
-        //{
-        //    if (file.Length > 0)
-        //    {
-        //        string filePath = System.IO.Path.Combine(_hostEnvironment.ContentRootPath, "Images", file.FileName);
 
-        //        using (var stream = System.IO.File.Create(filePath))
-        //        {
-        //            file.CopyTo(stream);
-        //        }
-
-        //        _userService.UploadImage(file, filePath, userId);
-        //    }
-
-        //    var fileUrl = $"{this.Request.Scheme}://{this.Request.Host}/images/{file.FileName}";
-        //    //return fileUrl;
-
-        //    //var imagePath = Path.Combine(img.ToString(), img.FileName);
-        //    //_userService.UploadImage(img, imagePath);
-        //}
-        //https://www.c-sharpcorner.com/UploadFile/1a81c5/convert-file-to-byte-array-and-byte-array-to-files/
-        #endregion
-
+        //USING FOR REFERENCE FOR MYSELF DONT USE IN FRONT END
         #region User Image and File Upload, View, and Download Related Queries
-        //Allow user to upload/update profile image
-        [Route("~/api/User/UploadImage/{userId}")]
-        [HttpPost("{userId}")]
-        public void UploadImage([FromForm] IFormFile file, int userId)
-        {
-            if (file.Length > 0)
-            {
-                string filePath = System.IO.Path.Combine(_hostEnvironment.ContentRootPath, "Images", file.FileName);
-
-                using (var stream = System.IO.File.Create(filePath))
-                {
-                    file.CopyTo(stream);
-                }
-
-                //string fileUrl = $"{this.Request.Scheme}://{this.Request.Host}/images/{file.FileName}";
-                _userService.UploadImage(filePath, userId);       
-            }
-        }
-
         //Get profile picture of specific user
         [Route("~/api/User/GetUserProfilePicture/{userId}")]
         [HttpGet("{userId}")]
@@ -209,26 +233,6 @@ namespace Project.Web.Controllers
             path = _userService.GetImagePath(path, userId);
             var ext = Path.GetExtension(path).ToLowerInvariant();
             return File(_userService.GetUserProfilePicture(userId), GetMimeTypes()[ext]);        
-        }
-
-        //Allow user to upload/update CV
-        [Route("~/api/User/UploadCV/{userId}")]
-        [HttpPost("{userId}")]
-        public void UploadFile([FromForm] IFormFile file, int userId)
-        {
-            if (file.Length > 0)
-            {
-                UserDocument document = new UserDocument();
-                string filePath = System.IO.Path.Combine(_hostEnvironment.ContentRootPath, "CVs", file.FileName);
-
-                using (var stream = System.IO.File.Create(filePath))
-                {
-                    file.CopyTo(stream);
-                }
-
-                //string fileUrl = $"{this.Request.Scheme}://{this.Request.Host}/images/{file.FileName}";
-                _userService.UploadCV(filePath, userId, document);
-            }
         }
 
         //View CV of specific user
@@ -255,26 +259,6 @@ namespace Project.Web.Controllers
             memory.Position = 0;
             var ext = Path.GetExtension(path).ToLowerInvariant();
             return File(memory, GetMimeTypes()[ext], Path.GetFileName(path));
-        }
-
-        //Allow user to upload Course Certificate
-        [Route("~/api/User/UploadCourseCert/{userId}")]
-        [HttpPost("{userId}")]
-        public void UploadCourseCert([FromForm] IFormFile file, int userId)
-        {
-            if (file.Length > 0)
-            {
-                UserDocument document = new UserDocument();
-                string filePath = System.IO.Path.Combine(_hostEnvironment.ContentRootPath, "CVs", file.FileName);
-
-                using (var stream = System.IO.File.Create(filePath))
-                {
-                    file.CopyTo(stream);
-                }
-
-                //string fileUrl = $"{this.Request.Scheme}://{this.Request.Host}/images/{file.FileName}";
-                _userService.UploadCourseCert(filePath, userId, document);
-            }
         }
 
         //Get all of the course ceritifcates of a user

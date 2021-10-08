@@ -15,6 +15,7 @@ namespace Project.Core.Models
         public string Mobile { get; set; }
         public string Gender { get; set; }
         public string ThumbnailUrl { get; set; }
+        public string ImageName { get; set; }
         public string ImageUrl { get; set; }
         public bool IsActive { get; set; }
         public string UUID { get; set; }

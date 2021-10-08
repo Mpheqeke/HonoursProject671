@@ -15,6 +15,7 @@ namespace Project.Core.Models
         public string Vision { get; set; }
         public string Mission { get; set; }
         public bool IsActive { get; set; }
+        public string LogoName { get; set; }
         public string LogoUrl { get; set; }
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }

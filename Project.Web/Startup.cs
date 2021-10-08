@@ -65,6 +65,9 @@ namespace Project.Web
 			services.AddSingleton<IMemoryCache, MemoryCache>();
             services.AddScoped<IUserService, UserService>();
 			services.AddScoped<ICompanyService, CompanyService>();
+
+			//Cloud storage
+			services.AddSingleton<IGoogleCloudStorage, GoogleCloudStorage>();
 			//services.AddScoped<IAuthInfo, AuthInfo>();
 			//Firebase
 			//services.AddScoped<IUserAuthService, FireBaseAuth>();
