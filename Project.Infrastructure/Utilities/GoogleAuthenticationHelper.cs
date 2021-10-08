@@ -17,7 +17,7 @@ using FirebaseAdmin.Auth;
 
 namespace Project.Infrastructure.Utilities
 {
-    public class GoogleAuthenticationHelper : IAuthenticationHelper
+    public class GoogleAuthenticationHelper
     {
         private IOptions<AppSettings> _appSettings;
         public static string query = "https://www.googleapis.com";
