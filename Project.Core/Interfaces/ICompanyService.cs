@@ -10,7 +10,10 @@ namespace Project.Core.Interfaces
 {
     public interface ICompanyService
     {
-      
+
+        Task<string> test(int compId);
+        string test2(int compId);
+
         //***Company CRUD Operations***
         //-->Gets Profile information of a specific company (Company Profile Page)
         List<CompanyDTO> GetSpecificCompany(int CompId);

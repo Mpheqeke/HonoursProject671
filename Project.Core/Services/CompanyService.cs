@@ -54,7 +54,7 @@ namespace Project.Core.Services
                         await _googleCloudStorage.DeleteFileAsync(updateObj.LogoName);
                     }
 
-                    string fileNameForStorage = FormFileName(updateObj.Name, file.FileName);
+                    string fileNameForStorage = FormFileName(updateObj.Name + " Logo", file.FileName);
                     updateObj.LogoUrl = await _googleCloudStorage.UploadFileAsync(file, fileNameForStorage);
                     updateObj.LogoName = fileNameForStorage;
 
@@ -69,6 +69,20 @@ namespace Project.Core.Services
         } //WERK
         #endregion
       
+        public Task<string> test(int compId)
+        {
+            var updateObj = _unitOfWork.Company.Query(x => x.Id == compId).FirstOrDefault();
+            var test = updateObj.LogoName;
+            var url = _googleCloudStorage.GetFileAsync(test);
+            return url;
+        }
+
+        public string test2(int compId)
+        {
+            var updateObj = _unitOfWork.Company.Query(x => x.Id == compId).FirstOrDefault();
+            var test = updateObj.LogoUrl;
+            return test;
+        }
 
         //Approve Company
 

@@ -8,6 +8,7 @@ namespace Project.Core.Interfaces
 {
     public interface IGoogleCloudStorage
     {
+        Task<string> GetFileAsync(string fileNameForStorage);
         Task<string> UploadFileAsync(IFormFile imageFile, string fileNameForStorage);
         Task DeleteFileAsync(string fileUrl);
     }

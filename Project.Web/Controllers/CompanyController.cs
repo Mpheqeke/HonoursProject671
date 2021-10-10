@@ -248,6 +248,14 @@ namespace Project.Web.Controllers
         //    return File(_companyService.GetImage(compId), GetMimeTypes()[ext]);
         //}
 
+        //Get profile picture of specific company
+        [Route("~/api/Company/GetImage/{compId}")]
+        [HttpGet("{compId}")]
+        public Task<string> GetImage(int compId)
+        {
+             return _companyService.test(compId);
+        }
+
         //Dictionary defining the different types of documents and imnages
         private Dictionary<string, string> GetMimeTypes()
         {

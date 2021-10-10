@@ -75,6 +75,12 @@ namespace Project.Core.Services
         #endregion
 
         #region User Documents Functionalities
+        public string CourseCertFileName(string userName, string fileName)
+        {
+            var fileExtension = Path.GetExtension(fileName);
+            var fileNameForStorage = $"{userName}-{Path.GetFileNameWithoutExtension(fileName)}-{DateTime.Now.ToString("yyyyMMddHHmmss")}{fileExtension}";
+            return fileNameForStorage;
+        }
 
         //Allow users to upload CV documents /((WERK))
         public async Task UploadCVDocument(IFormFile file, int userId)
@@ -122,7 +128,7 @@ namespace Project.Core.Services
                 var userObj = _unitOfWork.User.Query(x => x.Id == userId).FirstOrDefault();
                 if (userObj != null)
                 {
-                    string fileNameForStorage = FormFileName(userObj.DisplayName + " Course Certificate", file.FileName);
+                    string fileNameForStorage = CourseCertFileName(userObj.DisplayName + " Course Certificate", file.FileName);
                     var docToAdd = new UserDocument
                     {
                         UserId = userId,
