@@ -23,12 +23,10 @@ namespace Project.Web.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IHostingEnvironment _hostEnvironment;
 
-        public UserController(IUserService userService, IHostingEnvironment hostEnvironment)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _hostEnvironment = hostEnvironment;
         }
 
         #region Profile Picture Queries

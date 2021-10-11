@@ -23,12 +23,10 @@ namespace Project.Web.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;
-        private readonly IHostingEnvironment _hostEnvironment;
 
-        public CompanyController(ICompanyService companyService, IHostingEnvironment hostEnvironment)
+        public CompanyController(ICompanyService companyService)
         {
-            _companyService = companyService;
-            _hostEnvironment = hostEnvironment;          
+            _companyService = companyService;       
         }
 
         #region Logo Image Queries
