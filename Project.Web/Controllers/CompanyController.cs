@@ -4,6 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -43,6 +45,15 @@ namespace Project.Web.Controllers
             {
                 ex.Message.ToString();
             }
+        }
+
+        //Get profile picture of specific company
+        [Route("~/api/Company/GetImage/{compId}")]
+        [HttpGet("{compId}")]
+        public void GetImage(int compId)
+        {
+            var url = _companyService.GetWorkingUrl(compId);
+            Response.Redirect(url);
         }
 
         //For reference to get files
@@ -234,46 +245,5 @@ namespace Project.Web.Controllers
         }
         #endregion
 
-
-        //USING FOR REFERENCE FOR MYSELF DONT USE IN FRONT END
-
-        #region Company Porfile Image Related Queries
-        //Get profile picture of specific company
-        //[Route("~/api/Company/GetImage/{compId}")]
-        //[HttpGet("{compId}")]
-        //public ActionResult GetImage(int compId, string path)
-        //{
-        //    path = _companyService.GetImagePath(path, compId);
-        //    var ext = Path.GetExtension(path).ToLowerInvariant();
-        //    return File(_companyService.GetImage(compId), GetMimeTypes()[ext]);
-        //}
-
-        //Get profile picture of specific company
-        [Route("~/api/Company/GetImage/{compId}")]
-        [HttpGet("{compId}")]
-        public Task<string> GetImage(int compId)
-        {
-             return _companyService.test(compId);
-        }
-
-        //Dictionary defining the different types of documents and imnages
-        private Dictionary<string, string> GetMimeTypes()
-        {
-            return new Dictionary<string, string>
-            {
-                {".txt", "text/plain"},
-                {".pdf", "application/pdf"},
-                {".doc", "application/vnd.ms-word"},
-                {".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
-                {".xls", "application/vnd.ms-excel"},
-                {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
-                {".png", "image/png"},
-                {".jpg", "image/jpg"},
-                {".jpeg", "image/jpeg"},
-                {".gif", "image/gif"},
-                {".csv", "text/csv"},
-            };
-        }
-        #endregion
     }
 }

@@ -72,6 +72,14 @@ namespace Project.Core.Services
             }
            
         }
+
+        public string GetUserProfilePicture(int userId)
+        {
+            var userToQuery = _unitOfWork.User.Query(x => x.Id == userId).FirstOrDefault();
+            var url = _googleCloudStorage.GetFileAsync(userToQuery.ImageName);
+
+            return url;
+        }
         #endregion
 
         #region User Documents Functionalities
@@ -168,6 +176,33 @@ namespace Project.Core.Services
                 ex.Message.ToString();
             }
 
+        }
+
+        //Get list of all User Course Certificates
+        public List<CourseCertDTOcs> GetUserCourseCertificates(int userId)
+        {
+            List<User> user = _unitOfWork.User.Query(x => x.Id == userId).ToList();
+            List<UserDocument> doc = _unitOfWork.UserDocument.Query(x => x.DocumentTypeId == 3).ToList();
+
+            var company = (from u in user
+                           join ud in doc on u.Id equals ud.UserId
+                           where u.Id == userId
+                           select new CourseCertDTOcs
+                           {
+                               DocumentUrl = ud.DocumentUrl,
+                               DocumentName = Path.GetFileNameWithoutExtension(ud.DocumentUrl),
+                               CourseCertId = ud.Id
+                           }).ToList();
+
+            return company;
+        }
+
+        public string GetUserDocument(int docId)
+        {
+            var docToQuery = _unitOfWork.UserDocument.Query(x => x.Id == docId).FirstOrDefault();
+            var url = _googleCloudStorage.GetFileAsync(docToQuery.DocumentName);
+
+            return url;
         }
         #endregion
 
@@ -407,95 +442,6 @@ namespace Project.Core.Services
                 ex.Message.ToString();
             }
         }
-        #endregion
-
-
-
-        //USING FOR REFERENCE FOR MYSELF DONT USE IN FRONT END
-
-        #region User Document Functionalities
-
-        //View User CV
-        public byte[] GetUserDocument(int userId)
-        {
-            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 1).SingleOrDefault();
-
-            string docUrl = userDoc.DocumentUrl;
-
-            byte[] b = System.IO.File.ReadAllBytes(@docUrl);
-            return b;
-        }
-
-        //Get CV path
-        public string GetFilePath(string docPath, int userId)
-        {
-            var user = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 1).SingleOrDefault();
-            docPath = user.DocumentUrl;
-
-            return docPath;
-        }
-
-        //Get all User Course Certificates
-        public List<CourseCertDTOcs> GetUserCourseCertificates(int userId)
-        {
-            List<User> user = _unitOfWork.User.Query(x => x.Id == userId).ToList();
-            List<UserDocument> doc = _unitOfWork.UserDocument.Query(x => x.DocumentTypeId == 3).ToList();
-
-            var company = (from u in user
-                           join ud in doc on u.Id equals ud.UserId
-                           where u.Id == userId
-                           select new CourseCertDTOcs
-                           {
-                               DocumentUrl = ud.DocumentUrl,
-                               DocumentName = Path.GetFileNameWithoutExtension(ud.DocumentUrl),
-                               CourseCertId = ud.Id
-                           }).ToList();
-
-            return company;
-        }
-
-        //View User Course Certificate
-        public byte[] GetUserCourseCert(int userId, int docId)
-        {
-            var userDoc = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 3 && u.Id == docId).SingleOrDefault();
-
-            string docUrl = userDoc.DocumentUrl;
-
-            byte[] b = System.IO.File.ReadAllBytes(@docUrl);
-            return b;
-        }
-
-        //Get Course Certificate path
-        public string GetCourseCertPath(string docPath, int userId, int docId)
-        {
-            var user = _unitOfWork.UserDocument.Query(x => x.UserId == userId).Where(u => u.DocumentTypeId == 3 && u.Id == docId).SingleOrDefault();
-            docPath = user.DocumentUrl;
-
-            return docPath;
-        }
-        #endregion
-
-        #region User Image Functionalities
-
-        //Display Profile Picture
-        public byte[] GetUserProfilePicture(int userId)
-        {
-            var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
-            string imgUrl = user.ImageUrl;
-
-            byte[] b = System.IO.File.ReadAllBytes(@imgUrl);
-            return b;
-        }
-
-        //Get Image Path
-        public string GetImagePath(string imagePath, int userId)
-        {
-            var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
-            imagePath = user.ImageUrl;
-
-            return imagePath;
-        }
-
         #endregion
 
     }

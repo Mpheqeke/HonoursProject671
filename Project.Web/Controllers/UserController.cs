@@ -47,6 +47,14 @@ namespace Project.Web.Controllers
             }
         }
 
+        //Get profile picture of specific user
+        [Route("~/api/User/GetUserProfilePicture/{userId}")]
+        [HttpGet("{userId}")]
+        public void GetUserProfilePicture(int userId)
+        {
+            var url = _userService.GetUserProfilePicture(userId);
+            Response.Redirect(url);
+        }
         #endregion
 
         #region User Document Queries
@@ -95,6 +103,24 @@ namespace Project.Web.Controllers
                 ex.Message.ToString();
             }
         }
+
+        //Get document of specific user
+        [Route("~/api/User/GetUserDocument/{docId}")]
+        [HttpGet("{userId}")]
+        public void GetUserDocument(int docId)
+        {
+            var url = _userService.GetUserDocument(docId);
+            Response.Redirect(url);
+        }
+
+        //Get LIST containing all of the course ceritifcates of a user
+        [Route("~/api/User/GetUserCourseCertificates/{userId}")]
+        [HttpGet("{userId}")]
+        public ActionResult<List<CourseCertDTOcs>> GetUserCourseCertificates(int userId)
+        {
+            return _userService.GetUserCourseCertificates(userId);
+        }
+
         #endregion
 
 
@@ -222,97 +248,5 @@ namespace Project.Web.Controllers
         }
         #endregion
 
-
-        //USING FOR REFERENCE FOR MYSELF DONT USE IN FRONT END
-        #region User Image and File Upload, View, and Download Related Queries
-        //Get profile picture of specific user
-        [Route("~/api/User/GetUserProfilePicture/{userId}")]
-        [HttpGet("{userId}")]
-        public ActionResult GetUserProfilePicture(int userId, string path)
-        {
-            path = _userService.GetImagePath(path, userId);
-            var ext = Path.GetExtension(path).ToLowerInvariant();
-            return File(_userService.GetUserProfilePicture(userId), GetMimeTypes()[ext]);        
-        }
-
-        //View CV of specific user
-        [Route("~/api/User/GetUserCV/{userId}")]
-        [HttpGet("{userId}")]
-        public ActionResult GetUserCV(int userId, string path)
-        {
-            path = _userService.GetFilePath(path, userId);
-            var ext = Path.GetExtension(path).ToLowerInvariant();
-            return File(_userService.GetUserDocument(userId), GetMimeTypes()[ext]);
-        }
-
-        //Download CV of specific user
-        [Route("~/api/User/DownloadUserCV/{userId}")]
-        [HttpGet("{userId}")]
-        public ActionResult DownloadUserCV(int userId, string path)
-        {
-            path = _userService.GetFilePath(path, userId);
-            var memory = new MemoryStream();
-            using (var stream = new FileStream(path, FileMode.Open))
-            {
-                stream.CopyTo(memory);
-            }
-            memory.Position = 0;
-            var ext = Path.GetExtension(path).ToLowerInvariant();
-            return File(memory, GetMimeTypes()[ext], Path.GetFileName(path));
-        }
-
-        //Get all of the course ceritifcates of a user
-        [Route("~/api/User/Test/{userId}")]
-        [HttpGet("{userId}")]
-        public ActionResult<List<CourseCertDTOcs>> GetUserCourseCertificates(int userId)
-        {
-            return _userService.GetUserCourseCertificates(userId);
-        }
-
-        //View single Course Certificate of specific user
-        [Route("~/api/User/GetUserCourseCert/{userId}/{docId}")]
-        [HttpGet("{docId}")]
-        public ActionResult GetUserCourseCert(int userId, int docId, string path)
-        {
-            path = _userService.GetCourseCertPath(path, userId, docId);
-            var ext = Path.GetExtension(path).ToLowerInvariant();
-            return File(_userService.GetUserCourseCert(userId, docId), GetMimeTypes()[ext]);
-        }
-
-        //Download Course Certificate of specific user
-        [Route("~/api/User/DownloadUserCourseCert/{userId}/{docId}")]
-        [HttpGet("{docId}")]
-        public ActionResult DownloadUserCourseCert(int userId, string path, int docId)
-        {
-            path = _userService.GetCourseCertPath(path, userId, docId);
-            var memory = new MemoryStream();
-            using (var stream = new FileStream(path, FileMode.Open))
-            {
-                stream.CopyTo(memory);
-            }
-            memory.Position = 0;
-            var ext = Path.GetExtension(path).ToLowerInvariant();
-            return File(memory, GetMimeTypes()[ext], Path.GetFileName(path));
-        }
-
-        //Dictionary defining the different types of documents and imnages
-        private Dictionary<string, string> GetMimeTypes()
-        {
-            return new Dictionary<string, string>
-            {
-                {".txt", "text/plain"},
-                {".pdf", "application/pdf"},
-                {".doc", "application/vnd.ms-word"},
-                {".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
-                {".xls", "application/vnd.ms-excel"},
-                {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
-                {".png", "image/png"},
-                {".jpg", "image/jpg"},
-                {".jpeg", "image/jpeg"},
-                {".gif", "image/gif"},
-                {".csv", "text/csv"},
-            };
-        }
-        #endregion
     }
 }

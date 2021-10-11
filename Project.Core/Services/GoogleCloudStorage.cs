@@ -48,26 +48,21 @@ namespace Project.Core.Services
             using (var memoryStream = new MemoryStream())
             {
                 await imageFile.CopyToAsync(memoryStream);
-                var dataObject = await storageClient.UploadObjectAsync(bucketName, fileNameForStorage, null, memoryStream);
-
-                //var ext = Path.GetExtension(dataObject.MediaLink).ToLowerInvariant();
-                //dataObject.ContentType = GetMimeTypes()[ext];
-
+                var ext = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
+                var dataObject = await storageClient.UploadObjectAsync(bucketName, fileNameForStorage, GetMimeTypes()[ext], memoryStream);
                 return dataObject.MediaLink;
             }           
         }
 
-        public async Task<string> GetFileAsync(string fileNameForStorage)
+        public string GetFileAsync(string fileNameForStorage)
         {
-            using (var memoryStream = new MemoryStream())
+            try
             {
-                //await imageFile.CopyToAsync(memoryStream);
-                var dataObject = await storageClient.GetObjectAsync(bucketName, fileNameForStorage, null, default);
-
-                var ext = Path.GetExtension(dataObject.Name).ToLowerInvariant();
-                dataObject.ContentType = GetMimeTypes()[ext];
-
-                return dataObject.MediaLink;
+                return "https://storage.googleapis.com/" + bucketName + "/" + fileNameForStorage;
+            }
+            catch (Exception ex)
+            { 
+                return ex.Message.ToString();
             }
         }
 

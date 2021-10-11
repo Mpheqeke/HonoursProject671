@@ -15,6 +15,7 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Reflection.Metadata;
 
 namespace Project.Core.Services
 {
@@ -68,22 +69,14 @@ namespace Project.Core.Services
             }
         } //WERK
         #endregion
-      
-        public Task<string> test(int compId)
+
+        public string GetWorkingUrl(int compId)
         {
-            var updateObj = _unitOfWork.Company.Query(x => x.Id == compId).FirstOrDefault();
-            var test = updateObj.LogoName;
-            var url = _googleCloudStorage.GetFileAsync(test);
+            var compToQuery = _unitOfWork.Company.Query(x => x.Id == compId).FirstOrDefault();
+            var url = _googleCloudStorage.GetFileAsync(compToQuery.LogoName);
+
             return url;
         }
-
-        public string test2(int compId)
-        {
-            var updateObj = _unitOfWork.Company.Query(x => x.Id == compId).FirstOrDefault();
-            var test = updateObj.LogoUrl;
-            return test;
-        }
-
         //Approve Company
 
 

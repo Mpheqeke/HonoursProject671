@@ -3,6 +3,7 @@ using Project.Core.DTOs;
 using Project.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,8 +12,7 @@ namespace Project.Core.Interfaces
     public interface ICompanyService
     {
 
-        Task<string> test(int compId);
-        string test2(int compId);
+        string GetWorkingUrl(int compId);
 
         //***Company CRUD Operations***
         //-->Gets Profile information of a specific company (Company Profile Page)

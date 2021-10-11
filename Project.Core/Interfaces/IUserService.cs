@@ -13,6 +13,10 @@ namespace Project.Core.Interfaces
         Task UploadCVDocument(IFormFile file, int userId); //WERK
         Task UploadCourseCert(IFormFile file, int userId); //WERK
         Task DeleteCourseCert(int docId); //WERK
+        string GetUserProfilePicture(int userId);
+        string GetUserDocument(int docId);
+        List<CourseCertDTOcs> GetUserCourseCertificates(int userId);
+
 
         //***User(Graduate/Recruiter) CRUD Operations***
 
@@ -46,37 +50,6 @@ namespace Project.Core.Interfaces
 
             //-->A user can delete their own application
         void DeleteApplication(int applicationId);
-
-        //void UploadImage(IFormFile imageName, string imagePath, int userId);
-
-
-        //USING FOR REFERENCE FOR MYSELF DONT USE IN FRONT END
-        #region TESTS STUFFS
-
-        //-->Used to display the image
-        byte[] GetUserProfilePicture(int userId);
-
-            //-->Retreives image path
-        string GetImagePath(string imagePath, int userId);
- 
-
-            //-->Used to open document
-        byte[] GetUserDocument(int userId);
-
-            //-->Retreives file path
-        string GetFilePath(string docPath, int userId);
-
-
-            //-->Used to get all course documents of user
-        List<CourseCertDTOcs> GetUserCourseCertificates(int userId);
-
-            //-->Used to open document
-        byte[] GetUserCourseCert(int userId, int docId);
-
-            //-->Retreives file path
-        string GetCourseCertPath(string docPath, int userId, int docId);
-
-        #endregion
 
 
         //***User Related Select Operations*** (Might not use)
