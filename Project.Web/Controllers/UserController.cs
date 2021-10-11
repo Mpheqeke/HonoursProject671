@@ -102,7 +102,7 @@ namespace Project.Web.Controllers
             }
         }
 
-        //Get document of specific user
+        ////Get document of specific user
         [Route("~/api/User/GetUserDocument/{docId}")]
         [HttpGet("{userId}")]
         public void GetUserDocument(int docId)

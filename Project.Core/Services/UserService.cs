@@ -73,6 +73,7 @@ namespace Project.Core.Services
            
         }
 
+        //Retreives the user profile picture
         public string GetUserProfilePicture(int userId)
         {
             var userToQuery = _unitOfWork.User.Query(x => x.Id == userId).FirstOrDefault();
@@ -197,6 +198,7 @@ namespace Project.Core.Services
             return company;
         }
 
+        //Retreives any user document based on docId
         public string GetUserDocument(int docId)
         {
             var docToQuery = _unitOfWork.UserDocument.Query(x => x.Id == docId).FirstOrDefault();

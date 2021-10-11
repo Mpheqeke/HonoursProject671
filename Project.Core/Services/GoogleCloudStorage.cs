@@ -47,6 +47,7 @@ namespace Project.Core.Services
         {
             using (var memoryStream = new MemoryStream())
             {
+                
                 await imageFile.CopyToAsync(memoryStream);
                 var ext = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
                 var dataObject = await storageClient.UploadObjectAsync(bucketName, fileNameForStorage, GetMimeTypes()[ext], memoryStream);
