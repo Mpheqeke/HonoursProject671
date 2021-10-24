@@ -21,7 +21,7 @@ namespace Project.Core.Services
         //Create User
         public int SingUpUser(User user)
         {
-            BaseUserFactory userFactory = new AbstractUserFactory().CreateFactory(user);
+           BaseUserFactory userFactory = new AbstractUserFactory().CreateFactory(user);
             
             var userToSave = new User
             {
@@ -44,7 +44,7 @@ namespace Project.Core.Services
             _unitOfWork.User.Add(userToSave);
             _unitOfWork.Save();
 
-            return user.Id;
+            return userToSave.Id;
         }
 
         //Create Company
