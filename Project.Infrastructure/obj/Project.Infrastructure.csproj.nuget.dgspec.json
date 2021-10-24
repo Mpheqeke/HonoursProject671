@@ -1,23 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "E:\\HonoursProject671\\Project.Infrastructure\\Project.Infrastructure.csproj": {}
+    "C:\\Projects\\HonoursProject671\\Project.Infrastructure\\Project.Infrastructure.csproj": {}
   },
   "projects": {
-    "E:\\HonoursProject671\\Project.Core\\Project.Core.csproj": {
+    "C:\\Projects\\HonoursProject671\\Project.Core\\Project.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\HonoursProject671\\Project.Core\\Project.Core.csproj",
+        "projectUniqueName": "C:\\Projects\\HonoursProject671\\Project.Core\\Project.Core.csproj",
         "projectName": "Project.Core",
-        "projectPath": "E:\\HonoursProject671\\Project.Core\\Project.Core.csproj",
-        "packagesPath": "C:\\Users\\Carmen\\.nuget\\packages\\",
-        "outputPath": "E:\\HonoursProject671\\Project.Core\\obj\\",
+        "projectPath": "C:\\Projects\\HonoursProject671\\Project.Core\\Project.Core.csproj",
+        "packagesPath": "C:\\Users\\Katleho Mpheqeke\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\HonoursProject671\\Project.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Carmen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Katleho Mpheqeke\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -45,6 +48,10 @@
             "FirebaseAuthentication.net": {
               "target": "Package",
               "version": "[3.7.2, )"
+            },
+            "Google.Cloud.Storage.V1": {
+              "target": "Package",
+              "version": "[2.5.0, )"
             },
             "Microsoft.AspNetCore.Http.Abstractions": {
               "target": "Package",
@@ -103,20 +110,23 @@
         }
       }
     },
-    "E:\\HonoursProject671\\Project.Infrastructure\\Project.Infrastructure.csproj": {
+    "C:\\Projects\\HonoursProject671\\Project.Infrastructure\\Project.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\HonoursProject671\\Project.Infrastructure\\Project.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Projects\\HonoursProject671\\Project.Infrastructure\\Project.Infrastructure.csproj",
         "projectName": "Project.Infrastructure",
-        "projectPath": "E:\\HonoursProject671\\Project.Infrastructure\\Project.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\Carmen\\.nuget\\packages\\",
-        "outputPath": "E:\\HonoursProject671\\Project.Infrastructure\\obj\\",
+        "projectPath": "C:\\Projects\\HonoursProject671\\Project.Infrastructure\\Project.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Katleho Mpheqeke\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\HonoursProject671\\Project.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Carmen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Katleho Mpheqeke\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -130,8 +140,8 @@
         "frameworks": {
           "netcoreapp2.1": {
             "projectReferences": {
-              "E:\\HonoursProject671\\Project.Core\\Project.Core.csproj": {
-                "projectPath": "E:\\HonoursProject671\\Project.Core\\Project.Core.csproj"
+              "C:\\Projects\\HonoursProject671\\Project.Core\\Project.Core.csproj": {
+                "projectPath": "C:\\Projects\\HonoursProject671\\Project.Core\\Project.Core.csproj"
               }
             }
           }
@@ -152,6 +162,10 @@
             "FirebaseAuthentication.net": {
               "target": "Package",
               "version": "[3.7.2, )"
+            },
+            "Google.Cloud.Storage.V1": {
+              "target": "Package",
+              "version": "[2.5.0, )"
             },
             "Microsoft.AspNetCore.Http": {
               "target": "Package",

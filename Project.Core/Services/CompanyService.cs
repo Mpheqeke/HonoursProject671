@@ -68,8 +68,8 @@ namespace Project.Core.Services
                 ex.Message.ToString();
             }
         } //WERK
-        #endregion
 
+        //Get company logo image
         public string GetWorkingUrl(int compId)
         {
             var compToQuery = _unitOfWork.Company.Query(x => x.Id == compId).FirstOrDefault();
@@ -77,6 +77,9 @@ namespace Project.Core.Services
 
             return url;
         }
+        #endregion
+
+
         //Approve Company
 
 
