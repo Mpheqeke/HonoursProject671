@@ -14,7 +14,7 @@ namespace Project.Web.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ApiExceptionFilter]
-    [Authorize]
+
     public class UserAuthController : ControllerBase
     {
         private readonly IUserAuthService _userAuthService;
@@ -25,9 +25,11 @@ namespace Project.Web.Controllers
         }
 
         //Create new user
-        [Route("~/api/Auth/SingUpUser")]
+       
         [HttpPost]
-        public int SingUpUser([FromBody] User user)
+        [Route("~/api/Auth/SingUpUser")]
+        [AllowAnonymous]
+        public int SingUpUser(User user)
         {
             return _userAuthService.SingUpUser(user);
         }
@@ -41,7 +43,7 @@ namespace Project.Web.Controllers
         }
 
         //Allow users to sign in
-        [HttpPost]
+        [HttpGet]
         [AllowAnonymous]
         [Route("~/api/Auth/SingIn")]
         public List<UserDTO> SingIn(string uuid)

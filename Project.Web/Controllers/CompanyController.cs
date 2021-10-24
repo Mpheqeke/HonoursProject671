@@ -185,9 +185,9 @@ namespace Project.Web.Controllers
         //Create new position
         [Route("~/api/Company/Vacancy/CreatePosition/{CompId}")]
         [HttpPost]
-        public void CreatePosition([FromBody] Vacancy vacancy, int CompId)
+        public void CreatePosition( Vacancy vacancy)
         {
-            _companyService.CreatePosition(vacancy, CompId);
+            _companyService.CreatePosition(vacancy, vacancy.CompanyId);
         }
 
         //Remove a position

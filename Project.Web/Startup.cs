@@ -70,7 +70,7 @@ namespace Project.Web
 			services.AddSingleton<IGoogleCloudStorage, GoogleCloudStorage>();
 			//services.AddScoped<IAuthInfo, AuthInfo>();
 			//Firebase
-			//services.AddScoped<IUserAuthService, FireBaseAuth>();
+			services.AddScoped<IUserAuthService, UserAuthService>();
 			//services.AddScoped<IFireBaseHelper, FirebaseHelper>();
 		}
 

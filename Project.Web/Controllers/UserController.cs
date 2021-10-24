@@ -1,17 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTOs;
-using Project.Core.Global;
 using Project.Core.Interfaces;
 using Project.Core.Models;
-using Project.Web.Filters;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace Project.Web.Controllers
@@ -217,11 +212,11 @@ namespace Project.Web.Controllers
 
         #region User Application Related Queries
         //Apply to a Postion
-        [Route("~/api/User/Vacancy/ApplyToPosition/{userId}/{vacId}")]
+        [Route("~/api/User/Vacancy/ApplyToPosition")]
         [HttpPost]
-        public void ApplyToPosition([FromBody] UserJobApplication application, int userId, int vacId)
+        public void ApplyToPosition(UserJobApplication application)
         {
-            _userService.ApplyToPosition(userId, vacId, application);
+            _userService.ApplyToPosition(application.UserId, application.VacancyId, application);
         }
 
         //Get all application for specific user
