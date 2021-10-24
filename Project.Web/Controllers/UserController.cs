@@ -149,19 +149,6 @@ namespace Project.Web.Controllers
         #endregion
 
         #region User Select and Search Related Queries
-        //Retreive specific user info by Id
-        [Route("~/api/User/GetSpecificUser/{userId}")]
-        [HttpGet("{userId}")]
-        public ActionResult<List<UserDTO>> GetSpecificUser(int userId)
-        {
-            var user = _userService.GetSpecificUser(userId);
-            return user;
-        }
-
-        //------------------------------------------------------------------------
-        //MIGHT NOT USE, RETREIVES ALL MODEL INFORMATION - NO DTO
-        //------------------------------------------------------------------------
-
         //Retreive all users
         [Route("~/api/User/GetUsers")]
         [HttpGet]
@@ -186,12 +173,22 @@ namespace Project.Web.Controllers
             return Ok(users.Skip((curPage - 1) * curPageSize).Take(curPageSize));
         }
 
+
         //Retreive user by Id
         [Route("~/api/User/GetSingleUser/{userId}")]
         [HttpGet("{userId}")]
         public ActionResult<List<User>> GetSingleUser(int userId)
         {
             var user = _userService.GetSingleUser(userId);
+            return user;
+        }
+
+        //Retreive specific user info by Id
+        [Route("~/api/User/GetSpecificUser/{userId}")]
+        [HttpGet("{userId}")]
+        public ActionResult<List<UserDTO>> GetSpecificUser(int userId)
+        {
+            var user = _userService.GetSpecificUser(userId);
             return user;
         }
         #endregion
