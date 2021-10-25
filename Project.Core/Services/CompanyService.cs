@@ -106,7 +106,8 @@ namespace Project.Core.Services
                             RepId = cr.Id,
                             RepFirstName = u.FirstName,
                             RepLastName = u.LastName,
-                            RepProfileImageUrl = u.ImageUrl
+                            RepProfileImageUrl = u.ImageUrl,
+                            Email = u.Email
                         }).ToList();
 
             return reps;
@@ -265,6 +266,7 @@ namespace Project.Core.Services
                          join v in vacan on c.Id equals v.CompanyId
                          select new VacanciesDTO
                          {
+                             Id = v.Id,
                              CompanyId = c.Id,
                              CompanyName = c.Name,
                              Sector = c.Sector,

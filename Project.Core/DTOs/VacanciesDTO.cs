@@ -7,6 +7,7 @@ namespace Project.Core.DTOs
     public class VacanciesDTO
     {
         // Id to be able to redirect to the company page when selecting a company
+        public int Id { get; set; }
         public int CompanyId { get; set; }
 
         // Info for Vacancies Table

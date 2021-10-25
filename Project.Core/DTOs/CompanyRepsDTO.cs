@@ -11,5 +11,6 @@ namespace Project.Core.DTOs
         public string RepFirstName { get; set; }
         public string RepLastName { get; set; }
         public string RepProfileImageUrl { get; set; }
+        public string Email { get; set; }
     }
 }

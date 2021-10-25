@@ -208,7 +208,7 @@ namespace Project.Web.Controllers
         //Update existing position
         [Route("~/api/Company/Vacancy/UpdatePosition/{CompId}/{VacId}")]
         [HttpPut("{VacId}")]
-        public void UpdatePosition(int VacId, int CompId, [FromBody] Vacancy vacancy)
+        public void UpdatePosition(int VacId, int CompId,  Vacancy vacancy)
         {
             _companyService.UpdatePosition(VacId, CompId, vacancy);
         }

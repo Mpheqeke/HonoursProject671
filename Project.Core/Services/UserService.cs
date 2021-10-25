@@ -347,13 +347,13 @@ namespace Project.Core.Services
 
                 var user = _unitOfWork.User.Query(x => x.Id == userId).SingleOrDefault();
                 var skills = _unitOfWork.UserSkillGain.Query(x => x.UserId == userId).SingleOrDefault();
-
+                
                 var applicationToAdd = new UserJobApplication
                 {
                     UserId = user.Id,
                     VacancyId = vacId,
                     StatusId = 1,
-                    SkillId = skills.SkillId,
+                    SkillId = skills !=null ? skills.SkillId: application.SkillId,
                     Motivation = application.Motivation,
                     CVUrl = application.CVUrl,
                     IsActive = true,
