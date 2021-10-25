@@ -491,6 +491,28 @@ namespace Project.Core.Services
             return applicants;
         }
 
+        public List<CompanyApplicantsDTO> GetSubmissions(int CompId)
+        {
+            List<UserJobApplication> applications = _unitOfWork.UserJobApplication.Query(x => x.IsActive).ToList();
+            List<Vacancy> vacan = _unitOfWork.Vacancy.Query(x => x.IsActive).ToList();
+            List<User> user = _unitOfWork.User.Query(x => x.IsActive).ToList();
+            var applicants = (from a in applications
+                              join u in user on a.UserId equals u.Id //Not right format (Need to get UserId for this)(NOT IN DB YET)
+                              where a.StatusId == 1
+                              select new CompanyApplicantsDTO
+                              {
+                                  Id = a.Id,
+                                  VacancyId = a.VacancyId,
+                                  UserId = u.Id,
+                                  FirstName = u.FirstName,
+                                  LastName = u.LastName,
+                                  Motivation = a.Motivation,
+                                  CVUrl = a.CVUrl
+                              }).ToList();
+            return applicants;
+        }
+
+
         //Approve Application
         public void ApproveApplication(int compId, int appliId, UserJobApplication application)
         {

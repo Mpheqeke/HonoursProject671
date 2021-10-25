@@ -213,6 +213,13 @@ namespace Project.Web.Controllers
             _companyService.UpdatePosition(VacId, CompId, vacancy);
         }
         #endregion
+        [Route("~/api/Company/ViewSubmissions/{CompId}")]
+        [HttpGet("CompId")]
+        public ActionResult<List<CompanyApplicantsDTO>> GetSubmissions(int CompId)
+        {
+            var applicants = _companyService.GetSubmissions(CompId);
+            return applicants;
+        }
 
         #region User Application Related Queries 
         //View all applications for specific company position
@@ -236,7 +243,7 @@ namespace Project.Web.Controllers
         //Approve an application
         [Route("~/api/Company/Vacancy/ApproveApplication/{CompId}/{appliId}")]
         [HttpPut("{appliId}")]
-        public void ApproveApplication(int compId, int appliId, [FromBody] UserJobApplication application)
+        public void ApproveApplication(int compId, int appliId, UserJobApplication application)
         {
             _companyService.ApproveApplication(compId, appliId, application);
         }
@@ -244,7 +251,7 @@ namespace Project.Web.Controllers
         //Reject an application
         [Route("~/api/Company/Vacancy/RejectApplication/{CompId}/{appliId}")]
         [HttpPut("{appliId}")]
-        public void RejectApplication(int compId, int appliId, [FromBody] UserJobApplication application)
+        public void RejectApplication(int compId, int appliId,  UserJobApplication application)
         {
             _companyService.RejectApplication(compId, appliId, application);
         }

@@ -68,6 +68,7 @@ namespace Project.Core.Interfaces
         //***JobApplication Operations***
             //-->A company can view all applications for a position
         List<CompanyApplicantsDTO> GetPositionApplicants(int vacId);
+        List<CompanyApplicantsDTO> GetSubmissions(int CompId);
 
             //-->A company can approve an application
         void ApproveApplication(int compId, int appliId, UserJobApplication application);
