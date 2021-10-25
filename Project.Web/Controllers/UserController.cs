@@ -28,7 +28,7 @@ namespace Project.Web.Controllers
         //Upload Profile Image / Replace Exisiting One
         [Route("~/api/User/UploadProfileImage/{userId}")]
         [HttpPut("{userId}")]
-        public async Task UploadProfileImage(int userId, [FromForm] IFormFile file)
+        public async Task UploadProfileImage(int userId,  IFormFile file)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace Project.Web.Controllers
         //Upload User CV / Replace Exisiting One
         [Route("~/api/User/UploadCVDocument/{userId}")]
         [HttpPost("{userId}")]
-        public async Task UploadCVDocument(int userId, [FromForm] IFormFile file)
+        public async Task UploadCVDocument(int userId,  IFormFile file)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace Project.Web.Controllers
         //Upload User Course Certificate / Replace Exisiting One
         [Route("~/api/User/UploadCourseCert/{userId}")]
         [HttpPost("{userId}")]
-        public async Task UploadCourseCert(int userId, [FromForm] IFormFile file)
+        public async Task UploadCourseCert(int userId,  IFormFile file)
         {
             try
             {

@@ -32,8 +32,13 @@ namespace Project.Core.Services
             //_authentication = authentication;
         }
 
+        public int GetCompanyIdFromRep(int repId)
+        {
+            return _unitOfWork.CompanyRepresentative.Query(x => x.UserId == repId).FirstOrDefault().CompanyId;
+        }
         #region Logo Image Functionalities
         //Get the name of the file being uploaded
+
         public string FormFileName(string compName, string fileName)
         {
             var fileExtension = Path.GetExtension(fileName);
@@ -94,7 +99,7 @@ namespace Project.Core.Services
             var reps = (from c in comp
                         join cr in comprep on CompId equals cr.CompanyId
                         join u in users on cr.UserId equals u.Id
-                        where u.RoleId == 2 && c.Id == CompId
+                        where  c.Id == CompId
                         select new CompanyRepsDTO
                         {
                             CompanyId = c.Id,

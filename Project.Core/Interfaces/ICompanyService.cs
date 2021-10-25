@@ -11,7 +11,7 @@ namespace Project.Core.Interfaces
 {
     public interface ICompanyService
     {
-
+        int GetCompanyIdFromRep(int repId);
         string GetWorkingUrl(int compId);
 
         //***Company CRUD Operations***

@@ -29,6 +29,13 @@ namespace Project.Web.Controllers
             _companyService = companyService;       
         }
 
+        [Route("~/api/Company/GetCompanyFromRepId/{repId}")]
+        [HttpGet]
+        public int GetCompanyIdFromRep(int repId)
+        {
+            return _companyService.GetCompanyIdFromRep(repId);
+        }
+
         #region Logo Image Queries
         //Upload Profile Image / Replace Exisiting One
         [Route("~/api/Company/UploadCompanyLogo/{compId}")]
@@ -100,7 +107,7 @@ namespace Project.Web.Controllers
         //Update existing company
         [Route("~/api/Company/UpdateCompany/{compId}")]
         [HttpPut("{compId}")]
-        public void UpdateCompany(int compId, [FromBody] Company company)
+        public void UpdateCompany(int compId,  Company company)
         {
             _companyService.UpdateCompany(compId, company);
         }

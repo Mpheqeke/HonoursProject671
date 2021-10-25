@@ -281,7 +281,8 @@ namespace Project.Core.Services
                                Gender = u.Gender,
                                Email = u.Email,
                                Mobile = u.Mobile,
-                               ImageUrl = u.ImageUrl
+                               ImageUrl = u.ImageUrl,
+                               RoleId = u.RoleId
                            }).ToList();
 
             return company;

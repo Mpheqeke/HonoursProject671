@@ -67,7 +67,7 @@ namespace Project.Core.Services
             _unitOfWork.Company.Add(companyToSave);
             _unitOfWork.Save();
 
-            return company.Id;
+            return companyToSave.Id;
         }
 
         //SignIn Functionality
@@ -86,7 +86,8 @@ namespace Project.Core.Services
                                     Email = u.Email,
                                     Gender = u.Gender,
                                     Mobile = u.Mobile,
-                                    ImageUrl = u.ImageUrl
+                                    ImageUrl = u.ImageUrl,
+                                    RoleId = u.RoleId
                                 }).ToList();
 
                 return MoocList;

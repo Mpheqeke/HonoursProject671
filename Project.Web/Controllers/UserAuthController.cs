@@ -37,7 +37,7 @@ namespace Project.Web.Controllers
         //Create new company
         [Route("~/api/Auth/SingUpCompany")]
         [HttpPost]
-        public int SingUpCompany([FromBody] Company company)
+        public int SingUpCompany( Company company)
         {
             return _userAuthService.SingUpCompany(company);
         }
