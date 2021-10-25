@@ -271,7 +271,7 @@ namespace Project.Core.Services
                              CompanyName = c.Name,
                              Sector = c.Sector,
                              JobTitle = v.JobTitle,
-                             StartDate = v.StartDate,
+                             StartDate = v.StartDate.ToShortDateString(),
                              TotalVac = c.Vacancy.Count(x => x.CompanyId == c.Id)
                          }).ToList();
 
@@ -305,7 +305,7 @@ namespace Project.Core.Services
                              CompanyName = c.Name,
                              Sector = c.Sector,
                              JobTitle = v.JobTitle,
-                             StartDate = v.StartDate,
+                             StartDate = v.StartDate.ToShortDateString(),
                              TotalVac = c.Vacancy.Count(x => x.CompanyId == c.Id)
                          }).ToList();
 
